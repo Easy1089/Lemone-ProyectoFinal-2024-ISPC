@@ -3,7 +3,7 @@ Lemone-ProyectoFinal-2024-ISPC
 
 Repositorio de LE MONE Sistema de Gestion para Vinotecas.
 
-**##Personal involucrado**
+# Personal involucrado
 
 * Fabiola Benitez: Scrum Master, Analista, diseñador y programador
 * Enzo Mateo Antunez: Analista, diseñador y programador
