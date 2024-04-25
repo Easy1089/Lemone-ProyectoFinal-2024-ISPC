@@ -20,5 +20,5 @@ Repositorio de LE MONE Sistema de Gestion para Vinotecas.
 # Link de la wiki del proyecto actual
 Wiki : https://github.com/Easy1089/Lemone-ProyectoFinal-2024-ISPC.wiki.git
 
-# Link de la organizacion donde estan los repositorios de los proyecto anteriores y el actual una vez finalizado el sprint 2 se subira para que quede unificado.
+# Link de la organizacion donde estan los repositorios de los proyectos anteriores y el actual una vez finalizado el sprint 2 se subira para que quede unificado.
 Organizacion: https://github.com/orgs/SuquiaRiverCba/repositories
