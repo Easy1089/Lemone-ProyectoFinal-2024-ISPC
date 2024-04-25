@@ -21,4 +21,4 @@ Repositorio de LE MONE Sistema de Gestion para Vinotecas.
 https://landingpagevinos.dfrweb.com/#
 
 # Link de la wiki del proyecto actual
-Wiki : 
+Wiki : https://github.com/Easy1089/Lemone-ProyectoFinal-2024-ISPC.wiki.git
