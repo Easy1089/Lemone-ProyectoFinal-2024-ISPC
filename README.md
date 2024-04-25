@@ -1,6 +1,4 @@
 # Lemone-ProyectoFinal-2024-ISPC
-Lemone-ProyectoFinal-2024-ISPC
-
 Repositorio de LE MONE Sistema de Gestion para Vinotecas.
 
 # Personal involucrado
