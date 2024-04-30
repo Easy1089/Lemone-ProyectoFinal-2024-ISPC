@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="catalogo.component.css">
+
+<app-navbar></app-navbar>
+<div class="catalog">
+    <div class="container" style="margin-top: 10px;">
+        <h3>Bienvenidos a nuestro catálogo</h3>
+    </div>
+    <div class="product-container">
+        <div class="product" *ngFor="let product of productos">
+            <app-producto [product]="product"></app-producto>
+        </div>
+        <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
+    </div>
+</div>
+<app-footer></app-footer>
