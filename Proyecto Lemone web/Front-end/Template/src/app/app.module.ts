@@ -35,6 +35,7 @@ import { AuthGuard } from './service/auth.guard';
 import { EstadoProductoDirective } from './directivas/estado-producto.directive';
 import { ProductoFormComponent } from './components/producto-form/producto-form.component';
 import { AbmCategoriasComponent } from './components/abm-categorias/abm-categorias.component';
+import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { AbmCategoriasComponent } from './components/abm-categorias/abm-categori
     AbmCategoriasComponent,
     EstadoProductoDirective,
     ProductoFormComponent,
-    AbmCategoriasComponent
+    AbmCategoriasComponent,
+    CategoriaFormComponent
     
   ],
   imports: [
