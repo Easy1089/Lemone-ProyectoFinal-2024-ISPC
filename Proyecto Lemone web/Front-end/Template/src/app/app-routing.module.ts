@@ -20,6 +20,7 @@ import { Pagina404Component } from './components/pagina404/pagina404.component';
 import { Pagina500Component } from './components/pagina500/pagina500.component';
 import { PurchaseComponent } from './components/purchase/purchase.component';
 import { AbmProductosComponent } from './components/abm-productos/abm-productos.component';
+import { AbmCategoriasComponent } from './components/abm-categorias/abm-categorias.component';
 import { ProductoFormComponent } from './components/producto-form/producto-form.component';
 import { AuthGuard } from './service/auth.guard';
 //Importo AuthGuard para poder validar si el usuario está logueado o no
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'error500', component: Pagina500Component },
   { path: 'abmproductos', component: AbmProductosComponent, canActivate: [AuthGuard]},
+  { path: 'ambcategorias', component: AbmCategoriasComponent, canActivate: [AuthGuard]},
   { path: 'producto-form', component: ProductoFormComponent},
   { path: 'producto-form/:id', component: ProductoFormComponent },
   {path: 'descripcionproducto/:id', component: DescProductoComponent},

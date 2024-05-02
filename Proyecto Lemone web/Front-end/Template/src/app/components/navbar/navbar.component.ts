@@ -72,6 +72,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/abmproductos']);
   }
 
+  ambcategorias() {
+    this.router.navigate(['/ambcategorias']);
+  }
+
   logout(event: Event): void {
     event.preventDefault();
     this.authService.logout(this.currentUser).subscribe({
