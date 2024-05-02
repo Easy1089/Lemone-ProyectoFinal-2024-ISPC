@@ -22,11 +22,13 @@ import { PurchaseComponent } from './components/purchase/purchase.component';
 import { AbmProductosComponent } from './components/abm-productos/abm-productos.component';
 import { ProductoFormComponent } from './components/producto-form/producto-form.component';
 import { AuthGuard } from './service/auth.guard';
+import { MobileComponent } from './components/mobile/mobile.component';
 //Importo AuthGuard para poder validar si el usuario está logueado o no
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'catalogo', component: CatalogoComponent },
+  { path: 'mobile', component: MobileComponent },
   { path: 'producto', component: ProductoComponent },
   { path: 'descripcionproducto', component: DescProductoComponent },
   { path: 'about-me', component: AboutMeComponent },

@@ -34,6 +34,7 @@ import { ErrorHttpInterceptor } from './interceptors/errorhttp.interceptor';
 import { AuthGuard } from './service/auth.guard';
 import { EstadoProductoDirective } from './directivas/estado-producto.directive';
 import { ProductoFormComponent } from './components/producto-form/producto-form.component';
+import { MobileComponent } from './components/mobile/mobile.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { ProductoFormComponent } from './components/producto-form/producto-form.
     PurchaseComponent,
     AbmProductosComponent,
     EstadoProductoDirective,
-    ProductoFormComponent
+    ProductoFormComponent,
+    MobileComponent
     
   ],
   imports: [
