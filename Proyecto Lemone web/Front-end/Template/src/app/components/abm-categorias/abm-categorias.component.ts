@@ -11,7 +11,9 @@ export class AbmCategoriasComponent implements OnInit {
   productos: any[] | undefined;
   errorMensaje: string | undefined;
   mostrarForm = false;
-
+  categorias: any;
+  cantidadCategorias: any;
+  
   constructor(private productoServ: ProductoService, private router: Router) {}
 
   ngOnInit(): void {
@@ -25,6 +27,18 @@ export class AbmCategoriasComponent implements OnInit {
         this.errorMensaje = 'Ocurrió un error al obtener los productos. Por favor, inténtalo de nuevo más tarde.';
       }
   });
+
+  this.productoServ.ObtenerCategorias().subscribe({
+    next: (response) => {
+        console.log(response.categorias);
+        this.categorias = response.categorias;
+        this.cantidadCategorias = this.categorias.length;
+    },
+    error: (error) => {
+        console.error(error);
+        this.errorMensaje = 'Ocurrió un error al obtener las categorías. Por favor, inténtalo de nuevo más tarde.';
+    }
+  }); 
   }
   mostrarFormulario() {
     //this.mostrarForm = true;

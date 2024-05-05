@@ -65,8 +65,8 @@ import { CategoriaFormComponent } from './components/categoria-form/categoria-fo
     AbmProductosComponent,
     AbmCategoriasComponent,
     EstadoProductoDirective,
-    ProductoFormComponent
-    
+    ProductoFormComponent,
+    MobileComponent    
   ],
   imports: [
     BrowserModule,

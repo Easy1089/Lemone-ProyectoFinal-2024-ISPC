@@ -13,11 +13,32 @@ export class ProductoService {
   urlProductos = `${this.url}/api/productos`;
   urlCategorias = `${this.url}/api/categorias`;
   urlProductoId = `${this.url}/api/productos`;
+  urlCantidaddeproductos = `${this.url}/api/cantidaddeproductos`;
+  urlCompras = `${this.url}/api/compras`;
+  urlVentas = `${this.url}/api/ventas`;
 
   constructor(private http: HttpClient) { }
 
   ObtenerProductos(): Observable<any> {
     return this.http.get<any[]>(this.urlProductos).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  ObtenerCompras(): Observable<any> {
+    return this.http.get<any[]>(this.urlCompras).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  ObtenerVentas(): Observable<any> {
+    return this.http.get<any[]>(this.urlVentas).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  ObtenerCantidadDeProductos(): Observable<any> {
+    return this.http.get<any[]>(this.urlCantidaddeproductos).pipe(
       catchError(this.handleError)
     );
   }

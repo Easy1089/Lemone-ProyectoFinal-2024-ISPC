@@ -181,7 +181,7 @@ class Persona(models.Model):
         return self.nombre
 
     def __str__(self):
-        return self.nombre
+        return str(self.apellido) + " " + str(self.nombre) 
 
 # Create your models here.
 
@@ -213,7 +213,7 @@ class Operacion(models.Model):
         return self.id
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Orden(models.Model):
@@ -225,13 +225,13 @@ class Orden(models.Model):
     persona = models.ForeignKey(
         Persona, to_field='id', on_delete=models.CASCADE)
     mediodepago = models.ForeignKey(
-        MedioDePago, to_field='id', on_delete=models.CASCADE)
+        MedioDePago, to_field='id', on_delete=models.CASCADE, null=True, blank=True)
     tipodeenvio = models.ForeignKey(
-        TipoDeEnvio, to_field='id', on_delete=models.CASCADE)
+        TipoDeEnvio, to_field='id', on_delete=models.CASCADE, null=True, blank=True)
     importeneto = models.DecimalField(blank=False, decimal_places=2, max_digits=10)
     importeiva = models.DecimalField(blank=False, decimal_places=2, max_digits=10)
     importetotal = models.DecimalField(blank=False, decimal_places=2, max_digits=10)
-    observaciones = models.CharField(max_length=250, blank=False)
+    observaciones = models.CharField(max_length=250, blank=True, null=True)
     estado = models.CharField(max_length=1, default="A")
     usuarioalta = models.ForeignKey(
         CustomUser, to_field='id', on_delete=models.CASCADE, related_name='orden_usuarioalta')
@@ -246,7 +246,7 @@ class Orden(models.Model):
         return self.id
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class OrdenDetalle(models.Model):
@@ -256,7 +256,7 @@ class OrdenDetalle(models.Model):
     producto = models.ForeignKey(
         Producto, to_field='id', on_delete=models.CASCADE)
     cantidad = models.IntegerField(blank=False)
-    observaciones = models.CharField(max_length=250, blank=False)
+    observaciones = models.CharField(max_length=250, blank=False, null=True)
 
     estado = models.CharField(max_length=1, default="A")
     usuarioalta = models.ForeignKey(
@@ -276,4 +276,4 @@ class OrdenDetalle(models.Model):
         return self.id
 
     def __str__(self):
-        return self.id
+        return str(self.id)

@@ -96,7 +96,7 @@
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
                 <thead class="table-light">
-                    <tr>
+                    <tr >
                         <th scope="col">Código</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Estado</th>
@@ -104,26 +104,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let product of productos">
+                    <tr *ngFor="let categoria of categorias">
                         <td>
-                            <img alt="..." [src]="product.imagen" class="avatar avatar-sm rounded-circle me-2">
                             <a class="text-heading font-semibold" href="#">
-                                {{ product.codigo }}
+                                {{ categoria.id }}
                             </a>
                         </td>
                         <td>
-                            {{ product.descripcion }}
+                            {{ categoria.nombre }}
                         </td>
                         <td>
                             <span class="badge badge-lg badge-dot">
                                 <i class="bg-success"></i>
-                                <span [appEstadoProducto]="product.activoactualmente"></span>
+                                <span [appEstadoProducto]="categoria.activoactualmente"></span>
                             </span>
                         </td>
                         <td class="text-end">
                             <!--<a href="#" class="btn btn-sm btn-neutral">View</a>-->
                             <a class="btn btn-sm btn-primary"
-                                [routerLink]="['/producto-form', { id: product.id, editar: true } ]">Editar</a>
+                                [routerLink]="['/producto-form', { id: categoria.id, editar: true } ]">Editar</a>
                             <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                 <i class="bi bi-trash"></i>
                             </button>
@@ -135,7 +134,7 @@
         </div>
 
         <div class="card-footer border-0 py-5">
-            <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+            <span class="text-muted text-sm">Mostrando {{cantidadCategorias}} usuarios de {{cantidadCategorias}}</span>
         </div>
     </div>
 </div>

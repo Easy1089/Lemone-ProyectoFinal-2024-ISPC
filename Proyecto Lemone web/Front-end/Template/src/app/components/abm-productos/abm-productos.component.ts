@@ -9,9 +9,10 @@ import { Router } from '@angular/router';
 })
 
 export class AbmProductosComponent implements OnInit {
-  productos: any[] | undefined;
+  productos: any | undefined;
   errorMensaje: string | undefined;
   mostrarForm = false;
+  cantidadProductos: any;
 
   constructor(private productoServ: ProductoService, private router: Router) {}
 
@@ -19,7 +20,8 @@ export class AbmProductosComponent implements OnInit {
     this.productoServ.ObtenerProductos().subscribe({
       next: (response) => {
         console.log(response.productos);
-        this.productos = response.productos; // Extraer el array de productos de la respuesta
+        this.productos = response.productos; 
+        this.cantidadProductos = this.productos.length;
       },
       error: (error) => {
         console.error(error);
