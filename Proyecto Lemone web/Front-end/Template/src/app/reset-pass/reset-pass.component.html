@@ -14,29 +14,32 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
- <div class="form-gap"></div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<div class="form-gap"></div>
 <div class="container">
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
               <div class="panel-body">
                 <div class="text-center">
-                  <h3><i class="fa fa-lock fa-4x"></i></h3>
+                  <img src="../../../assets/img/login/Le mone icono 2.png"
+                    style="width: 185px" alt="logo" />
+                </div>
+                <div class="text-center">
                   <h2 class="text-center">¿Olvidaste La Contraseña?</h2>
                   <p>¡Puedes recuperar tu contraseña aquí!</p>
                   <div class="panel-body">
     
-                    <form id="register-form" role="form" autocomplete="off" class="form" method="post">
+                    <form id="register-form" role="form" autocomplete="off" class="form" method="post" (submit)="enviarCorreo()">
     
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                          <input id="email" name="email" placeholder="email address" class="form-control"  type="email">
+                          <input id="email" name="email" placeholder="Email" class="form-control"  type="email">
                         </div>
                       </div>
                       <div class="form-group">
-                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset Password" type="submit">
+                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" style="background-color: #993b58;" value="Enviar" type="submit">
                       </div>
                       
                       <input type="hidden" class="hide" name="token" id="token" value=""> 
@@ -49,5 +52,17 @@
           </div>
 	</div>
 </div> 
+
+<!-- Aquí agregamos el mensaje -->
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div *ngIf="mostrarMensaje" class="alert alert-success text-center" role="alert">
+        Se ha enviado un email al correo indicado.
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
