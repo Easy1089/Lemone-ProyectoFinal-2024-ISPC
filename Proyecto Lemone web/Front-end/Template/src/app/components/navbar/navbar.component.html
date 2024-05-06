@@ -42,21 +42,28 @@
       <li><button (click)="catalogo()">Catálogo</button></li>
       <li><button (click)="contacto()">Contacto</button></li>
     </ul>
-    <div class="nav-right">
-      <div *ngIf="isLoggedIn">
-        <button>
+    <div class="nav-right">      
+      <div *ngIf="isLoggedIn$ | async">
+        <button *ngIf="esAdmin$">
+          <a class="fa fa-user-circle-o" aria-hidden="true" style="text-decoration: none; font-weight: bold; color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol; background-color: #590829;"
+             [routerLink]="['/dashboard']">Panel Administrador</a>
+        </button>
+
+        <button *ngIf="!esAdmin$">
           <a class="fa fa-user-circle-o" aria-hidden="true" style="text-decoration: none; font-weight: bold; color: #fff;
           border: none; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
           background-color: #590829;"      
           [routerLink]="['/usuarioprofile', { id: currentUser.id } ]">{{ currentUser.username }} </a>
         </button>
+
         <button (click)="logout($event)">
           <i class="fa fa-user"></i> Logout
         </button>
+        <!--<button (click)="logout($event)">Logout2</button>-->
 
         <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
       </div>
-      <div *ngIf="!isLoggedIn">
+      <div *ngIf="!(isLoggedIn$ | async)">
         <button (click)="login()"><i class="fa fa-user"></i> Login</button>
         <button (click)="register()"><i class="fa fa-user-plus"></i> Registro</button>
       </div>

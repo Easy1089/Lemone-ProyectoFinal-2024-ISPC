@@ -10,8 +10,22 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class UsuarioService {
   url: string = "http://127.0.0.1:8000";
-  urlServicioId = `${this.url}/api/usuarios`;
+  urlUsuarios =`${this.url}/api/usuarios`;
+  urlUsuarioId =`${this.url}/api/usuarios`;
+  urlCantidadDeUsuarios = `${this.url}/api/cantidaddeusuarios`;
   constructor(private http:HttpClient) { }
+
+  ObtenerCantidadDeUsuarios(): Observable<any> {
+    return this.http.get<any[]>(this.urlCantidadDeUsuarios).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  ObtenerUsuarios(): Observable<any> {
+    return this.http.get<any[]>(this.urlUsuarios).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   onCrearUsuario(usuario:Usuario):Observable<Usuario>{
     return this.http.post<Usuario>("http://127.0.0.1:8000/api/auth/signup/", usuario);
@@ -22,7 +36,7 @@ export class UsuarioService {
   }
 
   ObtenerUsuarioPorId(id: number): Observable<any> {
-    return this.http.get<any[]>(`${this.urlServicioId}/${id}`).pipe(
+    return this.http.get<any[]>(`${this.urlUsuarioId}/${id}`).pipe(
       catchError(this.handleError)
     );
   }

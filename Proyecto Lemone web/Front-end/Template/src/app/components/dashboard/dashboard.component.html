@@ -36,41 +36,22 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" [routerLink]="['/dashboard']">
                             <i class="bi bi-house"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" [routerLink]="['/abmproductos']">
                             <i class="bi bi-bag-check"></i> Productos
                         </a>
                     </li>
                    
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" [routerLink]="['/ambcategorias']">
                             <i class="bi bi-bookmarks"></i> Categorias
                         </a>
                     </li>
                    
-                </ul>
-                <!-- Divider -->
-                <hr class="navbar-divider my-5 opacity-20">
-                <!-- Navigation -->
-                
-                <!-- Push content down -->
-                <div class="mt-auto"></div>
-                <!-- User (md) -->
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-person-square"></i> Cuenta
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-box-arrow-left"></i> Logout
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -103,7 +84,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total recaudado</span>
-                                        <span class="h3 font-bold mb-0">$750.90</span>
+                                        <span class="h3 font-bold mb-0">${{ventas}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
@@ -111,12 +92,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-2 mb-0 text-sm">
+                                <!--<div class="mt-2 mb-0 text-sm">
                                     <span class="badge badge-pill bg-soft-success text-success me-2">
                                         <i class="bi bi-arrow-up me-1"></i>13%
                                     </span>
                                     <span class="text-nowrap text-xs text-muted">En el ultimo mes</span>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -126,7 +107,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">Nuevos Usuarios</span>
-                                        <span class="h3 font-bold mb-0">215</span>
+                                        <span class="h3 font-bold mb-0">{{cantidadDeUsuarios}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
@@ -134,12 +115,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-2 mb-0 text-sm">
+                                <!--<div class="mt-2 mb-0 text-sm">
                                     <span class="badge badge-pill bg-soft-success text-success me-2">
                                         <i class="bi bi-arrow-up me-1"></i>30%
                                     </span>
                                     <span class="text-nowrap text-xs text-muted">En el ultimo mes</span>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -149,7 +130,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">Compras</span>
-                                        <span class="h3 font-bold mb-0">1.400</span>
+                                        <span class="h3 font-bold mb-0">${{compras}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
@@ -157,12 +138,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-2 mb-0 text-sm">
+                                <!--<div class="mt-2 mb-0 text-sm">
                                     <span class="badge badge-pill bg-soft-danger text-danger me-2">
                                         <i class="bi bi-arrow-down me-1"></i>-5%
                                     </span>
                                     <span class="text-nowrap text-xs text-muted">En el ultimo mes</span>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -172,7 +153,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">Cantidad de productos</span>
-                                        <span class="h3 font-bold mb-0">95</span>
+                                        <span class="h3 font-bold mb-0">{{cantidadDeProductos}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-warning text-white text-lg rounded-circle">
@@ -180,12 +161,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-2 mb-0 text-sm">
+                                <!--<div class="mt-2 mb-0 text-sm">
                                     <span class="badge badge-pill bg-soft-success text-success me-2">
                                         <i class="bi bi-arrow-up me-1"></i>10%
                                     </span>
                                     <span class="text-nowrap text-xs text-muted">En el ultimo mes</span>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -201,88 +182,57 @@
                         </div>
                       </div>
                       
-                      
                     <div class="table-responsive">
                         <table class="table table-hover table-nowrap">
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col">Nombre</th>
-                                    <th scope="col">Ultima Coneccion</th>
-                                    <th scope="col">correo</th>
-                                    <th scope="col">id</th>
-                                    <th scope="col">estado</th>
+                                    <th scope="col">Última conexión</th>
+                                    <th scope="col">Correo</th>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Estado</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr *ngFor="let usuario of usuarios">
                                     <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
                                         <a class="text-heading font-semibold" href="#">
-                                            Roberto
+                                            {{ usuario.first_name }} {{ usuario.last_name }}
                                         </a>
                                     </td>
                                     <td>
-                                        Feb 15, 2023
+                                        {{ usuario.last_login | date:'dd/MM/yyyy HH:mm' }}
                                     </td>
                                     <td>
-                                        
                                         <a class="text-heading font-semibold" href="#">
-                                            roberto@roberto
+                                            {{ usuario.email }}
                                         </a>
                                     </td>
                                     <td>
-                                        3500
+                                        {{ usuario.id }}
                                     </td>
                                     <td>
                                         <span class="badge badge-lg badge-dot">
-                                            <i class="bg-success"></i>Scheduled
-                                        </span>
+                                            <i class="bg-warning" *ngIf="!usuario.is_active"></i>
+                                            <i class="bg-success" *ngIf="usuario.is_active"></i>
+                                            {{ usuario.is_active ? 'Activo' : 'Inactivo' }}
+                                        </span>                                                                        
                                     </td>
                                     <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
+                                        <a [routerLink]="['/usuarios', { id: usuario.id }]" class="btn btn-sm btn-neutral">Ver</a>
                                         <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1610271340738-726e199f0258?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Gerundio
-                                        </a>
-                                    </td>
-                                    <td>
-                                        abril 15, 2023
-                                    </td>
-                                    <td>
-                                        
-                                        <a class="text-heading font-semibold" href="#">
-                                            jorge@jorge
-                                        </a>
-                                    </td>
-                                    <td>
-                                        2750
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-warning"></i>Postponed
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                
                             </tbody>
                         </table>
                     </div>
+
+                    
                     <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+                        <span class="text-muted text-sm">Mostrando {{cantidadUsuarios}} usuarios de {{cantidadUsuarios}}</span>
                     </div>
                 </div>
             </div>
