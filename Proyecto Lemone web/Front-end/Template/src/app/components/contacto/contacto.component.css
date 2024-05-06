@@ -6,11 +6,11 @@ body{
     
 }
 .contact-form{
-    background: #ffffff;
+    background:  rgba(255, 255, 255, 0.5);
     margin-top: 10%;
     margin-bottom: 5%;
     width: 70%;
-    border-radius: 15%;
+    border-radius: 25%;
     
 }
 .contact-form .form-control{
