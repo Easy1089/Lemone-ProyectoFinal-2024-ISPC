@@ -24,6 +24,7 @@ import { AbmCategoriasComponent } from './components/abm-categorias/abm-categori
 import { ProductoFormComponent } from './components/producto-form/producto-form.component';
 import { AuthGuard } from './service/auth.guard';
 import { MobileComponent } from './components/mobile/mobile.component';
+import { UsuarioFormComponent } from './components/usuario-form/usuario-form.component';
 //Importo AuthGuard para poder validar si el usuario está logueado o no
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'reset-pass', component: ResetPassComponent },
   { path: 'error404', component: Pagina404Component },
   { path: 'usuarioprofile', component: UsuarioProfileComponent, canActivate: [AuthGuard] },
+  { path: 'usuarioform/:id', component: UsuarioFormComponent, canActivate: [AuthGuard] },
   { path: 'preguntasfrecuentes', component: PreguntasFrecuentesComponent },
   { path: 'purchase', component: PurchaseComponent  , canActivate: [AuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
