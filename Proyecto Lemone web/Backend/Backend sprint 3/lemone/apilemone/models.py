@@ -6,9 +6,6 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from authentication.models import CustomUser
 
-# Create your models here.
-
-
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, blank=False)
@@ -26,7 +23,6 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nombre
-
 
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
@@ -62,9 +58,6 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
-# Create your models here.
-
-
 class EstadoDeOrden(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, blank=False)
@@ -79,9 +72,6 @@ class EstadoDeOrden(models.Model):
 
     def __str__(self):
         return self.nombre
-
-# Create your models here.
-
 
 class MedioDePago(models.Model):
     id = models.AutoField(primary_key=True)
@@ -98,9 +88,6 @@ class MedioDePago(models.Model):
     def __str__(self):
         return self.nombre
 
-# Create your models here.
-
-
 class TipoDePersona(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, blank=False)
@@ -116,8 +103,6 @@ class TipoDePersona(models.Model):
     def __str__(self):
         return self.nombre
 
-
-# Create your models here.
 class TipoDeOperacion(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, blank=False)
@@ -132,8 +117,6 @@ class TipoDeOperacion(models.Model):
 
     def __str__(self):
         return self.nombre
-
-# Create your models here.
 
 
 class TipoDeEnvio(models.Model):
@@ -150,9 +133,6 @@ class TipoDeEnvio(models.Model):
 
     def __str__(self):
         return self.nombre
-
-# Create your models here.
-
 
 class Persona(models.Model):
     id = models.AutoField(primary_key=True)
@@ -182,9 +162,6 @@ class Persona(models.Model):
 
     def __str__(self):
         return str(self.apellido) + " " + str(self.nombre) 
-
-# Create your models here.
-
 
 class Operacion(models.Model):
     id = models.AutoField(primary_key=True)
@@ -274,6 +251,29 @@ class OrdenDetalle(models.Model):
 
     def __unicode__(self):
         return self.id
+
+    def __str__(self):
+        return str(self.id)
+
+class ProductoDestacado(models.Model):
+    id = models.AutoField(primary_key=True)
+    producto = models.ForeignKey(  
+        Producto, to_field='id', on_delete=models.CASCADE)
+    fechadesde = models.DateField(default=django.utils.timezone.now)
+    fechahasta = models.DateField(default=django.utils.timezone.now)
+    estado = models.CharField(max_length=1, default="A")
+    usuarioalta = models.ForeignKey(
+        CustomUser, to_field='id', on_delete=models.CASCADE, related_name='productodestacado_usuarioalta')
+    fechaalta = models.DateField(default=django.utils.timezone.now)
+    usuariomodificacion = models.ForeignKey(
+        CustomUser, to_field='id', on_delete=models.CASCADE, related_name='productodestacado_usuariomodificacion', blank=True, null=True)
+    fechamodificacion = models.DateField(
+        default=django.utils.timezone.now, blank=True, null=True)
+
+    class Meta:
+        db_table = 'productodestacado'
+        verbose_name = 'ProductoDestacado'
+        verbose_name_plural = "ProductosDestacados"
 
     def __str__(self):
         return str(self.id)

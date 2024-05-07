@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CantidadDeUsuariosView, CantidadProductosView, CategoriaView, ComprasView, OperacionView, OrdenView, ProductoView, SumaVentasView, UsuariosView
+from .views import CantidadDeUsuariosView, CantidadProductosView, CategoriaView, ComprasView, OperacionView, OrdenView, ProductoDestacadoView, ProductoView, SumaVentasView, UsuariosView
 
 urlpatterns = [
     path('productos/', ProductoView.as_view(), name='productos_list'),
@@ -11,6 +11,7 @@ urlpatterns = [
     path('cantidaddeproductos/', CantidadProductosView.as_view(), name='cantidad_productos'),   
     path('ventas/', SumaVentasView.as_view(), name='ventas'),
     path('usuarios/', UsuariosView.as_view(), name='usuarios_list'),
+    path('productosdestacados/', ProductoDestacadoView.as_view(), name='productosdestacados_list'),  
     path('productos/<int:producto_id>/',
          ProductoView.as_view(), name='producto-detail'),
      path('usuarios/<int:usuario_id>/',
