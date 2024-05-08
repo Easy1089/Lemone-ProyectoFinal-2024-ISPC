@@ -3,11 +3,11 @@ from decimal import Decimal
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from authentication.models import CustomUser
-from .models import Categoria, Operacion, Orden, Producto
-from .serializers import CategoriaSerializer, OperacionSerializer, OrdenSerializer, ProductoSerializer, UsuarioSerializer
+from .models import Categoria, Operacion, Orden, Producto, TipoDeOperacion, ProductoDestacado
+from .serializers import CategoriaSerializer, OperacionSerializer, OrdenSerializer, ProductoDestacadoSerializer, ProductoSerializer, UsuarioSerializer
 from django.views import View
 from django.http import JsonResponse
-from django.db.models import Sum, F, DecimalField, ExpressionWrapper
+from django.db.models import Sum, F, DecimalField, ExpressionWrapper,  Value, IntegerField
 from django.db.models.functions import Cast
 
 class ProductoView(APIView):
@@ -106,6 +106,25 @@ class ProductoView(APIView):
         pass
 
 
+class ProductoDestacadoView(APIView):
+    def get(self, request, productodestacado_id=None):
+        if productodestacado_id is None:
+            productosdestacados = ProductoDestacado.objects.all()
+            serializer = ProductoDestacadoSerializer(productosdestacados, many=True)
+            if len(serializer.data) > 0:
+                datos = {'message': 'Success', 'productosdestacados': serializer.data}
+            else:
+                datos = {'message': 'Productos destacados no encontrados...'}
+        else:
+            try:
+                productodestacado = ProductoDestacado.objects.get(id=productodestacado_id)
+                serializer = ProductoDestacadoSerializer(productodestacado)
+                datos = {'message': 'Success', 'producto destacado': serializer.data}
+            except Producto.DoesNotExist:
+                datos = {'message': 'Producto destacado no encontrado...'}
+        return Response(datos)
+    
+    
 class UsuariosView(APIView):
      def get(self, request, usuario_id=None):
         if usuario_id is None:
@@ -188,10 +207,6 @@ class CantidadDeUsuariosView(APIView):
            
         return Response(datos)    
     
-from django.db.models import Sum, F, Value, IntegerField
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import Operacion, TipoDeOperacion, Producto
 
 class CantidadProductosView(APIView):
     def get(self, request):

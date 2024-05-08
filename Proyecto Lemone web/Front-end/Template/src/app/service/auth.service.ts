@@ -22,20 +22,19 @@ export class AuthService {
 
    login(usuario: Usuario): Observable<any> {
     return this.http.post<any>(this.url, usuario)
-      .pipe(map(data => {
-        localStorage.setItem('currentUser', JSON.stringify(data));
-        this.currentUserSubject.next(data);
-        this.currentUser = data;
-        this.loggedIn.next(true);
-        console.log(data);
-        
-        return data;
-      }),
-      catchError(error => {
-        // Manejar el error aquí
-        console.log("Error de inicio de sesión:", error);
-        throw error; // Relanzar el error para que se maneje en el componente que llama al método
-      }));
+      .pipe(
+        map(data => {
+          localStorage.setItem('currentUser', JSON.stringify(data));
+          this.currentUserSubject.next(data);
+          this.loggedIn.next(true);
+          console.log(data);
+          return data;
+        }),
+        catchError(error => {
+          console.log("Error de inicio de sesión:", error);
+          throw error; 
+        })
+      );
   }
   
   logout(usuario: Usuario): Observable<any> {
@@ -44,17 +43,21 @@ export class AuthService {
       .pipe(map(data => {
         localStorage.removeItem('currentUser');
         this.loggedIn.next(false);
-        this.currentUserSubject.next(null); // Establecer el usuario actual como null
         
+        if (this.currentUserSubject.value !== null && typeof this.currentUserSubject.value === 'object' && 'id' in this.currentUserSubject.value) {
+          this.currentUserSubject.next(null);
+        } else {
+          console.warn("No hay usuario actualmente logueado o el objeto de usuario es inválido.");
+        }
         console.log("Data:", data);
         console.log("Usuario:", usuario);
       }),
       catchError(error => {
-        // Manejar el error aquí
         console.log("Error de cierre de sesión:", error);
-        throw error; // Relanzar el error para que se maneje en el componente que llama al método
+        throw error; 
       }));
   }
+  
   
   esAdmin(): Observable<boolean> {
     return this.currentUserSubject.pipe(

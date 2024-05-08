@@ -1,12 +1,19 @@
 from rest_framework import serializers
 from authentication.models import CustomUser
-from .models import Categoria, Operacion, Orden, Producto
+from .models import Categoria, Operacion, Orden, Producto, ProductoDestacado
 
 
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
         fields = '__all__'
+
+class ProductoDestacadoSerializer(serializers.ModelSerializer):
+    producto = ProductoSerializer()
+    class Meta:
+        model = ProductoDestacado
+        fields = '__all__'
+
 
 class OrdenSerializer(serializers.ModelSerializer):
     class Meta:

@@ -37,6 +37,7 @@ import { ProductoFormComponent } from './components/producto-form/producto-form.
 import { MobileComponent } from './components/mobile/mobile.component';
 import { AbmCategoriasComponent } from './components/abm-categorias/abm-categorias.component';
 import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
+import { UsuarioFormComponent } from './components/usuario-form/usuario-form.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { CategoriaFormComponent } from './components/categoria-form/categoria-fo
     AbmCategoriasComponent,
     EstadoProductoDirective,
     ProductoFormComponent,
-    MobileComponent    
+    MobileComponent,
+    UsuarioFormComponent    
   ],
   imports: [
     BrowserModule,
