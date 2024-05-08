@@ -237,6 +237,10 @@ ol {
 	}
 }
 
+.justificado {
+	text-align: justify;
+  }
+  
 /*---------------------
   Header
 -----------------------*/

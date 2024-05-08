@@ -26,8 +26,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
+    this.authService.currentUser.subscribe(user => {  
       this.currentUser = user;
+      console.log("Usuario logueado", this.currentUser.id, this.currentUser.username);
+
       this.isLoggedIn = user !== null;
     });
 
@@ -78,15 +80,20 @@ export class NavbarComponent implements OnInit {
 
   logout(event: Event): void {
     event.preventDefault();
-    this.authService.logout(this.currentUser).subscribe({
-      next: () => {
-        this.router.navigate(['/home']);  
-      },
-      error: (error) => {
-        console.error("Error al cerrar sesión:", error);
-      }
-    });
-  }  
+    if (this.currentUser) {
+      this.authService.logout(this.currentUser).subscribe({
+        next: () => {
+          this.router.navigate(['/home']);  
+        },
+        error: (error) => {
+          console.error("Error al cerrar sesión:", error);
+        }
+      });
+    } else {
+      console.warn("No hay usuario actualmente logueado.");
+    }
+  }
+ 
 
   /*logout(event: Event): void {
     event.preventDefault();

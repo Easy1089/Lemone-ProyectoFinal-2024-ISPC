@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Producto
+from .models import Producto, ProductoDestacado
 from .models import Categoria
 from .models import TipoDeEnvio
 from .models import TipoDeOperacion
@@ -12,7 +12,6 @@ from .models import Persona
 from .models import Orden
 from .models import OrdenDetalle
 from .models import Operacion
-
 
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'descripcion', 'activoactualmente')
@@ -51,7 +50,10 @@ class OrdenDetalleAdmin(admin.ModelAdmin):
    
 class OperacionAdmin(admin.ModelAdmin):
     list_display = ('id', 'persona', 'tipodeoperacion', 'producto', 'cantidad')      
-                    
+    
+class ProductoDestadoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'producto', 'fechadesde', 'fechahasta')         
+                       
 admin.site.register(Categoria, CategoriaAdmin)
 admin.site.register(Producto, ProductoAdmin)
 admin.site.register(TipoDeEnvio, TipoDeEnvioAdmin)
@@ -63,3 +65,4 @@ admin.site.register(OrdenDetalle, OrdenDetalleAdmin)
 admin.site.register(Operacion, OperacionAdmin)
 admin.site.register(TipoDeOperacion, TipoDeOperacionAdmin)
 admin.site.register(TipoDePersona, TipoDePersonaAdmin)
+admin.site.register(ProductoDestacado, ProductoDestadoAdmin)
