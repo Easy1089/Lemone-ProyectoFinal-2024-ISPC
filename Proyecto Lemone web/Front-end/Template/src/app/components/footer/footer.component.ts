@@ -30,6 +30,7 @@ export class FooterComponent implements OnInit {
     } else {
       // Si el formulario es inválido, muestra mensajes de error en los campos correspondientes
       this.suscripcionForm.markAllAsTouched();
+      console.log('xxx invalido')
     }
   }
 
