@@ -16,6 +16,7 @@ export class ProductoService {
   urlCantidaddeproductos = `${this.url}/api/cantidaddeproductos`;
   urlCompras = `${this.url}/api/compras`;
   urlVentas = `${this.url}/api/ventas`;
+  urlProductosDestacados = `${this.url}/api/productosdestacados`;
 
   constructor(private http: HttpClient) { }
 
@@ -66,6 +67,12 @@ export class ProductoService {
   onActualizarProducto(producto: Producto, usuario: any): Observable<Producto> {
     const body = { producto, usuario };
     return this.http.put<any>(`${this.urlProductoId}/${producto.id}`, body).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  ObtenerProductoDestacado(): Observable<any> {
+    return this.http.get<any[]>(`${this.urlProductosDestacados}`).pipe(
       catchError(this.handleError)
     );
   }

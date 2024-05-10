@@ -3,9 +3,11 @@
   color: white;
   background-color: #590828;
   display: flex;
+  font-weight: 600;
   justify-content: center;
   padding-top: 30px;
   padding-bottom: 30px;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8); /* Ajusta estos valores según prefieras */
 }
 
 /* Seccion Inicio-------------------------------------------*/
@@ -121,7 +123,7 @@ h2 {
 
 .card h5 {
   overflow: hidden;
-  height: 56px;
+  height: 80px;
   font-weight: 900;
   font-size: 1rem
 }
@@ -213,6 +215,33 @@ h2 {
 }
 
 /* Destacados--------------------------------------------------------------------- */
+.mainDestacados {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.spanDes {
+  display: flex;
+  height: max-content;
+
+}
+
+.containerDestacados {
+display: flex;
+align-items: center;
+align-content: center;
+flex-direction: row;
+}
+
+.cardProducto {
+  display: flex;
+  box-sizing:content-box;
+}
+
+.h5Des{
+  font-size: x-small;
+}
 
 .btn-warning {
   background: none #590829;
@@ -222,7 +251,7 @@ h2 {
   text-decoration: none;
   outline: 0;
   box-shadow: -1px 6px 19px rgba(247, 129, 10, 0.25);
-  border-radius: 100px
+  border-radius: 100px;
 }
 
 .btn-warning:hover {
