@@ -1,8 +1,8 @@
 body{
     background: -webkit-linear-gradient(left, #420213, #993b58);
     background-image: url('../../../assets/img/contacto/fondo.jpg');
-    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el fondo */
-    background-position: center; /* Centra la imagen en el fondo */
+    background-size: cover; 
+    background-position: center; 
     
 }
 .contact-form {
@@ -11,18 +11,18 @@ body{
     margin-bottom: 5%;
     width: 60%;
     border-radius: 1%;
-    padding: 3%; /* Añade más espacio dentro del formulario */
+    padding: 3%; 
 }
 .contact-form .form-control {
     border-radius: .25rem;
     margin-bottom: 10%;
-    transition: border-color 0.3s; /* Agrega una transición suave al cambio de color del borde */
-    border-color: #ced4da; /* Color de borde por defecto */
+    transition: border-color 0.3s; 
+    border-color: #ced4da; 
 }
 
 .contact-form .form-control:hover,
 .contact-form .form-control:focus {
-    border-color: #771731; /* Color de borde al pasar el mouse o enfocar el input */
+    border-color: #771731; 
     border-width: 1px;
 }
 .contact-image{
@@ -42,7 +42,7 @@ body{
 }
 .contact-form h3 {
     margin-bottom: 4%;
-    margin-top: -15%; /* Ajusta el margen superior para centrar el título */
+    margin-top: -15%; 
     text-align: center;
     color: #771731;
 }
@@ -56,12 +56,12 @@ body{
     font-weight: 600;
     color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s; /* Agrega una transición suave al cambio de color de fondo */
+    transition: background-color 0.3s;
 }
 
 .contact-form .btnContact:hover,
 .btnContactSubmit:hover {
-    background-color: #993b58; /* Cambia el color de fondo al pasar el mouse */
+    background-color: #993b58; 
 }
 
 
