@@ -38,23 +38,27 @@ export class FooterComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  inicio() {
-    this.router.navigate(['']);
-  }
+  // inicio() {
+  //   this.router.navigate(['']);
+  // }
 
-  register() {
-    this.router.navigate(['/register']);
-  }
+  // register() {
+  //   this.router.navigate(['/register']);
+  // }
 
-  catalogo() {
-    this.router.navigate(['/catalogo']);
-  }
+  // catalogo() {
+  //   this.router.navigate(['/catalogo']);
+  // }
 
-  contacto() {
-    this.router.navigate(['/contacto']);
-  }
+  // contacto() {
+  //   this.router.navigate(['/contacto']);
+  // }
 
-  aboutme() {
-    this.router.navigate(['/about-me']);
+  // aboutme() {
+  //   this.router.navigate(['/about-me']);
+  // }
+  mobile() {
+    this.router.navigate(['/mobile']);
   }
 }
+

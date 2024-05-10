@@ -75,66 +75,28 @@
 
   <main>
     <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
-      <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
-        <div class="col">
-          <div class="card h-100 shadow-sm"> <img src="../../../assets/img/index/producto-base.png" class="card-img-top"
-              alt="...">
-            <div class="card-body">
-              <div class="clearfix mb-3"> <span class="float-start badge rounded-pill bg-success">SuperVino 1</span>
+      <div class="row">
+        <div *ngFor="let destacado of productosDestacados" class="col-md-3">
+          <div class="card h-100 shadow-sm"> 
+            <img [src]="'/assets/img/catalogo/' + destacado.producto.imagen" class="card-img-top" alt="...">
+            <div class="card-body" style="height: 100%;">
+              <div class="clearfix mb-3"> 
+                <span class="float-start badge rounded-pill bg-success">{{destacado.producto.nombre}}</span> 
               </div>
-              <h5 class="card-title">El Chardonnay es un vino blanco seco y elegante que se produce en muchas regiones.
-              </h5>
-              <div class="text-center my-4"> <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver
-                  Catalogo</button> </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100 shadow-sm"> <img src="../../../assets/img/index/producto-base.png" class="card-img-top"
-              alt="...">
-            <div class="card-body">
-              <div class="clearfix mb-3"> <span class="float-start badge rounded-pill bg-success">SuperVino 2</span>
+              <span class="spanDes" >
+                <h5 style="font-size: x-small; padding: auto;">{{destacado.producto.descripcion}}</h5>
+              </span>
+              <div> 
+                <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver Catalogo</button> 
               </div>
-              <h5 class="card-title">El Malbec es un vino tinto de origen francés que ha ganado reconocimiento mundial.
-              </h5>
-              <div class="text-center gap-2 my-4"> <button (click)="catalogo();scrollToTop()"
-                  class="btn btn-warning">Ver Catalogo</button> </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100 shadow-sm"> <img src="../../../assets/img/index/producto-base.png" class="card-img-top"
-              alt="...">
-
-            <div class="card-body">
-              <div class="clearfix mb-3"> <span class="float-start badge rounded-pill bg-success">SuperVino 3</span>
-              </div>
-              <h5 class="card-title">El Cabernet Sauvignon es un vino tinto de cuerpo completo y robusto.</h5>
-              <div class="text-center my-4"> <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver
-                  Catalogo</button> </div>
-              <div class="clearfix mb-1"> <span class="float-start"><i class="far fa-question-circle"></i></span> <span
-                  class="float-end"><i class="fas fa-plus"></i></span> </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100 shadow-sm"> <img src="../../../assets/img/index/producto-base.png" class="card-img-top"
-              alt="...">
-            <div class="label-top shadow-sm">15%OFF</div>
-            <div class="card-body">
-              <div class="clearfix mb-3"> <span class="float-start badge rounded-pill bg-success">Supervino4</span>
-              </div>
-              <h5 class="card-title">El Prosecco es un vino espumoso italiano muy popular y refrescante. </h5>
-              <div class="text-center my-4"> <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver
-                  Catalogo</button> </div>
-              <div class="clearfix mb-1"> <span class="float-start"><i class="far fa-question-circle"></i></span> <span
-                  class="float-end"><i class="fas fa-plus"></i></span> </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </main>
+  
+  
 
   <!-- Contacto ---------------------------------->
 

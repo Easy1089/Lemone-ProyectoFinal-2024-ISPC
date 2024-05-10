@@ -80,7 +80,6 @@
         <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
       </div>
       <div *ngIf="!(isLoggedIn$ | async)">
-        <button (click)="login()"><i class="fa fa-user"></i> Login</button>
         <button (click)="register()"><i class="fa fa-user-plus"></i> Registro</button>
         <button (click)="login()"><i class="fa fa-user"></i> Login</button>
       </div>
