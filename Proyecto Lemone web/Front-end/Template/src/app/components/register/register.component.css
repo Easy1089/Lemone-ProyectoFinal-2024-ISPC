@@ -88,3 +88,8 @@
     .visually-hidden:checked + .custom-checkbox-label::after {
         display: block;
     }
+
+    .error-message {
+    color: red;
+  }
+  
