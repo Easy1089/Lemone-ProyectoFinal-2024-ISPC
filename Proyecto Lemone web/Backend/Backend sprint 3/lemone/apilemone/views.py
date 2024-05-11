@@ -3,13 +3,51 @@ from decimal import Decimal
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from authentication.models import CustomUser
-from .models import Categoria, Operacion, Orden, Producto, TipoDeOperacion, ProductoDestacado
-from .serializers import CategoriaSerializer, OperacionSerializer, OrdenSerializer, ProductoDestacadoSerializer, ProductoSerializer, UsuarioSerializer
+from .models import Categoria, Operacion, Orden, Producto, PuntoClavePorProducto, TipoDeOperacion, ProductoDestacado
+from .serializers import CategoriaSerializer, OperacionSerializer, OrdenSerializer, ProductoDestacadoSerializer, ProductoSerializer, PuntoClavePorProductoSerializer, UsuarioSerializer
 from django.views import View
 from django.http import JsonResponse
 from django.db.models import Sum, F, DecimalField, ExpressionWrapper,  Value, IntegerField
 from django.db.models.functions import Cast
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import PuntoClavePorProducto
+from .serializers import PuntoClavePorProductoSerializer
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from collections import defaultdict
+from .models import PuntoClavePorProducto
+from .serializers import PuntoClavePorProductoSerializer
+
+class PuntosClavesPorProductoView(APIView):
+    def get(self, request, producto_id=None):
+        puntos_claves_por_producto = defaultdict(list)
+
+        if producto_id is None:
+            puntos_claves = PuntoClavePorProducto.objects.all()
+        else:
+            puntos_claves = PuntoClavePorProducto.objects.filter(producto_id=producto_id)
+
+        for punto_clave in puntos_claves:
+            puntos_claves_por_producto[punto_clave.producto_id].append(punto_clave.puntoclave.nombre)
+
+        response_data = []
+        for producto_id, nombres_puntos_claves in puntos_claves_por_producto.items():
+            producto_puntos_claves = {
+                "producto": producto_id,
+                "puntosclaves": [{"nombre": nombre} for nombre in nombres_puntos_claves]
+            }
+            response_data.append(producto_puntos_claves)
+
+        datos = {
+            'message': 'Success',
+            'puntosclavesporproducto': response_data
+            }
+           
+        return Response(datos)    
+ 
 class ProductoView(APIView):
     def get(self, request, producto_id=None):
         if producto_id is None:
