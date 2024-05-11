@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from authentication.models import CustomUser
-from .models import Categoria, Operacion, Orden, Producto, ProductoDestacado
+from .models import Bodega, Categoria, Operacion, Orden, Producto, ProductoDestacado, PuntoClave, PuntoClavePorProducto, TipoDeVino
 
 
 class ProductoSerializer(serializers.ModelSerializer):
@@ -35,5 +35,24 @@ class UsuarioSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = '__all__'
 
+class PuntoClaveSerializer(serializers.ModelSerializer):
+    class PuntoClave:
+        model = PuntoClave
+        fields = '__all__'
 
 
+class BodegaSerializer(serializers.ModelSerializer):
+    class Bodega:
+        model = Bodega
+        fields = '__all__'
+
+class PuntoClavePorProductoSerializer(serializers.ModelSerializer):
+    class PuntoClavePorProducto:
+        model = PuntoClavePorProducto
+        fields = '__all__'
+
+
+class TipoDeVinoSerializer(serializers.ModelSerializer):
+    class TipoDeVino:
+        model = TipoDeVino
+        fields = '__all__'

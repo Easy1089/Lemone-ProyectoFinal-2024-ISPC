@@ -30,6 +30,7 @@ export class FooterComponent implements OnInit {
     } else {
       // Si el formulario es inválido, muestra mensajes de error en los campos correspondientes
       this.suscripcionForm.markAllAsTouched();
+      console.log('xxx invalido')
     }
   }
 
@@ -37,23 +38,27 @@ export class FooterComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  inicio() {
-    this.router.navigate(['']);
-  }
+  // inicio() {
+  //   this.router.navigate(['']);
+  // }
 
-  register() {
-    this.router.navigate(['/register']);
-  }
+  // register() {
+  //   this.router.navigate(['/register']);
+  // }
 
-  catalogo() {
-    this.router.navigate(['/catalogo']);
-  }
+  // catalogo() {
+  //   this.router.navigate(['/catalogo']);
+  // }
 
-  contacto() {
-    this.router.navigate(['/contacto']);
-  }
+  // contacto() {
+  //   this.router.navigate(['/contacto']);
+  // }
 
-  aboutme() {
-    this.router.navigate(['/about-me']);
+  // aboutme() {
+  //   this.router.navigate(['/about-me']);
+  // }
+  mobile() {
+    this.router.navigate(['/mobile']);
   }
 }
+
