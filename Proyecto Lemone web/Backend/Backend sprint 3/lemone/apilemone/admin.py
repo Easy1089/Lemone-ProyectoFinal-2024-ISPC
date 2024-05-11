@@ -12,6 +12,10 @@ from .models import Persona
 from .models import Orden
 from .models import OrdenDetalle
 from .models import Operacion
+from .models import Bodega
+from .models import PuntoClave
+from .models import PuntoClavePorProducto
+from .models import TipoDeVino
 
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'descripcion', 'activoactualmente')
@@ -52,7 +56,20 @@ class OperacionAdmin(admin.ModelAdmin):
     list_display = ('id', 'persona', 'tipodeoperacion', 'producto', 'cantidad')      
     
 class ProductoDestadoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'producto', 'fechadesde', 'fechahasta')         
+    list_display = ('id', 'producto', 'fechadesde', 'fechahasta')     
+    
+class BodegaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombre')     
+    
+class PuntoClaveAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombre')         
+    
+class TipoDeVinoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombre')     
+
+class PuntoClavePorProductoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'producto', 'puntoclave')         
+         
                        
 admin.site.register(Categoria, CategoriaAdmin)
 admin.site.register(Producto, ProductoAdmin)
@@ -66,3 +83,7 @@ admin.site.register(Operacion, OperacionAdmin)
 admin.site.register(TipoDeOperacion, TipoDeOperacionAdmin)
 admin.site.register(TipoDePersona, TipoDePersonaAdmin)
 admin.site.register(ProductoDestacado, ProductoDestadoAdmin)
+admin.site.register(Bodega, BodegaAdmin)
+admin.site.register(TipoDeVino, TipoDeVinoAdmin)
+admin.site.register(PuntoClave, PuntoClaveAdmin)
+admin.site.register(PuntoClavePorProducto, PuntoClavePorProductoAdmin)

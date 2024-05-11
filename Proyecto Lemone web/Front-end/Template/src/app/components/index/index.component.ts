@@ -22,7 +22,7 @@ export class IndexComponent implements OnInit {
   }
 
   contactos() {
-    this.router.navigate(['/contacto'])
+    this.router.navigate(["/contacto"])
   }
 
   catalogo(){
