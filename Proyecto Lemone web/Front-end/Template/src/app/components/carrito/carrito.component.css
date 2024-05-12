@@ -73,11 +73,19 @@ body {
 .product {
     border: 1px solid #ccc;
     border-radius: 8px;
-    margin-bottom: 20px;
+    padding: 15px;
+    display: inline-block;
+    margin: 10px;
     padding: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: inline-block;
 }
+
+.row {
+    margin-right: -5px;
+    margin-left: -5px; 
+}
+
+
 
 .product:nth-child(4n+1) {
     margin-left: 0;
@@ -89,9 +97,10 @@ body {
 
 h3 {
     font-family: Rouge Script;
-    font-size: 50px;
+    font-size: 80px;
     color: #590829;
 }
+
 
 /* Responsive */
 
@@ -133,12 +142,24 @@ h3 {
     transition: background-color 0.3s;
 }
 .btnCont {
-    width: 20%;
+    display: flex;
+    width: 15rem;
     border-radius: 1rem;
-    padding: 0.5%;
     background: #771731;
     font-weight: 500;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+p {
+    justify-content: center;
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.carritoContainer {
+    display: flex;
+    flex: content;
+    flex-direction: row;
 }
