@@ -8,27 +8,41 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./desc-producto.component.css']
 })
 export class DescProductoComponent implements OnInit {
-  id:number=0;
+  id: number = 0;
   product: any;
+  puntosClavesPorProducto: any[] = [];
+  errorMensaje: string | undefined;
 
-  constructor(private route: ActivatedRoute, private productoServ: ProductoService){
-  }
+  constructor(private route: ActivatedRoute, private productoServ: ProductoService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
-    });
 
-    this.productoServ.ObtenerProductoPorId(this.id).subscribe({
-      next: (productoData: any) => {
-        console.log(productoData.producto);
-        this.product=productoData.producto
+      this.obtenerPuntosClavesPorProducto();
+      
+      this.productoServ.ObtenerProductoPorId(this.id).subscribe({
+        next: (productoData: any) => {
+          console.log(productoData.producto);
+          this.product = productoData.producto;
+        },
+        error: (errorData: any) => {
+          console.error(errorData);
+        }
+      });
+    });
+  }
+
+  obtenerPuntosClavesPorProducto() {
+    this.productoServ.ObtenerPuntosClavesPorProducto(this.id).subscribe({
+      next: (response) => {
+        console.log('Puntos claves', response.puntosclavesporproducto);
+        this.puntosClavesPorProducto = response.puntosclavesporproducto;
       },
-      error: (errorData: any) => {
-        console.error(errorData);
+      error: (error) => {
+        console.error(error);
+        this.errorMensaje = 'Ocurrió un error al obtener los puntos claves del producto. Por favor, inténtalo de nuevo más tarde.';
       }
-    })
+    });    
   }
 }
-
-
