@@ -76,3 +76,10 @@ body{
 .bottom-0 {
     bottom: 0;
 }
+
+h3 {
+    font-family: "Courgette", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 50px;
+}
