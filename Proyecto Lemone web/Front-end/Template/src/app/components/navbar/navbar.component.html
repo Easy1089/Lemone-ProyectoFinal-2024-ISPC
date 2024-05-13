@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title></title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Agregar los estilos CSS de Bootstrap -->
@@ -23,6 +23,7 @@
   <!-- Fuentes de google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Borel&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Arizonia&family=Dancing+Script:wght@700&display=swap"
     rel="stylesheet">
 </head>
@@ -41,26 +42,47 @@
       <li><button (click)="aboutme()">Acerca de</button></li>
       <li><button (click)="catalogo()">Catálogo</button></li>
       <li><button (click)="contacto()">Contacto</button></li>
+      <button (click)="carrito()"><i class="fa fa-shopping-cart"></i></button>
     </ul>
-    <div class="nav-right">
-      <div *ngIf="isLoggedIn">
-        <button>
-          <a class="fa fa-user-circle-o" aria-hidden="true" style="text-decoration: none; font-weight: bold; color: #fff;
-          border: none; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-          background-color: #590829;"      
-          [routerLink]="['/usuarioprofile', { id: currentUser.id } ]">{{ currentUser.username }} </a>
+    <div class="nav-right">      
+      <div *ngIf="isLoggedIn$ | async">
+        <button *ngIf="esAdmin$ | async">
+          <a class="fa fa-user-circle-o" aria-hidden="true" style="text-decoration: none; font-weight: bold; 
+          color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, 
+          Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol; 
+          background-color: #590829;" 
+          [routerLink]="['/dashboard']">Administrador</a>
         </button>
+        
+        <!--<button *ngIf="!(esAdmin$ | async)">
+          <a class="fa fa-user-circle-o" aria-hidden="true" 
+          style="text-decoration: none; font-weight: bold; color: #fff; border: none; 
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, 
+          Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol; background-color: #590829;" 
+          [routerLink]="['/dashboard']">{{ currentUser.username }}</a>
+          [routerLink]="['/usuarioprofile', { id: currentUser.id } ]">{{ currentUser.username }}</a>
+        </button>-->
+
+        <button *ngIf="!(esAdmin$ | async)">
+          <a class="fa fa-user-circle-o" aria-hidden="true" style="text-decoration: none; 
+          font-weight: bold; color: #fff; border: none; font-family: -apple-system, 
+          BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, 
+          Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol; background-color: #590829;" 
+          [routerLink]="['/usuarioprofile', { id: currentUser?.id } ]">{{ currentUser?.username }}</a>
+        </button>
+        
+        
         <button (click)="logout($event)">
           <i class="fa fa-user"></i> Logout
         </button>
+        <!--<button (click)="logout($event)">Logout2</button>-->
 
         <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
       </div>
-      <div *ngIf="!isLoggedIn">
-        <button (click)="login()"><i class="fa fa-user"></i> Login</button>
+      <div *ngIf="!(isLoggedIn$ | async)">
         <button (click)="register()"><i class="fa fa-user-plus"></i> Registro</button>
+        <button (click)="login()"><i class="fa fa-user"></i> Login</button>
       </div>
-      <button (click)="carrito()"><i class="fa fa-shopping-cart"></i></button>
     </div>
   </nav>
 

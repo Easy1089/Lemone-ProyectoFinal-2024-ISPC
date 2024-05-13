@@ -1,13 +1,53 @@
 from datetime import date
+from decimal import Decimal
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from authentication.models import CustomUser
-from .models import Categoria, Producto
-from .serializers import CategoriaSerializer, ProductoSerializer, UsuarioSerializer
+from .models import Categoria, Operacion, Orden, Producto, PuntoClavePorProducto, TipoDeOperacion, ProductoDestacado
+from .serializers import CategoriaSerializer, OperacionSerializer, OrdenSerializer, ProductoDestacadoSerializer, ProductoSerializer, PuntoClavePorProductoSerializer, UsuarioSerializer
 from django.views import View
 from django.http import JsonResponse
+from django.db.models import Sum, F, DecimalField, ExpressionWrapper,  Value, IntegerField
+from django.db.models.functions import Cast
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import PuntoClavePorProducto
+from .serializers import PuntoClavePorProductoSerializer
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from collections import defaultdict
+from .models import PuntoClavePorProducto
+from .serializers import PuntoClavePorProductoSerializer
+
+class PuntosClavesPorProductoView(APIView):
+    def get(self, request, producto_id=None):
+        puntos_claves_por_producto = defaultdict(list)
+
+        if producto_id is None:
+            puntos_claves = PuntoClavePorProducto.objects.all()
+        else:
+            puntos_claves = PuntoClavePorProducto.objects.filter(producto_id=producto_id)
+
+        for punto_clave in puntos_claves:
+            puntos_claves_por_producto[punto_clave.producto_id].append(punto_clave.puntoclave.nombre)
+
+        response_data = []
+        for producto_id, nombres_puntos_claves in puntos_claves_por_producto.items():
+            producto_puntos_claves = {
+                "producto": producto_id,
+                "puntosclaves": [{"nombre": nombre} for nombre in nombres_puntos_claves]
+            }
+            response_data.append(producto_puntos_claves)
+
+        datos = {
+            'message': 'Success',
+            'puntosclavesporproducto': response_data
+            }
+           
+        return Response(datos)    
+ 
 class ProductoView(APIView):
     def get(self, request, producto_id=None):
         if producto_id is None:
@@ -104,6 +144,25 @@ class ProductoView(APIView):
         pass
 
 
+class ProductoDestacadoView(APIView):
+    def get(self, request, productodestacado_id=None):
+        if productodestacado_id is None:
+            productosdestacados = ProductoDestacado.objects.all()
+            serializer = ProductoDestacadoSerializer(productosdestacados, many=True)
+            if len(serializer.data) > 0:
+                datos = {'message': 'Success', 'productosdestacados': serializer.data}
+            else:
+                datos = {'message': 'Productos destacados no encontrados...'}
+        else:
+            try:
+                productodestacado = ProductoDestacado.objects.get(id=productodestacado_id)
+                serializer = ProductoDestacadoSerializer(productodestacado)
+                datos = {'message': 'Success', 'producto destacado': serializer.data}
+            except Producto.DoesNotExist:
+                datos = {'message': 'Producto destacado no encontrado...'}
+        return Response(datos)
+    
+    
 class UsuariosView(APIView):
      def get(self, request, usuario_id=None):
         if usuario_id is None:
@@ -133,4 +192,89 @@ class CategoriaView(APIView):
             datos = {'message': 'Success', 'categorias': serializer.data}
         else:
             datos = {'message': 'Categorías no encontradas...'}
+        return Response(datos)
+    
+class OrdenView(APIView):
+    def get(self, request):
+        ordenes = Orden.objects.all()
+        serializer = OrdenSerializer(ordenes, many=True)
+        if len(serializer.data) > 0:
+            datos = {'message': 'Success', 'ordenes': serializer.data}
+        else:
+            datos = {'message': 'Órdenes no encontradas...'}
+        return Response(datos)
+
+class OperacionView(APIView):
+    def get(self, request):
+        operaciones = Operacion.objects.all()
+        serializer = OperacionSerializer(operaciones, many=True)
+        if len(serializer.data) > 0:
+            datos = {'message': 'Success', 'operaciones': serializer.data}
+        else:
+            datos = {'message': 'Operaciones no encontradas...'}
+        return Response(datos)
+
+class ComprasView(APIView):
+    def get(self, request):
+        # Filtra las operaciones que representan compras
+        operaciones_compras = Operacion.objects.filter(tipodeoperacion__nombre='Compra')
+
+        # Calcula el total de precios multiplicando el precio del producto por la cantidad en cada operación
+        suma_precios = operaciones_compras.aggregate(
+            total_precio=Sum(ExpressionWrapper(F('producto__preciodecosto') * F('cantidad'), output_field=DecimalField())))
+
+        # Serializa las operaciones para respuesta detallada
+        serializer = OperacionSerializer(operaciones_compras, many=True)
+
+        datos = {
+            'message': 'Success',
+            'total_precio_compras': suma_precios['total_precio'] or 0,
+            'operaciones_compras': serializer.data
+        }
+           
+        return Response(datos)
+    
+class CantidadDeUsuariosView(APIView):
+    def get(self, request):
+        cantidad_usuarios = CustomUser.objects.filter(is_active=True, is_superuser=False).count()
+
+        datos = {
+            'message': 'Success',
+            'cantidad_usuarios_activos': cantidad_usuarios
+        }
+           
+        return Response(datos)    
+    
+
+class CantidadProductosView(APIView):
+    def get(self, request):
+        #Cantidad de productos activos
+        productos_activos = Producto.objects.filter(activoactualmente=True).count()
+
+        #Productos vendidos
+        cantidad_ventas = Operacion.objects.filter(tipodeoperacion__nombre='Venta').aggregate(total_ventas=Sum('cantidad'))
+
+        #Productos comprados
+        cantidad_compras = Operacion.objects.filter(tipodeoperacion__nombre='Compra').aggregate(total_compras=Sum('cantidad'))
+
+        #Total
+        cantidad_productos = productos_activos - (cantidad_ventas['total_ventas'] or 0) + (cantidad_compras['total_compras'] or 0)
+
+        datos = {
+            'message': 'Success',
+            'cantidad_productos': cantidad_productos
+        }
+           
+        return Response(datos)
+
+        
+class SumaVentasView(APIView):
+    def get(self, request):
+        suma_ventas = Orden.objects.filter(estadodeorden__nombre='Finalizada').aggregate(total_ventas=Sum('importetotal'))
+
+        datos = {
+            'message': 'Success',
+            'total_ventas': suma_ventas['total_ventas'] or 0   
+        }
+           
         return Response(datos)

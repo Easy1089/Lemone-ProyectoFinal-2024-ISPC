@@ -10,6 +10,7 @@ export class Usuario {
     imagen:string="";
     direccion:string="";
     fechadenacimiento: string | null = null;
+    last_login:Date| null = null;
     id:number=0;
     token?: string;
 
@@ -28,6 +29,7 @@ export class Usuario {
         fechadenacimiento: this.fechadenacimiento,
         id: this.id,
         token: this.token,
+        last_login: this.last_login
       };
     }
   }

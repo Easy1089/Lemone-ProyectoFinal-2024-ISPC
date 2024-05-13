@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, Usuario } from 'src/app/service/auth.service';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-navbar',
@@ -13,12 +15,21 @@ export class NavbarComponent implements OnInit {
   esAdmin: boolean = false;
   usuarioLogueado: boolean = false;
   errorMensaje: string | null = null;
+  isLoggedIn$: Observable<boolean>;  // Observable para el estado de login
+  currentUser$: Observable<Usuario | null>;  // Observable para el usuario actual
+  esAdmin$: Observable<boolean>;  // Observable para comprobar si el usuario es administrador
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) { 
+    this.isLoggedIn$ = this.authService.estaAutenticado;
+    this.currentUser$ = this.authService.currentUser;
+    this.esAdmin$ = this.authService.esAdmin();
+  }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
+    this.authService.currentUser.subscribe(user => {  
       this.currentUser = user;
+      console.log("Usuario logueado", this.currentUser.id, this.currentUser.username);
+
       this.isLoggedIn = user !== null;
     });
 
@@ -63,9 +74,31 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/abmproductos']);
   }
 
+  ambcategorias() {
+    this.router.navigate(['/ambcategorias']);
+  }
+
   logout(event: Event): void {
     event.preventDefault();
-  
+    if (this.currentUser) {
+      this.authService.logout(this.currentUser).subscribe({
+        next: () => {
+          this.router.navigate(['/home']);  
+        },
+        error: (error) => {
+          console.error("Error al cerrar sesión:", error);
+        }
+      });
+    } else {
+      console.warn("No hay usuario actualmente logueado.");
+    }
+  }
+ 
+
+  /*logout(event: Event): void {
+    event.preventDefault();
+    console.log("Llamando al deslogueo desde navbar.")
+
     if (this.currentUser) {
       console.log("Llamando al deslogueo desde navbar.")
       this.authService.logout(this.currentUser).subscribe({
@@ -83,5 +116,5 @@ export class NavbarComponent implements OnInit {
     } else {
       console.warn("No hay usuario actualmente logueado.");
     }
-  }  
+  } */ 
 }

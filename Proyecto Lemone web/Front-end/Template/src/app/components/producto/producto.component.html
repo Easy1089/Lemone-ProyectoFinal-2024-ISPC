@@ -11,25 +11,22 @@
 <div class="product">
     <div>
         <div class="card-img">
-            <img [src]="product.imagen" alt="..." height="240px">
+            <img [src]="product?.imagen" alt="..." height="240px">
         </div>
     </div>
     <div class="text-center">
-        <h4 class="h5 mb-2">{{ product.nombre }}</h4>
+        <h4 class="h5 mb-2">{{ product?.nombre }}</h4>
         <div class="small m-t-xs">
-            {{ product.descripcion }}
+            {{ product?.descripcion }}
         </div>
-        <h5 class="mb-0 text-primary"> {{ product.preciodeventa|currency }}</h5>
+        <h5 class="mb-0 text-primary"> {{ product?.preciodeventa|currency }}</h5>
         <div class="agregarcarrito">
             <div class="btn-group" style="margin-top: 15px; align-items: center;">                     
                 <button class="add-to-cart">
-                    <i class="fas fa-shopping-cart" style="margin-left: 6px;"></i>
-                </button>                     
+                    <i class="fas fa-shopping-cart" style="margin-left: 6px;" *ngIf="product" (click)="agregarCarrito(product)"></i>
+                </button>                   
                 <button class="add-to-cart">
-                    <i class="fas fa-trash-alt" style="margin-left: 6px;"></i>
-                </button>                     
-                <button class="add-to-cart">
-                    <i class="fas fa-eye" style="margin-left: 6px;" (click)="descproducto(product.id)"></i>
+                    <i class="fas fa-eye" style="margin-left: 6px;" (click)="descproducto(product?.id || 0)"></i>
                 </button>                 
             </div>
         </div>

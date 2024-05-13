@@ -24,33 +24,18 @@ export class AboutMeComponent implements OnInit {
       image: 'assets/img/miembros/MateoAntunes.jpg'
     },
     {
-      name: 'Salvador Berón',
-      description: 'salvadorberon@gmail.com',
-      image: 'assets/img/miembros/SalvadorBeron.jpg'
-    },
-    {
-      name: 'Ana Eugenia Abregú',
-      description: 'euge.abregu.ea@gmail.com',
+      name: 'Emiliano Guazzetti',
+      description: 'edguazzetti@gmail.com',
       image: ''
     },
-    {
-      name: 'Dalma Ponce',
-      description: 'p.d.f.1915@gmail.com',
-      image: ''
-    },
-    {
-      name: 'Jesica  Amaya',
-      description: 'Jesicaeamaya@gmail.com ',
-      image: ''
-    }, 
     {
       name: 'Fabiola Benítez',
       description: 'fabiolaben03@gmail.com',
       image: ''
     }, 
     {
-      name: 'Marcelo Apaz',
-      description: 'marceysoleapazvidela@gmail.com',
+      name: 'Priscila Teruel',
+      description: 'priscilateruel93@gmail.com',
       image: ''
     }
   ];
