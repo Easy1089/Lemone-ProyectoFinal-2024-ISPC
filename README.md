@@ -6,7 +6,7 @@ Repositorio de LE MONE Sistema de Gestion para Vinotecas.
 * Fabiola Benitez: Scrum Master, Analista, diseñador y programador
 * Enzo Mateo Antunez: Analista, diseñador y programador
 * Melisa Apaz: Analista, diseñador y programador
-* :Analista, diseñador y programador 
+* Emiliano Guazzetti: Analista, diseñador y programador 
 * :Analista, diseñador y programador 
 
 # Links de repositorios anteriores del proyecto
