@@ -36,8 +36,8 @@ import { EstadoProductoDirective } from './directivas/estado-producto.directive'
 import { ProductoFormComponent } from './components/producto-form/producto-form.component';
 import { MobileComponent } from './components/mobile/mobile.component';
 import { AbmCategoriasComponent } from './components/abm-categorias/abm-categorias.component';
-import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
 import { UsuarioFormComponent } from './components/usuario-form/usuario-form.component';
+import { AmbPuntosclavesComponent } from './components/amb-puntosclaves/amb-puntosclaves.component';
 
 
 @NgModule({
@@ -68,7 +68,8 @@ import { UsuarioFormComponent } from './components/usuario-form/usuario-form.com
     EstadoProductoDirective,
     ProductoFormComponent,
     MobileComponent,
-    UsuarioFormComponent    
+    UsuarioFormComponent,
+    AmbPuntosclavesComponent    
   ],
   imports: [
     BrowserModule,

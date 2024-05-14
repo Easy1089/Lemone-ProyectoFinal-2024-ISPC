@@ -78,6 +78,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/ambcategorias']);
   }
 
+  ambpuntosclaves() {
+    this.router.navigate(['/puntosclaves']);
+  }
+
   logout(event: Event): void {
     event.preventDefault();
     if (this.currentUser) {
