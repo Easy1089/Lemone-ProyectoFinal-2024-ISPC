@@ -20,7 +20,7 @@ export class AbmCategoriasComponent implements OnInit {
     this.productoServ.ObtenerProductos().subscribe({
       next: (response) => {
         console.log(response.productos);
-        this.productos = response.productos; // Extraer el array de productos de la respuesta
+        this.productos = response.productos; 
       },
       error: (error) => {
         console.error(error);
@@ -40,6 +40,7 @@ export class AbmCategoriasComponent implements OnInit {
     }
   }); 
   }
+  
   mostrarFormulario() {
     //this.mostrarForm = true;
     this.router.navigate(['/producto-form'])

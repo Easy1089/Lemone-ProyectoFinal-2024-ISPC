@@ -25,6 +25,7 @@ import { ProductoFormComponent } from './components/producto-form/producto-form.
 import { AuthGuard } from './service/auth.guard';
 import { MobileComponent } from './components/mobile/mobile.component';
 import { UsuarioFormComponent } from './components/usuario-form/usuario-form.component';
+import { AmbPuntosclavesComponent } from './components/amb-puntosclaves/amb-puntosclaves.component';
 //Importo AuthGuard para poder validar si el usuario está logueado o no
 
 const routes: Routes = [
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path: 'ambcategorias', component: AbmCategoriasComponent, canActivate: [AuthGuard]},
   { path: 'producto-form', component: ProductoFormComponent},
   { path: 'producto-form/:id', component: ProductoFormComponent },
+  { path: 'puntosclaves', component: AmbPuntosclavesComponent },
   {path: 'descripcionproducto/:id', component: DescProductoComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: HomeComponent } // esta ruta captura cualquier otra ruta no definida

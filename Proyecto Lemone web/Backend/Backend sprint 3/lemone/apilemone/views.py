@@ -3,8 +3,8 @@ from decimal import Decimal
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from authentication.models import CustomUser
-from .models import Categoria, Operacion, Orden, Producto, PuntoClavePorProducto, TipoDeOperacion, ProductoDestacado
-from .serializers import CategoriaSerializer, OperacionSerializer, OrdenSerializer, ProductoDestacadoSerializer, ProductoSerializer, PuntoClavePorProductoSerializer, UsuarioSerializer
+from .models import Bodega, Categoria, Operacion, Orden, Producto, PuntoClave, PuntoClavePorProducto, TipoDeOperacion, ProductoDestacado, TipoDeVino
+from .serializers import CategoriaSerializer, OperacionSerializer, OrdenSerializer, ProductoDestacadoSerializer, ProductoSerializer, PuntoClavePorProductoSerializer, PuntoClaveSerializer, UsuarioSerializer
 from django.views import View
 from django.http import JsonResponse
 from django.db.models import Sum, F, DecimalField, ExpressionWrapper,  Value, IntegerField
@@ -20,6 +20,7 @@ from rest_framework.response import Response
 from collections import defaultdict
 from .models import PuntoClavePorProducto
 from .serializers import PuntoClavePorProductoSerializer
+from rest_framework import status
 
 class PuntosClavesPorProductoView(APIView):
     def get(self, request, producto_id=None):
@@ -69,15 +70,19 @@ class ProductoView(APIView):
         return Response(datos)
 
     def post(self, request):
+        print("Llegó a la vista POST de productos")  
         # Obtener los datos del producto del cuerpo de la solicitud JSON
         datos = request.data
         datos_producto = datos.get('producto')
         usuario = datos.get('usuario')
 
-        # Obtener la instancia de Categoria correspondiente al ID proporcionado
-        categoria_id = datos_producto['categoria']
-        categoria = Categoria.objects.get(id=categoria_id)
-
+        try:
+            categoria = Categoria.objects.get(id=datos_producto.get('categoria'))
+        except Categoria.DoesNotExist:
+            print("Categoría no encontrada") 
+            datos = {'message': 'Categoría no encontrada...'}
+            return Response(datos, status=status.HTTP_404_NOT_FOUND)
+        
         # Obtener la instancia de CustomUser correspondiente al nombre de usuario proporcionado
         usuarioalta = CustomUser.objects.get(id=usuario['id'])
 
@@ -96,32 +101,38 @@ class ProductoView(APIView):
             usuarioalta=usuarioalta,
             fechaalta=date.today(),
             usuariomodificacion=usuarioalta,
-            fehamodificacion=date.today()
+            fehamodificacion=date.today()      
         )
         # Devolver una respuesta exitosa
         return Response(datos_producto)
 
     def put(self, request, producto_id=None):
+        print("Llegó a la vista put de productos")  
+        
+        datos = request.data
+        print("Request.data: ", request)
+        datos_producto = request.data.get('producto')
+        print("Request.data - producto: ", datos_producto)
+        
         try:
-            producto = Producto.objects.get(id=producto_id)
+            producto = Producto.objects.get(id=datos_producto.get('id'))            
         except Producto.DoesNotExist:
+            print("Producto no encontrado") 
             datos = {'message': 'Producto no encontrado...'}
             return Response(datos, status=status.HTTP_404_NOT_FOUND)
-
-        datos = request.data
-
-        datos_producto = request.data.get('producto')
-        usuario = datos.get('usuario')
-        usuariomodificacion = CustomUser.objects.get(id=usuario['id'])
-
-        categoria_id = datos_producto.get('categoria')
-
+        
         try:
-            categoria = Categoria.objects.get(id=categoria_id)
+            categoria = Categoria.objects.get(id=datos_producto.get('categoria'))
         except Categoria.DoesNotExist:
+            print("Categoría no encontrada") 
             datos = {'message': 'Categoría no encontrada...'}
             return Response(datos, status=status.HTTP_404_NOT_FOUND)
 
+
+        usuario = datos.get('usuario')
+        usuariomodificacion = CustomUser.objects.get(id=usuario['id'])
+                       
+        producto.id = datos_producto.get('id')
         producto.codigo = datos_producto.get('codigo')
         producto.nombre = datos_producto.get('nombre')
         producto.descripcion = datos_producto.get('descripcion')
@@ -133,15 +144,24 @@ class ProductoView(APIView):
         producto.imagen = datos_producto.get('imagen')
         producto.usuariomodificacion = usuariomodificacion
         producto.fechamodificacion = date.today()
+        
         producto.save()
 
         serializer = ProductoSerializer(producto)
         datos = {'message': 'Producto actualizado exitosamente',
-                 'producto': serializer.data}
+                'producto': serializer.data}
         return Response(datos, status=status.HTTP_200_OK)
 
-    def delete(self, request):
-        pass
+
+    def delete(self, request, producto_id):
+        try:
+            producto = Producto.objects.get(id=producto_id)
+            producto.delete()
+            return Response({'message': 'Producto eliminado exitósamente'}, status=status.HTTP_204_NO_CONTENT)
+        except Producto.DoesNotExist:
+            return Response({'message': 'Producto no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ProductoDestacadoView(APIView):
@@ -192,6 +212,16 @@ class CategoriaView(APIView):
             datos = {'message': 'Success', 'categorias': serializer.data}
         else:
             datos = {'message': 'Categorías no encontradas...'}
+        return Response(datos)
+    
+class PuntosClavesView(APIView):
+    def get(self, request):
+        puntosclaves = PuntoClave.objects.all()
+        serializer = PuntoClaveSerializer(puntosclaves, many=True)
+        if len(serializer.data) > 0:
+            datos = {'message': 'Success', 'puntosclave': serializer.data}
+        else:
+            datos = {'message': 'Puntos clave no encontrados...'}
         return Response(datos)
     
 class OrdenView(APIView):
@@ -252,13 +282,13 @@ class CantidadProductosView(APIView):
         productos_activos = Producto.objects.filter(activoactualmente=True).count()
 
         #Productos vendidos
-        cantidad_ventas = Operacion.objects.filter(tipodeoperacion__nombre='Venta').aggregate(total_ventas=Sum('cantidad'))
+        #cantidad_ventas = Operacion.objects.filter(tipodeoperacion__nombre='Venta').aggregate(total_ventas=Sum('cantidad'))
 
         #Productos comprados
-        cantidad_compras = Operacion.objects.filter(tipodeoperacion__nombre='Compra').aggregate(total_compras=Sum('cantidad'))
+        #cantidad_compras = Operacion.objects.filter(tipodeoperacion__nombre='Compra').aggregate(total_compras=Sum('cantidad'))
 
         #Total
-        cantidad_productos = productos_activos - (cantidad_ventas['total_ventas'] or 0) + (cantidad_compras['total_compras'] or 0)
+        cantidad_productos = productos_activos #- (cantidad_ventas['total_ventas'] or 0) + (cantidad_compras['total_compras'] or 0)
 
         datos = {
             'message': 'Success',
