@@ -281,14 +281,8 @@ class CantidadProductosView(APIView):
         #Cantidad de productos activos
         productos_activos = Producto.objects.filter(activoactualmente=True).count()
 
-        #Productos vendidos
-        #cantidad_ventas = Operacion.objects.filter(tipodeoperacion__nombre='Venta').aggregate(total_ventas=Sum('cantidad'))
-
-        #Productos comprados
-        #cantidad_compras = Operacion.objects.filter(tipodeoperacion__nombre='Compra').aggregate(total_compras=Sum('cantidad'))
-
         #Total
-        cantidad_productos = productos_activos #- (cantidad_ventas['total_ventas'] or 0) + (cantidad_compras['total_compras'] or 0)
+        cantidad_productos = productos_activos 
 
         datos = {
             'message': 'Success',
