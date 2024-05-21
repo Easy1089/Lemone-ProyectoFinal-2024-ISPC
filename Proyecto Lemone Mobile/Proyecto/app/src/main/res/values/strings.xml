@@ -1,0 +1,86 @@
+<resources>
+    <!--    globales    -->
+
+    <string name="app_name">Lemone</string>
+    <string name="msj_presentacion">Sistema de Gestion de Stock para Vinotecas</string>
+
+    <!--    login    -->
+
+    <string name="msj_contacto">Contacto</string>
+    <string name="msj_acerca_de">Acerca de</string>
+    <string name="usuario">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="msj_login">Ingrese con su cuenta</string>
+    <string name="msj_btn_ingresar">Ingresar</string>
+    <string name="login_pass_olvidada">¿Olvidó su contraseña?</string>
+    <string name="btnGestionUs">Gestión de usuarios</string>
+    <string name="btnGestionProv">Gestión de proovedores</string>
+    <string name="btnGestionConsumidor">Gestión de consumidores finales</string>
+    <string name="btnGestionProducto">Gestión de productos</string>
+    <string name="btnInforme">Generar informe</string>
+    <string name="btnInformeStock">Generar informe de stock mínimo</string>
+    <string name="btnSalir">Salir</string>
+    <string name="btnGuardar">Guardar</string>
+    <string name="btnEliminar">Eliminar</string>
+    <string name="tituloAgregarProducto">Agregar Producto</string>
+    <string name="tituloAgregarUsuario">Crear cuenta de usuario</string>
+    <!--        -->
+
+    <!--   edit product     -->
+    <string name="tituloEditarProducto">Editar Producto</string>
+    <string name="subtitulo">Sistema de Gestión de Stock para Vinotecas</string>
+    <!--   find product     -->
+    <string name="tituloConsultaProducto">Consulta de productos</string>
+    <string name="btnBuscar">Buscar</string>
+    <string name="tituloNombreProducto">Vino Tinto Chateau Les Martineaux</string>
+    <string name="presentacioProducto">Botella 1 L</string>
+    <string name="precioProducto">$ 3000</string>
+    <string name="stockProducto">Stock: 500 u.</string>
+    <string name="activar">Activar</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="btnAgregarProd">+ Agregar producto</string>
+    <!--        -->
+
+    <!--   add providers & add consumers    -->
+    <string name="tituloProveedores">Proveedores</string>
+    <string name="tituloConsumidor">Consumidores finales</string>
+    <string name="editNombre">Nombre</string>
+    <string name="editApellido">Apellido</string>
+    <string name="editDni">Tipo de documento</string>
+    <string name="editNumDni">Nro. de documento</string>
+    <string name="editContacto">Datos de contacto</string>
+    <string name="editPhone">Telefono</string>
+    <string name="editMail">Email</string>
+
+    <!--   Acerca De    -->
+    <string name="msj_btn_regresar">Menu Principal</string>
+    <string name="titulo">Lemone</string>
+    <string name="msj_textoacercade">Sistema de Gestion de Stock para Vinotecas, permite al usuario realizar control de Stock de sus mercaderias ahora en version movil</string>
+    <!--  -->
+
+    <!--   Contacto    -->
+    <string name="msj_btn_enviar">Enviar</string>
+    <string name="msj_textomensaje">Dejanos tu mensaje</string>
+
+    <string name="msj_nombreyapellido">Nombre y Apellido</string>
+    <string name="msj_celular">Celular</string>
+    <string name="msj_textoemail1">E-mail</string>
+    <string name="msj_mensajetextoamplio">Mensaje</string>
+
+    <string name="msj_textotelefono">Telefono</string>
+    <string name="msj_nrotelefono">1234567</string>
+    <string name="msj_textoemail">E-mail</string>
+    <string name="msj_email">info@lemone.com</string>
+    <string name="msj_textohelp">HelpDesk</string>
+    <string name="msj_help">http://lemonehelpdesk.com</string>
+
+
+    <!-- -->
+
+    <!--   Activar/Desactivar Producto    -->
+    <string name="act_desact_prod">¿Está seguro de que desea desactivar / activar el producto?</string>
+    <string name="editar_usuario">Editar usuario</string>
+
+
+</resources>
