@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/crema"
+    tools:context=".activities.ConsumidoresFinales">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/app_name"
+        android:textColor="@color/bordo"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.714"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="109dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_lemone" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="208dp"
+        android:text="@string/msj_presentacion"
+        android:textColor="@color/bordo"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="317dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="240dp"
+        android:text="Consulta de Consumidores Finales"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_addCons"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#FFF"
+        android:insetTop="10dp"
+        android:insetBottom="10dp"
+        android:text="+ Agregar Consumidor Final"
+        android:textColor="@color/bordo"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:iconPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="284dp"
+        android:ems="10"
+        android:hint="Filtro de búsqueda"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gris"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="284dp"
+        android:backgroundTint="@color/bordo"
+        android:text="Buscar"
+        android:textColor="@color/crema"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:iconPadding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayoutAtrasC"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/elemento_esquina_redondeada"
+        android:elevation="2dp"
+        app:circularflow_radiusInDP="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageViewAtras"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
+
+    </FrameLayout>
+    <!-- aca -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="375dp"
+        android:layout_height="75dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.521">
+
+           <ImageView
+               android:id="@+id/userImageViewA"
+               android:layout_width="64dp"
+               android:layout_height="64dp"
+               android:src="@drawable/user" />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+
+               <TextView
+                   android:id="@+id/usernameTextViewA"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Nombre de usuario" />
+
+               <TextView
+                   android:id="@+id/emailTextViewA"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="usuario@usuario.com" />
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <Button
+                       android:id="@+id/buttonModificarA"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:backgroundTint="@color/bordo"
+                       android:text="Modificar"
+                       android:textAlignment="center"
+                       android:textSize="10dp"
+                       android:textColor="@color/crema"/>
+
+                   <Button
+                       android:id="@+id/buttonEliminarA"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:backgroundTint="@color/bordo"
+                       android:text="Eliminar"
+                       android:textAlignment="center"
+                       android:textSize="10dp"
+                       android:textColor="@color/crema"/>
+
+                   <Button
+                       android:id="@+id/buttonActivarA"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:backgroundTint="@color/bordo"
+                       android:text="Activar"
+                       android:textAlignment="center"
+                       android:textSize="10dp"
+                       android:textColor="@color/crema"/>
+               </LinearLayout>
+           </LinearLayout>
+       </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="375dp"
+        android:layout_height="75dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.643">
+
+           <ImageView
+               android:id="@+id/userImageViewB"
+               android:layout_width="64dp"
+               android:layout_height="64dp"
+               android:src="@drawable/user" />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+
+               <TextView
+                   android:id="@+id/usernameTextViewB"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Nombre de usuario" />
+
+               <TextView
+                   android:id="@+id/emailTextViewB"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="usuario@usuario.com" />
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <Button
+                       android:id="@+id/buttonModificarB"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:backgroundTint="@color/bordo"
+                       android:text="Modificar"
+                       android:textSize="10dp"
+                       android:textColor="@color/crema"/>
+
+                   <Button
+                       android:id="@+id/buttonEliminarB"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:backgroundTint="@color/bordo"
+                       android:text="Eliminar"
+                       android:textSize="10dp"
+                       android:textColor="@color/crema"/>
+
+                   <Button
+                       android:id="@+id/buttonActivarB"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:backgroundTint="@color/bordo"
+                       android:text="Activar"
+                       android:textSize="10dp"
+                       android:textColor="@color/crema"/>
+               </LinearLayout>
+           </LinearLayout>
+       </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="375dp"
+        android:layout_height="75dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.765">
+
+
+                         <ImageView
+                             android:id="@+id/userImageViewC"
+                             android:layout_width="64dp"
+                             android:layout_height="64dp"
+                             android:src="@drawable/user" />
+
+                         <LinearLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:orientation="vertical">
+                             <TextView
+                                 android:id="@+id/usernameTextViewC"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="Nombre de usuario" />
+
+                             <TextView
+                                 android:id="@+id/emailTextViewC"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="usuario@usuario.com" />
+
+                             <LinearLayout
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:orientation="horizontal">
+
+                                 <Button
+                                     android:id="@+id/buttonModificarC"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="match_parent"
+                                     android:backgroundTint="@color/bordo"
+                                     android:text="Modificar"
+                                     android:textSize="10dp"
+                                     android:textColor="@color/crema"/>
+
+                                 <Button
+                                     android:id="@+id/buttonEliminarC"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="match_parent"
+                                     android:backgroundTint="@color/bordo"
+                                     android:text="Eliminar"
+                                     android:textSize="10dp"
+                                     android:textColor="@color/crema"/>
+
+                                 <Button
+                                     android:id="@+id/buttonActivarC"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="match_parent"
+                                     android:backgroundTint="@color/bordo"
+                                     android:text="Activar"
+                                     android:textSize="10dp"
+                                     android:textColor="@color/crema"/>
+                             </LinearLayout>
+                         </LinearLayout>
+                     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="375dp"
+        android:layout_height="75dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.879">
+
+                       <ImageView
+                           android:id="@+id/userImageViewD"
+                           android:layout_width="64dp"
+                           android:layout_height="64dp"
+                           android:src="@drawable/user" />
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical">
+                           <TextView
+                               android:id="@+id/usernameTextViewD"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Nombre de usuario" />
+
+                           <TextView
+                               android:id="@+id/emailTextViewD"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="usuario@usuario.com" />
+
+                           <LinearLayout
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:orientation="horizontal">
+
+                               <Button
+                                   android:id="@+id/buttonModificarD"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="match_parent"
+                                   android:backgroundTint="@color/bordo"
+                                   android:text="Modificar"
+                                   android:textSize="10dp"
+                                   android:textColor="@color/crema"/>
+
+                               <Button
+                                   android:id="@+id/buttonEliminarD"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="match_parent"
+                                   android:backgroundTint="@color/bordo"
+                                   android:text="Eliminar"
+                                   android:textSize="10dp"
+                                   android:textColor="@color/crema"/>
+
+                               <Button
+                                   android:id="@+id/buttonActivarD"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="match_parent"
+                                   android:backgroundTint="@color/bordo"
+                                   android:text="Activar"
+                                   android:textSize="10dp"
+                                   android:textColor="@color/crema"/>
+                           </LinearLayout>
+                       </LinearLayout>
+                   </LinearLayout>  -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
