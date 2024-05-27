@@ -7,13 +7,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.ispc.lemone.activities.AgregarUsuario;
 import com.ispc.lemone.clases.CategoriaProducto;
-import com.ispc.lemone.clases.InventarioMinimoPorProducto;
 import com.ispc.lemone.clases.Orden;
 import com.ispc.lemone.clases.Persona;
 import com.ispc.lemone.clases.Producto;
@@ -21,10 +18,7 @@ import com.ispc.lemone.clases.TipoPersona;
 import com.ispc.lemone.clases.TipoUsuario;
 import com.ispc.lemone.clases.Usuario;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -35,6 +29,51 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String tablaTiposUsuarios = "CREATE TABLE IF NOT EXISTS TiposDeUsuarios (" +
+                "Id INT NOT NULL, " +
+                "Nombre VARCHAR(50) NOT NULL, " +
+                "PRIMARY KEY(Id))";
+        db.execSQL(tablaTiposUsuarios);
+
+        String tablaPersonas = "CREATE TABLE IF NOT EXISTS Personas (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Nombre VARCHAR(50) NOT NULL)";
+        db.execSQL(tablaPersonas);
+
+        String tablaTiposDePersonas = "CREATE TABLE IF NOT EXISTS TiposDePersonas (" +
+                "Id INT NOT NULL, " +
+                "Nombre VARCHAR(50) NOT NULL, " +
+                "PRIMARY KEY(Id))";
+        db.execSQL(tablaTiposDePersonas);
+
+        String tablaUsuarios = "CREATE TABLE IF NOT EXISTS Usuarios (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IdTipoDeUsuario INT NOT NULL, " +
+                "IdPersona INT, " +
+                "Email VARCHAR(50), " +
+                "Password VARCHAR(255) NOT NULL, " +
+                "ActivoActualmente BIT NOT NULL DEFAULT 1, " +
+                "FOREIGN KEY(IdPersona) REFERENCES Personas(Id), " +
+                "FOREIGN KEY(IdTipoDeUsuario) REFERENCES TiposDeUsuarios(Id))";
+        db.execSQL(tablaUsuarios);
+
+        String tablaTiposOperacion = "CREATE TABLE IF NOT EXISTS TiposDeOperacion (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Nombre VARCHAR(50))";
+        db.execSQL(tablaTiposOperacion);
+
+        String tablaOrdenes = "CREATE TABLE IF NOT EXISTS Ordenes (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Fecha DATE NOT NULL, " +
+                "IdProducto INT NOT NULL, " +
+                "IdPersona INT, " +
+                "Cantidad INT NOT NULL, " +
+                "IdTipoDeOperacion INT NOT NULL, " +
+                "FOREIGN KEY(IdPersona) REFERENCES Personas(Id), " +
+                "FOREIGN KEY(IdProducto) REFERENCES Productos(Id))";
+        db.execSQL(tablaOrdenes);
+
+
         String tablaCategorias = "CREATE TABLE IF NOT EXISTS Categorias (" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Nombre VARCHAR(50) NOT NULL)";
@@ -53,55 +92,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(IdCategoria) REFERENCES Categorias(Id))";
         db.execSQL(tablaProductos);
 
-        String tablaTipoPersonas = "CREATE TABLE IF NOT EXISTS TiposDePersonas (" +
-                "Id INTEGER NOT NULL, " +
-                "Nombre VARCHAR(50) NOT NULL, " +
-                "PRIMARY KEY(Id))";
-        db.execSQL(tablaTipoPersonas);
+        db.execSQL("INSERT INTO TiposDePersonas VALUES (1,'Consumidor final')");
+        db.execSQL("INSERT INTO TiposDePersonas VALUES (2,'Proveedor')");
 
-        String tablaPersonas = "CREATE TABLE IF NOT EXISTS Personas (" +
-                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Apellido VARCHAR(50) NOT NULL, " +
-                "Nombre VARCHAR(50) NOT NULL, " +
-                "Telefono NUMERIC, " +
-                "IdTipoDePersona INT, " +
-                "ActivoActualmente BIT NOT NULL DEFAULT 1, " +
-                "Domicilio VARCHAR(200), " +
-                "FOREIGN KEY(IdTipoDePersona) REFERENCES TiposDePersonas(Id))";
-        db.execSQL(tablaPersonas);
+        db.execSQL("INSERT INTO TiposDeUsuarios VALUES (1,'Administrador')");
+        db.execSQL("INSERT INTO TiposDeUsuarios VALUES (2,'Usuario común')");
 
-        String tablaTiposUsuarios = "CREATE TABLE IF NOT EXISTS TiposDeUsuarios (" +
-                "Id INT NOT NULL, " +
-                "Nombre VARCHAR(50) NOT NULL, " +
-                "PRIMARY KEY(Id))";
-        db.execSQL(tablaTiposUsuarios);
+        db.execSQL("INSERT INTO Personas (Id, Nombre) VALUES (1, 'Admin')");
+        db.execSQL("INSERT INTO Personas (Id, Nombre) VALUES (2, 'Melisa')");
+        db.execSQL("INSERT INTO Personas (Id, Nombre) VALUES (3, 'Juan')");
+        db.execSQL("INSERT INTO Personas (Id, Nombre) VALUES (4, 'Marta')");
 
-        String tablaTiposOperacion = "CREATE TABLE IF NOT EXISTS TiposDeOperacion (" +
-                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Nombre VARCHAR(50))";
-        db.execSQL(tablaTiposOperacion);
+        db.execSQL("INSERT INTO Usuarios (Id, IdTipoDeUsuario, IdPersona, Email, Password, ActivoActualmente) VALUES (1, 1, 1, 'admin@admin.com', '12345678', 1)");
+        db.execSQL("INSERT INTO Usuarios (Id, IdTipoDeUsuario, IdPersona, Email, Password, ActivoActualmente) VALUES (2, 2, 2, 'melisaapaz@gmail.com', '12345678', 1)");
+        db.execSQL("INSERT INTO Usuarios (Id, IdTipoDeUsuario, IdPersona, Email, Password, ActivoActualmente) VALUES (3, 2, 3, 'juanperez@gmail.com', '12345678', 1)");
+        db.execSQL("INSERT INTO Usuarios (Id, IdTipoDeUsuario, IdPersona, Email, Password, ActivoActualmente) VALUES (4, 2, 4, 'martasanchez@gmail.com', '12345678', 1)");
 
-        String tablaUsuarios = "CREATE TABLE IF NOT EXISTS Usuarios (" +
-                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "IdTipoDeUsuario INT NOT NULL, " +
-                "IdPersona INT, " +
-                "Email VARCHAR(50), " +
-                "Password VARCHAR(255) NOT NULL, " +
-                "ActivoActualmente BIT NOT NULL DEFAULT 1, " +
-                "FOREIGN KEY(IdPersona) REFERENCES Personas(Id), " +
-                "FOREIGN KEY(IdTipoDeUsuario) REFERENCES TiposDeUsuarios(Id))";
-        db.execSQL(tablaUsuarios);
-
-        String tablaOrdenes = "CREATE TABLE IF NOT EXISTS Ordenes (" +
-                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Fecha DATE NOT NULL, " +
-                "IdProducto INT NOT NULL, " +
-                "IdPersona INT, " +
-                "Cantidad INT NOT NULL, " +
-                "IdTipoDeOperacion INT NOT NULL, " +
-                "FOREIGN KEY(IdPersona) REFERENCES Personas(Id), " +
-                "FOREIGN KEY(IdProducto) REFERENCES Productos(Id))";
-        db.execSQL(tablaOrdenes);
+        db.execSQL("INSERT INTO TiposDeOperacion VALUES (1,'Ingreso de stock')");
+        db.execSQL("INSERT INTO TiposDeOperacion VALUES (2,'Egreso de stock')");
 
         db.execSQL("INSERT INTO Categorias VALUES (1,'Categoría 1')");
         db.execSQL("INSERT INTO Categorias VALUES (2,'Categoría 2')");
@@ -109,49 +117,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO Productos VALUES (1,'420101','Producto 1','Descripción producto 1',10,120,220,1,1)");
 
-        db.execSQL("INSERT INTO TiposDePersonas VALUES (1,'Consumidor final')");
-        db.execSQL("INSERT INTO TiposDePersonas VALUES (2,'Proveedor')");
-
-        db.execSQL("INSERT INTO Personas VALUES (1,'Apaz','Melisa',3512553895,1,1,'Domicilio 1')");
-        db.execSQL("INSERT INTO Personas VALUES (2,'Perez','Juan',3512553896,2,1,'Domicilio')");
-        db.execSQL("INSERT INTO Personas VALUES (3,'Castro','Marta',3512553897,1,1,'Domicilio')");
-        db.execSQL("INSERT INTO Personas VALUES (4,'Castillo','Pedro',3512553898,2,1,'Domicilio')");
-
-        db.execSQL("INSERT INTO TiposDeUsuarios VALUES (1,'Administrador')");
-        db.execSQL("INSERT INTO TiposDeUsuarios VALUES (2,'Usuario')");
-
-        db.execSQL("INSERT INTO TiposDeOperacion VALUES (1,'Ingreso de stock')");
-        db.execSQL("INSERT INTO TiposDeOperacion VALUES (2,'Egreso de stock')");
-
-        db.execSQL("INSERT INTO Usuarios VALUES (1,1,1,'admin@admin.com','12345678',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (2,2,2,'melisaapaz@gmail.com','12345678',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (3,2,3,'juanperez@gmail.com','12345678',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (4,2,4,'martasanchez@gmail.com','12345678',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (5,2,1,'user@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (6,2,2,'user2@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (7,2,3,'user3@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (8,2,4,'user4@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (9,2,1,'user5@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (10,1,2,'admin@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (11,2,3,'admin2@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (12,1,4,'admin3@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (13,2,1,'admin4@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (14,1,2,'admin5@gmail.com','123',1)");
-        db.execSQL("INSERT INTO Usuarios VALUES (15,2,3,'admin6@gmail.com','123',1)");
-
-
-        // Insertar órdenes utilizando consultas SQL
         db.execSQL("INSERT INTO Ordenes (Fecha, IdProducto, IdPersona, IdTipoDeOperacion, Cantidad) VALUES ('23/10/2023', 1, 1, 1, 10)");
         db.execSQL("INSERT INTO Ordenes (Fecha, IdProducto, IdPersona, IdTipoDeOperacion, Cantidad) VALUES ('24/10/2023', 1, 1, 2, 2)");
         db.execSQL("INSERT INTO Ordenes (Fecha, IdProducto, IdPersona, IdTipoDeOperacion, Cantidad) VALUES ('25/10/2023', 1, 2, 1, 10)");
         db.execSQL("INSERT INTO Ordenes (Fecha, IdProducto, IdPersona, IdTipoDeOperacion, Cantidad) VALUES ('26/10/2023', 1, 2, 2, 3)");
     }
 
-
-
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        // Aquí se deben manejar las actualizaciones de la base de datos
     }
 
     public List<Usuario> listarUsuarios() {
@@ -269,9 +243,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return cursor.moveToFirst();
     }
 
-
-
-
     public boolean editarUsuario(Usuario usuario, String etPassActual, String etConfirmarPass, String etNombre, String etApellido, String etDatosContacto, double etTelefono) {
         SQLiteDatabase db = this.getWritableDatabase();
         int idPersona = usuario.getPersona().getId();
@@ -282,8 +253,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
 
         try {
-
-
             // Se actualiza la otra tabla solo si antiguoPassword coincide con el valor existente
             filasActualizadasTablaUsuario = 0;
             if (etConfirmarPass != null && etPassActual != null) {
@@ -341,8 +310,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return result != -1;
     }
-
-
     public boolean agregarProducto(Producto producto) {
         long result = 0;
         try {
@@ -634,4 +601,3 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return productos;
     }
 }
-
