@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ispc.lemone.DataBaseHelper;
 import com.ispc.lemone.R;
+import com.ispc.lemone.clases.Usuario;
+import com.ispc.lemone.clases.globalState;
 
 public class Login extends AppCompatActivity {
 
@@ -81,9 +83,11 @@ public class Login extends AppCompatActivity {
                 if (authenticateUser(email, password)) {
                     int userType = getUserType(email);
                     if (userType == 1) {
+                        globalState.getInstance().setLoginUser("admin");
                         Intent intent = new Intent(Login.this, MenuPrincipal.class);
                         startActivity(intent);
                     } else if (userType == 2) {
+                        globalState.getInstance().setLoginUser("user");
                         Intent intent = new Intent(Login.this, MenuPrincipalUsuarioComun.class);
                         startActivity(intent);
                     }

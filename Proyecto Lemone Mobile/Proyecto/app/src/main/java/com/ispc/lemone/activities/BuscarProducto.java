@@ -18,6 +18,7 @@ import com.ispc.lemone.R;
 import com.ispc.lemone.adapters.ProductoAdapter;
 import com.ispc.lemone.clases.Producto;
 import com.ispc.lemone.clases.Usuario;
+import com.ispc.lemone.clases.globalState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +34,14 @@ public class BuscarProducto extends AppCompatActivity {
     }
 
 
-    private FrameLayout btnVolver;
     private Button agregarProducto;
     private ArrayAdapter<Producto> adapter;
     private ArrayList<Producto> listaProductos;
     private ListView listViewProductos; // ListView para mostrar la lista de productos
     private EditText editTextCodigoProducto;
     private Button btnBuscarProducto;
+
+    private String loginUser = globalState.getInstance().getLoginUser();
 
 
 
@@ -49,7 +51,7 @@ public class BuscarProducto extends AppCompatActivity {
         setContentView(R.layout.activity_buscar_producto);
 
         editTextCodigoProducto = findViewById(R.id.editTextText);
-        btnVolver = findViewById(R.id.btn_volverFP);
+        FrameLayout btnVolver = findViewById(R.id.btn_volverFP);
         agregarProducto = findViewById(R.id.btn_agregarFP);
         listViewProductos = findViewById(R.id.listViewProductos); // Asocia el ListView de tu layout
         btnBuscarProducto = findViewById(R.id.buttonBuscarFP);
@@ -75,10 +77,10 @@ public class BuscarProducto extends AppCompatActivity {
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(usuario.getTipoUsuario().getId() == 1) {
+                if("admin".equals(loginUser)) {
                     Intent intent = new Intent(BuscarProducto.this, MenuPrincipal.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Intent intent = new Intent(BuscarProducto.this, MenuPrincipalUsuarioComun.class);
                     startActivity(intent);
                 }
