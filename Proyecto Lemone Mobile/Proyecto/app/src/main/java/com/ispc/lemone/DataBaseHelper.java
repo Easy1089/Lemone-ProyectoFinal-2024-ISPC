@@ -14,7 +14,6 @@ import com.ispc.lemone.clases.CategoriaProducto;
 import com.ispc.lemone.clases.Orden;
 import com.ispc.lemone.clases.Persona;
 import com.ispc.lemone.clases.Producto;
-import com.ispc.lemone.clases.TipoPersona;
 import com.ispc.lemone.clases.TipoUsuario;
 import com.ispc.lemone.clases.Usuario;
 
@@ -91,9 +90,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "ActivoActualmente BIT, " +
                 "FOREIGN KEY(IdCategoria) REFERENCES Categorias(Id))";
         db.execSQL(tablaProductos);
-
-        db.execSQL("INSERT INTO TiposDePersonas VALUES (1,'Consumidor final')");
-        db.execSQL("INSERT INTO TiposDePersonas VALUES (2,'Proveedor')");
 
         db.execSQL("INSERT INTO TiposDeUsuarios VALUES (1,'Administrador')");
         db.execSQL("INSERT INTO TiposDeUsuarios VALUES (2,'Usuario común')");
@@ -200,26 +196,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             persona.setApellido(apellido);
             persona.setNombre(nombre);
             persona.setTelefono(telefono);
-            persona.setTipoPersona(buscarTipoPersonaPorId(idTipoPersona));
             persona.setDomicilio(domicilio);
         }
         cursor.close();
         db.close();
         return persona;
-    }
-
-    public TipoPersona buscarTipoPersonaPorId(int id) {
-        String query = "SELECT * FROM TiposDePersonas WHERE id = " + id;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        TipoPersona tipoPersona = null;
-        if (cursor.moveToFirst()) {
-            String nombre = cursor.getString(1);
-            tipoPersona = new TipoPersona(id, nombre);
-        }
-        cursor.close();
-        db.close();
-        return tipoPersona;
     }
 
     public TipoUsuario buscarTipoUsuarioPorId(int id) {

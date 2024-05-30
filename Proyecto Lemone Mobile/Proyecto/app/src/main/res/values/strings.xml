@@ -15,7 +15,6 @@
     <string name="login_pass_olvidada">¿Olvidó su contraseña?</string>
     <string name="btnGestionUs">Gestión de usuarios</string>
     <string name="btnGestionProv">Gestión de proovedores</string>
-    <string name="btnGestionConsumidor">Gestión de consumidores finales</string>
     <string name="btnGestionProducto">Gestión de productos</string>
     <string name="btnInforme">Generar informe</string>
     <string name="btnInformeStock">Generar informe de stock mínimo</string>
@@ -43,8 +42,6 @@
     <!--        -->
 
     <!--   add providers & add consumers    -->
-    <string name="tituloProveedores">Proveedores</string>
-    <string name="tituloConsumidor">Consumidores finales</string>
     <string name="editNombre">Nombre</string>
     <string name="editApellido">Apellido</string>
     <string name="editDni">Tipo de documento</string>

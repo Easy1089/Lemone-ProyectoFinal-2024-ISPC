@@ -1,10 +1,13 @@
 package com.ispc.lemone.clases;
 
-public class Usuario {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Usuario implements Parcelable {
 
     private int id;
-    private TipoUsuario tipoUsuario;
-    private Persona persona;
+    private TipoUsuario tipoUsuario;  // Asegúrate de que TipoUsuario también implemente Parcelable
+    private Persona persona;          // Asegúrate de que Persona también implemente Parcelable
     private String email;
     private String password;
     private boolean activoActualmente;
@@ -19,9 +22,45 @@ public class Usuario {
         this.email = email;
         this.password = password;
         this.activoActualmente = activoActualmente;
-
     }
 
+    protected Usuario(Parcel in) {
+        id = in.readInt();
+        tipoUsuario = in.readParcelable(TipoUsuario.class.getClassLoader());
+        persona = in.readParcelable(Persona.class.getClassLoader());
+        email = in.readString();
+        password = in.readString();
+        activoActualmente = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeParcelable(tipoUsuario, flags);
+        dest.writeParcelable(persona, flags);
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeByte((byte) (activoActualmente ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
+        @Override
+        public Usuario createFromParcel(Parcel in) {
+            return new Usuario(in);
+        }
+
+        @Override
+        public Usuario[] newArray(int size) {
+            return new Usuario[size];
+        }
+    };
+
+    // Getters y setters aquí
     public int getId() {
         return id;
     }
@@ -73,8 +112,7 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                email + '\'' +
+                "email='" + email + '\'' +
                 '}';
     }
-
 }

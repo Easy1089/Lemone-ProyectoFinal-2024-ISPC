@@ -51,7 +51,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="parent" />
-
     <FrameLayout
         android:id="@+id/frameLayoutPassActual"
         android:layout_width="49dp"
@@ -227,7 +226,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <FrameLayout
+ <FrameLayout
         android:id="@+id/frameLayoutConfirmarPass"
         android:layout_width="49dp"
         android:layout_height="42dp"

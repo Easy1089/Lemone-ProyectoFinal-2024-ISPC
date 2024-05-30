@@ -1,27 +1,64 @@
 package com.ispc.lemone.clases;
 
-public class Persona {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Persona implements Parcelable {
 
     private int id;
     private String nombre;
     private String apellido;
     private double telefono;
-    private TipoPersona tipoPersona;
     private boolean activoActualmente;
     private String domicilio;
 
     public Persona() {
     }
 
-    public Persona(int id, String nombre, String apellido, double telefono, TipoPersona tipoPersona, boolean activoActualmente, String domicilio) {
+    public Persona(int id, String nombre, String apellido, double telefono, boolean activoActualmente, String domicilio) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
-        this.tipoPersona = tipoPersona;
         this.activoActualmente = activoActualmente;
         this.domicilio = domicilio;
     }
+
+    protected Persona(Parcel in) {
+        id = in.readInt();
+        nombre = in.readString();
+        apellido = in.readString();
+        telefono = in.readDouble();
+        activoActualmente = in.readByte() != 0;
+        domicilio = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(nombre);
+        dest.writeString(apellido);
+        dest.writeDouble(telefono);
+        dest.writeByte((byte) (activoActualmente ? 1 : 0));
+        dest.writeString(domicilio);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Persona> CREATOR = new Creator<Persona>() {
+        @Override
+        public Persona createFromParcel(Parcel in) {
+            return new Persona(in);
+        }
+
+        @Override
+        public Persona[] newArray(int size) {
+            return new Persona[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -55,14 +92,6 @@ public class Persona {
         this.telefono = telefono;
     }
 
-    public TipoPersona getTipoPersona() {
-        return tipoPersona;
-    }
-
-    public void setTipoPersona(TipoPersona tipoPersona) {
-        this.tipoPersona = tipoPersona;
-    }
-
     public boolean isActivoActualmente() {
         return activoActualmente;
     }
@@ -84,7 +113,6 @@ public class Persona {
         return "Persona{" +
                 "nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", tipoPersona=" + tipoPersona +
                 '}';
     }
 }
