@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import com.ispc.lemone.R;
 import com.ispc.lemone.clases.Usuario;
+import com.ispc.lemone.clases.globalState;
 
 public class Login extends AppCompatActivity {
 
@@ -105,10 +106,12 @@ public class Login extends AppCompatActivity {
                 String password = passwordIngresado.getText().toString();
 
                 if (email.equals("admin@gmail.com") && password.equals("admin123")) {
+                    globalState.getInstance().setLoginUser("admin");
                     // Usuario especial (admin) accede a una pantalla
                     Intent intent = new Intent(Login.this, MenuPrincipal.class);
                     startActivity(intent);
                 } else {
+                    globalState.getInstance().setLoginUser("user");
                     // Todos los demás usuarios acceden a otra pantalla
                     Intent intent = new Intent(Login.this, MenuPrincipalUsuarioComun.class);
                     startActivity(intent);
