@@ -35,22 +35,23 @@
 
     <Button
         android:id="@+id/btnGuardar"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_width="177dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
         android:backgroundTint="@color/bordo"
-        android:insetTop="10dp"
-        android:insetBottom="10dp"
-        android:text="Guardar"
+        android:insetTop="5dp"
+        android:insetBottom="5dp"
+        android:text="@string/btnGuardar"
         android:textColor="@color/crema"
         android:textSize="18sp"
         android:textStyle="bold"
         app:cornerRadius="10dp"
         app:iconPadding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.59"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.961" />
     <FrameLayout
         android:id="@+id/frameLayoutPassActual"
         android:layout_width="49dp"
@@ -321,5 +322,39 @@
         app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Switch
+        android:id="@+id/btnActivarDesactivarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activo"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.893" />
+
+    <Button
+        android:id="@+id/btnEliminarUsuario"
+        android:layout_width="177dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/bordo"
+        android:insetTop="5dp"
+        android:insetBottom="5dp"
+        android:text="@string/btnEliminar"
+        android:textColor="@color/crema"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:iconPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.963" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
