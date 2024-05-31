@@ -40,9 +40,9 @@ public class BuscarUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar_usuario);
 
-        buttonModificar = findViewById(R.id.btnModificarUsuario);
-        btnEliminarUsuario = findViewById(R.id.btnEliminarUsuario);
-        buttonActivar3 = findViewById(R.id.btnActivarDesactivarUsuario);
+//        buttonModificar = findViewById(R.id.btnModificarUsuario);
+//        btnEliminarUsuario = findViewById(R.id.btnEliminarUsuario);
+//        buttonActivar3 = findViewById(R.id.btnActivarDesactivarUsuario);
         buttonAgregarUsuario = findViewById(R.id.buttonAgregarUsuario);
         listViewUsuarios = findViewById(R.id.listViewUsuarios); // Asocia el ListView de tu layout
         btnBuscarUsuario = findViewById(R.id.buttonBuscar);
@@ -68,33 +68,33 @@ public class BuscarUsuario extends AppCompatActivity {
         // text view del correo
         //emailTextView3 = findViewById(R.id.editTextFilter);
 
-        buttonModificar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("Botón Modificar usuario", "Click en el botón modificar usuario");
-                Intent intent = new Intent(BuscarUsuario.this, EditarUsuario.class);
-                startActivity(intent);
-            }
-        });
+//        buttonModificar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d("Botón Modificar usuario", "Click en el botón modificar usuario");
+//                Intent intent = new Intent(BuscarUsuario.this, EditarUsuario.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
-        btnEliminarUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BuscarUsuario.this, EliminarUsuario.class);
-                // envio el valor del correo que se encuentra en emailTextView3
-                intent.putExtra("email", emailTextView3.getText().toString());
-                startActivity(intent);
-            }
-        });
+//        btnEliminarUsuario.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(BuscarUsuario.this, EliminarUsuario.class);
+//                // envio el valor del correo que se encuentra en emailTextView3
+//                intent.putExtra("email", emailTextView3.getText().toString());
+//                startActivity(intent);
+//            }
+//        });
 
-        buttonActivar3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BuscarUsuario.this, ActivarDesactivarUsuario.class);
-                startActivity(intent);
-            }
-        });
+//        buttonActivar3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(BuscarUsuario.this, ActivarDesactivarUsuario.class);
+//                startActivity(intent);
+//            }
+//        });
 
         buttonAgregarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
