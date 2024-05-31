@@ -1,18 +1,19 @@
 plugins {
-    id("com.android.application") version "8.3.0"
+    id("com.android.application") version "8.4.1"
     id("com.google.gms.google-services")
+    kotlin("android") version "1.8.20"
 }
+
 android {
     namespace = "com.ispc.lemone"
     compileSdk = 33
 
     defaultConfig {
         applicationId = "com.ispc.lemone"
-        minSdk = 26  // Cambiar de 24 a 26
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,7 +38,6 @@ tasks.register<Wrapper>("wrapper") {
 }
 tasks.register("prepareKotlinBuildScriptModel"){}
 dependencies {
-
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
