@@ -1,36 +1,28 @@
 package com.ispc.lemone.activities;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.AuthResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
+import com.ispc.lemone.DataBaseHelper;
 import com.ispc.lemone.R;
 import com.ispc.lemone.clases.Usuario;
 import com.ispc.lemone.clases.globalState;
 
 public class Login extends AppCompatActivity {
-
-    private Usuario usuario;
-
-    public Login(){
-
-    }
-
-    public Login(Usuario usuario){
-
-        this.usuario = usuario;
-    }
 
     private FirebaseAuth mAuth;
     private Button botonLogin;
@@ -39,13 +31,16 @@ public class Login extends AppCompatActivity {
     private TextView acercaDe;
     private TextView contacto;
     private TextView olvideMiPassword;
+    private DataBaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dbHelper = new DataBaseHelper(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance(); // Inicializa Firebase Authentication
+        mAuth = FirebaseAuth.getInstance();
 
         acercaDe = findViewById(R.id.txt_acerca_de);
         contacto = findViewById(R.id.txt_contacto);
@@ -79,47 +74,49 @@ public class Login extends AppCompatActivity {
         usuarioIngresado = findViewById(R.id.txt_usuario);
         passwordIngresado = findViewById(R.id.txt_password);
 
-//        botonLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                if(usuario.getTipoUsuario().getId() == 1) {
-//                    Intent intent = new Intent(Login.this, MenuPrincipal.class);
-//                    iniciarSesion();
-//                    startActivity(intent);
-//                }else{
-//                    Intent intent = new Intent(Login.this, MenuPrincipalUsuarioComun.class);
-//                    iniciarSesion();
-//                    startActivity(intent);
-//                }
-//
-//
-//                iniciarSesion();
-//            }
-//        });
-
-
         botonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = usuarioIngresado.getText().toString();
                 String password = passwordIngresado.getText().toString();
 
-                if (email.equals("admin@gmail.com") && password.equals("admin123")) {
-                    globalState.getInstance().setLoginUser("admin");
-                    // Usuario especial (admin) accede a una pantalla
-                    Intent intent = new Intent(Login.this, MenuPrincipal.class);
-                    startActivity(intent);
+                if (authenticateUser(email, password)) {
+                    int userType = getUserType(email);
+                    if (userType == 1) {
+                        globalState.getInstance().setLoginUser("admin");
+                        Intent intent = new Intent(Login.this, MenuPrincipal.class);
+                        startActivity(intent);
+                    } else if (userType == 2) {
+                        globalState.getInstance().setLoginUser("user");
+                        Intent intent = new Intent(Login.this, MenuPrincipalUsuarioComun.class);
+                        startActivity(intent);
+                    }
                 } else {
-                    globalState.getInstance().setLoginUser("user");
-                    // Todos los demás usuarios acceden a otra pantalla
-                    Intent intent = new Intent(Login.this, MenuPrincipalUsuarioComun.class);
-                    startActivity(intent);
+                    Toast.makeText(Login.this, "Credenciales inválidas", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
+    private boolean authenticateUser(String email, String password) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Usuarios WHERE Email = ? AND Password = ?", new String[]{email, password});
+        boolean authenticated = cursor != null && cursor.moveToFirst();
+        if (cursor != null) {
+            cursor.close();
+        }
+        return authenticated;
+    }
 
+    private int getUserType(String email) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT IdTipoDeUsuario FROM Usuarios WHERE Email = ?", new String[]{email});
+        int userType = -1;
+        if (cursor != null && cursor.moveToFirst()) {
+            userType = cursor.getInt(cursor.getColumnIndexOrThrow("IdTipoDeUsuario"));
+            cursor.close();
+        }
+        return userType;
     }
 
     public void iniciarSesion() {
@@ -131,11 +128,9 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Inicio de sesión exitoso, redirige al usuario a la actividad principal.
                             Intent intent = new Intent(Login.this, MenuPrincipal.class);
                             startActivity(intent);
                         } else {
-                            // Error en el inicio de sesión, muestra un mensaje de error.
                             AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
                             builder.setMessage("Credenciales incorrectas. Por favor, inténtalo de nuevo.")
                                     .setTitle("Error de inicio de sesión")
@@ -144,7 +139,6 @@ public class Login extends AppCompatActivity {
                             dialog.show();
                         }
 
-                        // Limpia los campos de entrada
                         usuarioIngresado.setText("");
                         passwordIngresado.setText("");
                     }

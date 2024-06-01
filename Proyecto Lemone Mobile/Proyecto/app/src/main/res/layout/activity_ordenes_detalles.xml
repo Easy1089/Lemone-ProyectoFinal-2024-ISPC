@@ -72,16 +72,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="#FFFFFF" />
+
     </FrameLayout>
 
     <ListView
         android:id="@+id/listViewOrdenes"
-        android:layout_width="351dp"
-        android:layout_height="517dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="359dp"
+        android:layout_height="477dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTitulo3" />
+
+    <Button
+        android:id="@+id/btn_exportar"
+        android:layout_width="177dp"
+        android:layout_height="49dp"
+        android:backgroundTint="@color/bordo"
+        android:insetTop="5dp"
+        android:insetBottom="5dp"
+        android:text="Exportar"
+        android:textColor="@color/crema"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:iconPadding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTitulo3" />
+        app:layout_constraintTop_toBottomOf="@+id/listViewOrdenes"
+        app:layout_constraintVertical_bias="0.238" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

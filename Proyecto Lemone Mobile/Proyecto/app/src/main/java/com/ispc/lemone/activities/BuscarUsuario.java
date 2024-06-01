@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,8 +52,21 @@ public class BuscarUsuario extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaUsuarios);
         listViewUsuarios.setAdapter(adapter);
 
+        listViewUsuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Obtengo el elemento en la posición 'position'
+                Usuario usuario = listaUsuarios.get(position);
+
+                // Enviar el seleccionado al modificar usuario
+                Intent intent = new Intent(BuscarUsuario.this, EditarUsuario.class);
+                intent.putExtra("usuario", usuario);  // Asegúrate que 'Usuario' implementa Parcelable
+                startActivity(intent);
+            }
+        });
+
         // text view del correo
-        emailTextView3 = findViewById(R.id.editTextFilter);
+        //emailTextView3 = findViewById(R.id.editTextFilter);
 
         buttonModificar.setOnClickListener(new View.OnClickListener() {
             @Override

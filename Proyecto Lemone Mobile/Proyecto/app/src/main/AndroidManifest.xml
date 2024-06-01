@@ -17,6 +17,28 @@
         android:theme="@style/Theme.Lemone"
         tools:targetApi="31">
         <activity
+            android:name=".item_producto_destacado"
+            android:exported="false" />
+        <activity
+            android:name=".activity_listar_productos_destacados"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".activities.MarcarProductoDestacadoActivity"
+            android:exported="true" />
+        <activity android:name=".activities.ListarProductosDestacadosActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.informe_inventario_minimo"
             android:exported="true" />
         <activity
@@ -38,12 +60,6 @@
             android:name=".activities.RecuperarContrasenia"
             android:exported="true" />
         <activity
-            android:name=".activities.ConsumidoresFinales"
-            android:exported="true" />
-        <activity
-            android:name=".activities.Proveedor"
-            android:exported="true" />
-        <activity
             android:name=".activities.AgregarUsuario"
             android:exported="true" />
         <activity
@@ -61,12 +77,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.AgregarConsumidorFinal"
-            android:exported="true" />
-        <activity
-            android:name=".activities.AgregarProveedor"
-            android:exported="true" />
         <activity
             android:name=".activities.BuscarUsuario"
             android:exported="true" />
