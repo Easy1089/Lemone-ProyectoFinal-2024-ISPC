@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.ispc.lemone.R;
 
 public class MenuPrincipal extends AppCompatActivity {
@@ -17,6 +15,7 @@ public class MenuPrincipal extends AppCompatActivity {
     private Button buttonInforme;
     private Button buttonInformeStock;
     private Button buttonSalir;
+    private  Button buttonProductosDestacados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,7 @@ public class MenuPrincipal extends AppCompatActivity {
         buttonInforme = findViewById(R.id.buttonInforme);
         buttonInformeStock = findViewById(R.id.buttonInformeStock);
         buttonSalir = findViewById(R.id.buttonSalir);
-
+        buttonProductosDestacados = findViewById(R.id.buttonProductosDestacados);
         buttonUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +45,14 @@ public class MenuPrincipal extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        buttonProductosDestacados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Botón Productos destacados", "Click en el botón Productos destacados");
+                Intent intent = new Intent(MenuPrincipal.this, ListarProductosDestacadosActivity.class);
+                startActivity(intent);
+            }
+        });
         buttonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

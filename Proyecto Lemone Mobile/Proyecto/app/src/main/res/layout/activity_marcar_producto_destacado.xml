@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="16dp">
+
+<Spinner
+    android:id="@+id/spinnerProductos"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:hint="Seleccione un producto" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha Desde" />
+
+    <Button
+        android:id="@+id/buttonFechaDesde"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar Fecha Desde" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha Hasta" />
+
+    <Button
+    android:id="@+id/buttonFechaHasta"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Seleccionar Fecha Hasta" />
+
+    <Button
+        android:id="@+id/buttonMarcarDestacado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Marcar como Destacado" />
+</LinearLayout>

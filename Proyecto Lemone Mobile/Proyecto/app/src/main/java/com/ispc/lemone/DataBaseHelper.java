@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -14,16 +15,23 @@ import com.ispc.lemone.clases.CategoriaProducto;
 import com.ispc.lemone.clases.Orden;
 import com.ispc.lemone.clases.Persona;
 import com.ispc.lemone.clases.Producto;
+import com.ispc.lemone.clases.ProductoDestacado;
 import com.ispc.lemone.clases.TipoUsuario;
 import com.ispc.lemone.clases.Usuario;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "lemonemobile_3.db";
+    private static final int DATABASE_VERSION = 2; // Incrementa la versión de la base de datos
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "lemonemobile_3.db", null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -72,7 +80,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(IdProducto) REFERENCES Productos(Id))";
         db.execSQL(tablaOrdenes);
 
-
         String tablaCategorias = "CREATE TABLE IF NOT EXISTS Categorias (" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Nombre VARCHAR(50) NOT NULL)";
@@ -90,6 +97,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "ActivoActualmente BIT, " +
                 "FOREIGN KEY(IdCategoria) REFERENCES Categorias(Id))";
         db.execSQL(tablaProductos);
+
+        String tablaProductosDestacados = "CREATE TABLE IF NOT EXISTS ProductosDestacados (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "FechaDesde DATETIME NOT NULL, " +
+                "FechaHasta DATETIME NOT NULL, " +
+                "IdProducto INT NOT NULL, " +
+                "FOREIGN KEY(IdProducto) REFERENCES Productos(Id))";
+        db.execSQL(tablaProductosDestacados);
 
         db.execSQL("INSERT INTO TiposDeUsuarios VALUES (1,'Administrador')");
         db.execSQL("INSERT INTO TiposDeUsuarios VALUES (2,'Usuario común')");
@@ -120,8 +135,83 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        // Aquí se deben manejar las actualizaciones de la base de datos
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 2) {
+            String tablaProductosDestacados = "CREATE TABLE IF NOT EXISTS ProductosDestacados (" +
+                    "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "FechaDesde DATETIME NOT NULL, " +
+                    "FechaHasta DATETIME NOT NULL, " +
+                    "IdProducto INT NOT NULL, " +
+                    "FOREIGN KEY(IdProducto) REFERENCES Productos(Id))";
+            db.execSQL(tablaProductosDestacados);
+        }
+        // Maneja otras actualizaciones de esquema aquí
+    }
+    public boolean existeProductoDestacadoEnFechas(int idProducto, Date fechaDesde, Date fechaHasta) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        String query = "SELECT COUNT(*) FROM productos_destacados WHERE idProducto = ? AND ((fechaDesde BETWEEN ? AND ?) OR (fechaHasta BETWEEN ? AND ?))";
+        Cursor cursor = db.rawQuery(query, new String[]{
+                String.valueOf(idProducto),
+                sdf.format(fechaDesde),
+                sdf.format(fechaHasta),
+                sdf.format(fechaDesde),
+                sdf.format(fechaHasta)
+        });
+
+        boolean existe = false;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                existe = cursor.getInt(0) > 0;
+            }
+            cursor.close();
+        }
+        db.close();
+        return existe;
+    }
+
+    public List<Producto> obtenerTodosLosProductos2() {
+        List<Producto> productos = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Productos", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id =  cursor.getInt(cursor.getColumnIndexOrThrow("Id"));
+
+                String codigo = cursor.getString(cursor.getColumnIndexOrThrow("Codigo"));
+                String nombre = cursor.getString(cursor.getColumnIndexOrThrow("Nombre"));
+                String descripcion = cursor.getString(cursor.getColumnIndexOrThrow("Descripcion"));
+                int inventarioMinimo = cursor.getInt(cursor.getColumnIndexOrThrow("InventarioMinimo"));
+                double precioDeCosto = cursor.getDouble(cursor.getColumnIndexOrThrow("PrecioDeCosto"));
+                double precioDeVenta = cursor.getDouble(cursor.getColumnIndexOrThrow("PrecioDeVenta"));
+                int idCategoria = cursor.getInt(cursor.getColumnIndexOrThrow("IdCategoria"));
+                boolean activoActualmente = cursor.getInt(cursor.getColumnIndexOrThrow("ActivoActualmente"))  == 1;;
+
+                Producto producto = new Producto(id, codigo, nombre, descripcion, inventarioMinimo, precioDeCosto, precioDeVenta, null, activoActualmente);
+                productos.add(producto);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return productos;
+    }
+
+    public int obtenerIdProductoPorNombre(String nombre) {
+        int idProducto = -1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT Id FROM Productos WHERE Nombre = ?", new String[]{nombre});
+
+        if (cursor.moveToFirst()) {
+            idProducto = cursor.getInt(cursor.getColumnIndexOrThrow("Id"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return idProducto;
     }
 
     public List<Usuario> listarUsuarios() {
@@ -580,5 +670,59 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return productos;
+    }
+
+    //public boolean insertarProductoDestacado2(ProductoDestacado productoDestacado) {
+        //SQLiteDatabase db = this.getWritableDatabase();
+        //ContentValues contentValues = new ContentValues();
+       // contentValues.put("FechaDesde", productoDestacado.getFechaDesde().getTime());
+        //contentValues.put("FechaHasta", productoDestacado.getFechaHasta().getTime());
+        //contentValues.put("IdProducto", productoDestacado.getIdProducto());
+
+        //long result = db.insert("ProductosDestacados", null, contentValues);
+        //db.close();
+
+        // Log insert operation result
+        //Log.d("ProductoDestacado", "Insert result: " + result);
+
+        //return result != -1;
+    //}
+
+    public boolean insertarProductoDestacado(ProductoDestacado productoDestacado) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("FechaDesde", productoDestacado.getFechaDesde());
+        contentValues.put("FechaHasta", productoDestacado.getFechaHasta());
+        contentValues.put("IdProducto", productoDestacado.getIdProducto());
+
+        long result = db.insert("ProductosDestacados", null, contentValues);
+        db.close();
+
+        // Log insert operation result
+        Log.d("ProductoDestacado", "Insert result: " + result);
+
+        return result != -1;
+    }
+
+    public List<ProductoDestacado> getProductosDestacados() {
+        List<ProductoDestacado> productosDestacados = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT pd.IdProducto, p.Nombre, pd.FechaDesde, pd.FechaHasta FROM ProductosDestacados pd INNER JOIN Productos p ON pd.IdProducto = p.Id";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                int idProducto = cursor.getInt(0);
+                String nombreProducto = cursor.getString(1);
+                long fechaDesde = cursor.getLong(2);
+                long fechaHasta = cursor.getLong(3);
+
+                ProductoDestacado productoDestacado = new ProductoDestacado(fechaDesde, fechaHasta, idProducto, nombreProducto);
+                productosDestacados.add(productoDestacado);
+            }
+            cursor.close();
+        }
+        db.close();
+        return productosDestacados;
     }
 }
