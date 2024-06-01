@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +20,9 @@ import com.ispc.lemone.DataBaseHelper;
 import com.ispc.lemone.R;
 import com.ispc.lemone.clases.Producto;
 import com.ispc.lemone.clases.ProductoDestacado;
+import com.ispc.lemone.clases.globalState;
+
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,28 +33,32 @@ import java.util.List;
 import java.util.Locale;
 
 public class MarcarProductoDestacadoActivity extends AppCompatActivity {
-
     private Spinner spinnerProductos;
-    private EditText editTextFechaDesde;
-    private EditText editTextFechaHasta;
     private Button buttonMarcarDestacado;
     private DataBaseHelper dbHelper;
     private Calendar calendarDesde = Calendar.getInstance();
     private Calendar calendarHasta = Calendar.getInstance();
     private Button buttonFechaDesde;
     private Button buttonFechaHasta;
+
+    private TextView textViewFechaDesde;
+    private TextView textViewFechaHasta;
+    private SimpleDateFormat sdf;
+    private String loginUser = globalState.getInstance().getLoginUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcar_producto_destacado);
 
+        FrameLayout btnVolver = findViewById(R.id.btn_volver);
+        sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         dbHelper = new DataBaseHelper(this);
 
         spinnerProductos = findViewById(R.id.spinnerProductos);
         buttonMarcarDestacado = findViewById(R.id.buttonMarcarDestacado);
 
-        calendarDesde = Calendar.getInstance();
-        calendarHasta = Calendar.getInstance();
+        textViewFechaDesde = findViewById(R.id.textViewFechaDesde);
+        textViewFechaHasta = findViewById(R.id.textViewFechaHasta);
 
         buttonFechaDesde = findViewById(R.id.buttonFechaDesde);
         buttonFechaHasta = findViewById(R.id.buttonFechaHasta);
@@ -57,44 +66,54 @@ public class MarcarProductoDestacadoActivity extends AppCompatActivity {
         buttonFechaDesde.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(MarcarProductoDestacadoActivity.this, dateDesde, calendarDesde.get(Calendar.YEAR), calendarDesde.get(Calendar.MONTH), calendarDesde.get(Calendar.DAY_OF_MONTH)).show();
+                showDatePickerDialog(calendarDesde, textViewFechaDesde, "Fecha desde: ");
             }
         });
 
         buttonFechaHasta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(MarcarProductoDestacadoActivity.this, dateHasta, calendarHasta.get(Calendar.YEAR), calendarHasta.get(Calendar.MONTH), calendarHasta.get(Calendar.DAY_OF_MONTH)).show();
+                showDatePickerDialog(calendarHasta, textViewFechaHasta, "Fecha hasta: ");
             }
         });
 
         cargarProductos();
 
         buttonMarcarDestacado.setOnClickListener(v -> marcarProductoDestacado());
+
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if("admin".equals(loginUser)) {
+                    Intent intent = new Intent(MarcarProductoDestacadoActivity.this, ListarProductosDestacadosActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MarcarProductoDestacadoActivity.this, ListarProductosDestacadosActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
-    private DatePickerDialog.OnDateSetListener dateDesde = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            calendarDesde.set(Calendar.YEAR, year);
-            calendarDesde.set(Calendar.MONTH, month);
-            calendarDesde.set(Calendar.DAY_OF_MONTH, day);
-        }
-    };
+    private void showDatePickerDialog(final Calendar calendar, final TextView textView, final String label) {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-    private DatePickerDialog.OnDateSetListener dateHasta = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            calendarHasta.set(Calendar.YEAR, year);
-            calendarHasta.set(Calendar.MONTH, month);
-            calendarHasta.set(Calendar.DAY_OF_MONTH, day);
-        }
-    };
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    calendar.set(selectedYear, selectedMonth, selectedDay);
+                    textView.setText(label + sdf.format(calendar.getTime()));
+                }, year, month, day);
+
+        datePickerDialog.show();
+    }
 
     private void cargarProductos() {
         DataBaseHelper dbHelper = new DataBaseHelper(this);
         List<Producto> productos = dbHelper.listaDeProductos();
         List<String> nombresProductos = new ArrayList<>();
+        nombresProductos.add("Seleccione");  // Añadir la opción "Seleccione"
         for (Producto producto : productos) {
             nombresProductos.add(producto.getNombre());
         }
@@ -108,8 +127,20 @@ public class MarcarProductoDestacadoActivity extends AppCompatActivity {
         try {
             DataBaseHelper dbHelper = new DataBaseHelper(this);
             String nombreProductoSeleccionado = (String) spinnerProductos.getSelectedItem();
-            int idProducto = dbHelper.obtenerIdProductoPorNombre(nombreProductoSeleccionado);
 
+            if ("Seleccione".equals(nombreProductoSeleccionado)) {
+                Toast.makeText(this, "Debe seleccionar un producto", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            // Verificar si se han seleccionado fechas
+            if (textViewFechaDesde.getText().toString().equals("Fecha desde") ||
+                    textViewFechaHasta.getText().toString().equals("Fecha hasta")) {
+                Toast.makeText(this, "Debe seleccionar ambas fechas", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            int idProducto = dbHelper.obtenerIdProductoPorNombre(nombreProductoSeleccionado);
             Date fechaDesde = calendarDesde.getTime();
             Date fechaHasta = calendarHasta.getTime();
 
