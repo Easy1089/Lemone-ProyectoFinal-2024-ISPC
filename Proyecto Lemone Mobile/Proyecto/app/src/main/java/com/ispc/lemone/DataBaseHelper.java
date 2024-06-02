@@ -28,7 +28,7 @@ import java.util.Locale;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lemonemobile_3.db";
-    private static final int DATABASE_VERSION = 3; // Incrementa la versión de la base de datos
+    private static final int DATABASE_VERSION = 4; // Incrementa la versión de la base de datos
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -60,7 +60,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "Email VARCHAR(50), " +
                 "Password VARCHAR(255) NOT NULL, " +
                 "ActivoActualmente BIT NOT NULL DEFAULT 1, " +
-                "Estado VARCHAR(5) DEFAULT 'A', " + // Agregar la nueva columna aquí
+                "Estado VARCHAR(5) DEFAULT 'A', " +
+                "DatosPersonales VARCHAR(50) DEFAULT 'Completar nombre y apellido', " +
+                "Telefono VARCHAR(50) DEFAULT 'Completar Teléfono', " +
                 "FOREIGN KEY(IdPersona) REFERENCES Personas(Id), " +
                 "FOREIGN KEY(IdTipoDeUsuario) REFERENCES TiposDeUsuarios(Id))";
         db.execSQL(tablaUsuarios);
@@ -151,6 +153,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (oldVersion < 3) {
             // Agregar la columna Estado en la versión 3
             db.execSQL("ALTER TABLE Usuarios ADD COLUMN Estado VARCHAR(5) DEFAULT 'A'");
+        }
+        if (oldVersion < 4) {
+            // Agregar la columna Estado en la versión 3
+            db.execSQL("ALTER TABLE Usuarios ADD COLUMN DatosPersonales VARCHAR(50) DEFAULT 'Completar nombre y apellido'");
+            db.execSQL("ALTER TABLE Usuarios ADD COLUMN Telefono VARCHAR(50) DEFAULT 'Completar teléfono'");
         }
         // Maneja otras actualizaciones de esquema aquí
     }
