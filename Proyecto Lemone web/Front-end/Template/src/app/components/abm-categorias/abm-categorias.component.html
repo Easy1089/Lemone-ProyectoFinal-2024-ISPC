@@ -57,7 +57,12 @@
                             <i class="bi bi-bookmarks"></i> Categorias
                         </a>
                     </li>
-                   
+
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/puntosclaves']">
+                            <i class="bi bi-bookmarks"></i> Puntos claves
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -114,10 +119,11 @@
                             {{ categoria.nombre }}
                         </td>
                         <td>
-                            <span class="badge badge-lg badge-dot">
-                                <i class="bg-success"></i>
-                                <span [appEstadoProducto]="categoria.activoactualmente"></span>
-                            </span>
+                          <span class="badge badge-lg badge-dot">
+                                <i class="bg-warning" *ngIf="!categoria.activoactualmente"></i>
+                                <i class="bg-success" *ngIf="categoria.activoactualmente"></i>
+                                {{ categoria.activoactualmente ? 'Activo' : 'Inactivo' }}
+                            </span>   
                         </td>
                         <td class="text-end">
                             <!--<a href="#" class="btn btn-sm btn-neutral">View</a>-->

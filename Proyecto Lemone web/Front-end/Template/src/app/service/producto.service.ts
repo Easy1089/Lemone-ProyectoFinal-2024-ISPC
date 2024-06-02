@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Producto } from '../models/Producto';
 import { Categoria } from '../models/Categoria';
 
@@ -16,6 +16,9 @@ export class ProductoService {
   urlCantidaddeproductos = `${this.url}/api/cantidaddeproductos`;
   urlCompras = `${this.url}/api/compras`;
   urlVentas = `${this.url}/api/ventas`;
+  urlProductosDestacados = `${this.url}/api/productosdestacados`;
+  urlPuntosClaves = `${this.url}/api/puntosclaves`;
+  urlPuntosClavesPorProducto = `${this.url}/api/puntosclavesporproducto`;
 
   constructor(private http: HttpClient) { }
 
@@ -50,6 +53,13 @@ export class ProductoService {
     );
   }
 
+  ObtenerPuntosClaves(): Observable<any> {
+    console.log("Get de puntos claves...")
+    return this.http.get<any[]>(this.urlPuntosClaves).pipe(
+      catchError(this.handleError)
+    );
+  }  
+
   ObtenerProductoPorId(id: number): Observable<any> {
     return this.http.get<any[]>(`${this.urlProductoId}/${id}`).pipe(
       catchError(this.handleError)
@@ -58,6 +68,9 @@ export class ProductoService {
 
   onCrearProducto(producto: Producto, usuario: any): Observable<Producto> {
     const body = { producto, usuario };
+    console.log("Ingresado al servicio a hacer un POST del producto", producto);
+    console.log("Cuerpo de la solicitud POST:", body); 
+    console.log("URL de la solicitud POST:", `${this.urlProductoId}/${producto.id}/`); 
     return this.http.post<Producto>(`${this.urlProductos}/`, body).pipe(
       catchError(this.handleError)
     );
@@ -65,7 +78,33 @@ export class ProductoService {
 
   onActualizarProducto(producto: Producto, usuario: any): Observable<Producto> {
     const body = { producto, usuario };
-    return this.http.put<any>(`${this.urlProductoId}/${producto.id}`, body).pipe(
+    console.log("Ingresado al servicio a hacer un PUT del producto", producto);
+    console.log("Cuerpo de la solicitud PUT:", body); 
+    console.log("URL de la solicitud PUT:", `${this.urlProductoId}/${producto.id}/`); 
+    return this.http.put<any>(`${this.urlProductoId}/${producto.id}/`, body).pipe(
+      tap(response => console.log("Respuesta del servidor:", response)), 
+      catchError(this.handleError)
+    );
+  }
+  
+onEliminarProducto(productoId: number): Observable<any> {
+    const url = `${this.urlProductoId}/${productoId}/`;
+    return this.http.delete<any>(url)
+      .pipe(
+        catchError(error => {
+          console.error('Error eliminando el producto:', error);
+          return throwError(error);
+        })
+      );
+  }
+  ObtenerProductoDestacado(): Observable<any> {
+    return this.http.get<any[]>(`${this.urlProductosDestacados}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  ObtenerPuntosClavesPorProducto(id: number): Observable<any> {
+    return this.http.get<any[]>(`${this.urlPuntosClavesPorProducto}/${id}`).pipe(
       catchError(this.handleError)
     );
   }

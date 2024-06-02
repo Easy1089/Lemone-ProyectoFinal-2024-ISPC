@@ -13,12 +13,19 @@
 }
 
 .product {
-  width: calc(25% - 20px);
-  margin: 10px; /* Margen entre los productos */
+  width: calc(25% - 20px); 
+  margin: 10px; 
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
+  min-height: 300px;
+}
+
+.product img {
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
 }
 
 .product:nth-child(4n+1) {
@@ -31,7 +38,7 @@
 
 h3 {
   font-family: Rouge Script;
-  font-size: 50px;
+  font-size: 80px;
   color: #590829;
 }
 
@@ -62,3 +69,11 @@ h3 {
   color: red;
   font-weight: bold;
 }
+
+.product.delete-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+}
+

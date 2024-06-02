@@ -71,7 +71,7 @@ export class ProductoFormComponent {
      this.productoServ.ObtenerCategorias().subscribe({
       next: (response) => {
         console.log(response.categorias);
-        this.categorias = response.categorias; // Extraer el array de categorias de la respuesta
+        this.categorias = response.categorias; 
       },
       error: (error) => {
         console.error(error);
@@ -82,22 +82,18 @@ export class ProductoFormComponent {
 
   guardarProducto() {
     if (this.productoForm.valid) {
-      console.log('Producto guardado:', this.productoForm.value);
-       // Obtener el usuario autenticado desde el servicio de autenticación
+      console.log('Producto a guardar:', this.productoForm.value);
       console.log("Obteniendo usuario...");
       const usuario = this.authService.usuarioAutenticado;
       console.log("Usuario:", usuario);
       this.productoServ.onCrearProducto(this.productoForm.value, usuario).subscribe({
         next: (productoCreado) => {
           console.log('Producto creado:', productoCreado);
-          // Restablece el formulario después de guardar
           this.productoForm.reset();
-          // Volver al componente AbmProductosComponent
           this.router.navigate(['/abmproductos']);
         },
         error: (error) => {
           console.error(error);
-          // Manejar el error según sea necesario
         }
       });
     } else {
@@ -132,28 +128,33 @@ export class ProductoFormComponent {
   
   actualizarProducto(producto: Producto) {
     if (this.formularioEdicion.valid) {
-      console.log('Producto actualizado:', this.formularioEdicion.value);
-      // Obtener el usuario autenticado desde el servicio de autenticación
-      console.log("Obteniendo usuario...");
-      const usuario = this.authService.usuarioAutenticado;
-      console.log("Usuario:", usuario);
+      producto.codigo = this.formularioEdicion.value.codigo;
+      producto.nombre = this.formularioEdicion.value.nombre;
+      producto.descripcion = this.formularioEdicion.value.descripcion;
+      producto.inventariominimo = this.formularioEdicion.value.inventariominimo;
+      producto.preciodecosto = this.formularioEdicion.value.preciodecosto;
+      producto.preciodeventa = this.formularioEdicion.value.preciodeventa;
+      producto.categoria = this.formularioEdicion.value.categoria;
+      producto.activoactualmente = this.formularioEdicion.value.activoactualmente;
+      producto.imagen = this.formularioEdicion.value.imagen;
+      producto.estado = this.formularioEdicion.value.estado;
   
-      this.productoServ.onActualizarProducto(this.formularioEdicion.value, usuario).subscribe({
+      const usuario = this.authService.usuarioAutenticado;
+      // Luego, puedes enviar el objeto producto actualizado a tu servicio para actualizarlo en el backend
+      this.productoServ.onActualizarProducto(producto, usuario).subscribe({
         next: (productoActualizado) => {
           console.log('Producto actualizado:', productoActualizado);
-          // Restablece el formulario después de guardar
           this.formularioEdicion.reset();
-          // Volver al componente AbmProductosComponent
           this.router.navigate(['/abmproductos']);
         },
         error: (error) => {
           console.error(error);
-          // Manejar el error según sea necesario
         }
       });
     } else {
       console.log('Formulario inválido');
     }
   }
+  
   
 }

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/crema"
+    tools:context=".activities.EditarUsuario">
+
+    <FrameLayout
+        android:id="@+id/btnAtras"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        android:background="@drawable/elemento_esquina_redondeada"
+        android:elevation="2dp"
+        app:circularflow_radiusInDP="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023">
+
+        <ImageView
+            android:id="@+id/ivAtras"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:onClick="volver"
+            android:src="@drawable/back_arrow_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />/>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="@color/bordo"
+        android:insetTop="10dp"
+        android:insetBottom="10dp"
+        android:text="Guardar"
+        android:textColor="@color/crema"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:iconPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintStart_toStartOf="parent" />
+    <FrameLayout
+        android:id="@+id/frameLayoutPassActual"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="232dp"
+        android:background="@drawable/elemento_esquina_redondeada"
+        app:circularflow_radiusInDP="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivPass"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/ivImagenUsuario"
+        android:layout_width="78dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/user" />
+
+    <EditText
+        android:id="@+id/etTelefono"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:hint="Teléfono"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toEndOf="@+id/frameLayoutTelefono"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85"
+        tools:ignore="MissingConstraints" />
+
+    <FrameLayout
+        android:id="@+id/frameLayoutTelefono"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/elemento_esquina_redondeada"
+        app:circularflow_radiusInDP="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnGuardar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.931">
+
+        <ImageView
+            android:id="@+id/ivTelefono"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile" />
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/etPassActual"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="232dp"
+        android:ems="10"
+        android:hint="Clave actual"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gris"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.778"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/etConfirmarPass"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="300dp"
+        android:ems="10"
+        android:hint="Nueva clave"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gris"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.778"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/etApellido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Apellido"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.648"
+        tools:ignore="MissingConstraints" />
+
+    <FrameLayout
+        android:id="@+id/frameLayoutNombre"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="376dp"
+        android:background="@drawable/elemento_esquina_redondeada"
+        app:circularflow_radiusInDP="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivNombre"
+            android:layout_width="34dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutApellido"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/elemento_esquina_redondeada"
+        app:circularflow_radiusInDP="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/etApellido"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645">
+
+        <ImageView
+            android:id="@+id/ivApellido"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile" />
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/etNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="376dp"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gris"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+ <FrameLayout
+        android:id="@+id/frameLayoutConfirmarPass"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/elemento_esquina_redondeada"
+        app:circularflow_radiusInDP="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivConfirmarPass"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile" />
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/etDatosContacto"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="512dp"
+        android:ems="10"
+        android:hint="Datos de contacto"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gris"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.778"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <FrameLayout
+        android:id="@+id/frameLayoutDatosContacto"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="512dp"
+        android:background="@drawable/elemento_esquina_redondeada"
+        app:circularflow_radiusInDP="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/etDatosContacto"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivNroDocumento2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/app_name"
+        android:textColor="@color/bordo"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.714"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="109dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_lemone" />
+
+    <TextView
+        android:id="@+id/tvTituloEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="184dp"
+        android:text="@string/editar_usuario"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

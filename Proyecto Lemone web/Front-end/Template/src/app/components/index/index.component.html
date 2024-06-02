@@ -31,107 +31,75 @@
   <!-- Fuentes de google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Arizonia&family=Bruno+Ace+SC&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arizonia&family=Bruno+Ace+SC&family=Dancing+Script:wght@700&display=swap"
+    rel="stylesheet">
 
 
 </head>
 
 <body>
-<div class="inicio">
-  <div class="contenedor">
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src=" ../../../assets/img/index/Vino final copia.png" class="d-block w-100" alt="Slide 1">
+  <div class="inicio">
+    <div class="contenedor">
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src=" ../../../assets/img/index/Vino final copia.png" class="d-block w-100" alt="Slide 1">
+          </div>
+          <div class="carousel-item">
+            <img src="../../../assets/img/index/slide1.png" class="d-block w-100" alt="Slide 2">
+          </div>
         </div>
-        <div class="carousel-item">
-          <img src="../../../assets/img/index/slide1.png" class="d-block w-100" alt="Slide 2">
-        </div>
+
+        <!-- Controles del carrusel -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
       </div>
-  
-      <!-- Controles del carrusel -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
-    </div>
-    <div class="texto">
-      <h2>Bienvenidos a Lemone</h2>
-      <p>Los mejores vinos de Córdoba</p>
+      <div class="texto">
+        <h2>Bienvenidos a Lemone</h2>
+        <p>Los mejores vinos de Córdoba</p>
+      </div>
     </div>
   </div>
-</div>
 
   <!-- Productos destacados ------------>
   <h1 class="titulo">Productos destacados</h1>
 
   <main>
     <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
-      <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
-        <div class="col">
-          <div class="card h-100 shadow-sm"> <img
-              src="../../../assets/img/index/producto-base.png"
-              class="card-img-top" alt="...">
-            <div class="card-body">
-              <div class="clearfix mb-3"> <span class="float-start badge rounded-pill bg-success">SuperVino 1</span>
-            </div>
-              <h5 class="card-title">El Chardonnay es un vino blanco seco y elegante que se produce en muchas regiones.</h5>
-              <div class="text-center my-4"> <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver Catalogo</button> </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100 shadow-sm"> <img
-              src="../../../assets/img/index/producto-base.png"
-              class="card-img-top" alt="...">
-            <div class="card-body">
-              <div class="clearfix mb-3"> <span class="float-start badge rounded-pill bg-success">SuperVino 2</span>
-            </div>
-              <h5 class="card-title">El Malbec es un vino tinto de origen francés que ha ganado reconocimiento mundial.</h5>
-              <div class="text-center gap-2 my-4"> <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver Catalogo</button> </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100 shadow-sm"> <img
-              src="../../../assets/img/index/producto-base.png"
-              class="card-img-top" alt="...">
-            
-            <div class="card-body">
-              <div class="clearfix mb-3"> <span class="float-start badge rounded-pill bg-success">SuperVino 3</span>
-            </div>
-              <h5 class="card-title">El Cabernet Sauvignon es un vino tinto de cuerpo completo y robusto.</h5>
-              <div class="text-center my-4"> <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver Catalogo</button> </div>
-              <div class="clearfix mb-1"> <span class="float-start"><i class="far fa-question-circle"></i></span> <span
-                  class="float-end"><i class="fas fa-plus"></i></span> </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100 shadow-sm"> <img
-              src="../../../assets/img/index/producto-base.png"
-              class="card-img-top" alt="...">
-            <div class="label-top shadow-sm">15%OFF</div>
-            <div class="card-body">
-              <div class="clearfix mb-3"> <span class="float-start badge rounded-pill bg-success">Supervino4</span>
-            </div>
-              <h5 class="card-title">El Prosecco es un vino espumoso italiano muy popular y refrescante. </h5>
-              <div class="text-center my-4"> <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver Catalogo</button> </div>
-              <div class="clearfix mb-1"> <span class="float-start"><i class="far fa-question-circle"></i></span> <span
-                  class="float-end"><i class="fas fa-plus"></i></span> </div>
+      <div class="row">
+        <div *ngFor="let destacado of productosDestacados" class="col-md-3">
+          <div class="card h-100 shadow-sm"> 
+            <img [src]="destacado.producto.imagen" class="card-img-top" alt="...">
+            <div class="card-body" style="height: 100%;">
+              <div class="clearfix mb-3"> 
+                <span class="float-start badge rounded-pill bg-success">{{destacado.producto.nombre}}</span> 
+              </div>
+              <span class="spanDes" >
+                <h5 style="font-size: x-small; padding: auto;">{{destacado.producto.descripcion}}</h5>
+              </span>
+              <div> 
+                <button (click)="catalogo();scrollToTop()" class="btn btn-warning">Ver Catalogo</button> 
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </main>
+  
+  
 
   <!-- Contacto ---------------------------------->
-  
+
   <div class="contenedor">
     <div id="carouselExampleControls2" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
@@ -142,7 +110,7 @@
           <img src="../../../assets/img/index/CATALOGO.png" class="d-block w-100" alt="Slide 2">
         </div>
       </div>
-  
+
       <div id="textocontacto" class="carousel-caption d-flex flex-column justify-content-center align-items-center">
         <div class="row">
           <div class="col-12 text-center">
@@ -151,87 +119,201 @@
             </div>
           </div>
           <div class="col-12 text-center">
-            <button style="background-color:#590829;" class="btn btn-primary btn-lg" onclick="contactos()">Contáctanos</button>
+            <button style="background-color:#590829;" class="btn btn-primary btn-lg"
+            (click)="contactos()">Contáctanos</button>
           </div>
         </div>
       </div>
-  
+
       <!-- Controles del carrusel -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2"
+        data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Anterior</span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2"
+        data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Siguiente</span>
       </button>
     </div>
   </div>
-  
-  
-  
-  
-  
+
 
 
 
   <!-- Testimonios ------------------------------>
-  <div class="container">
+  <!-- <div class="container">
     <div id="demo" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="carousel-caption">
-             
-              <img src="https://i.imgur.com/lE89Aey.jpg">
-              <div id="image-caption">Nick Doe</div>
-            </div>   
-          </div>
-          <div class="carousel-item">
-            <div class="carousel-caption">
-              
-                <img src="https://i.imgur.com/QptVdsp.jpg" class="img-fluid">
-                <div id="image-caption">Cromption Greves</div>
-            </div>   
-          </div>
-          <div class="carousel-item">
-            <div class="carousel-caption">
-                <img src="https://i.imgur.com/jQWThIn.jpg" class="img-fluid">
-                <div id="image-caption">Harry Mon</div>
-            </div>   
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="carousel-caption">
+
+            <img src="https://i.imgur.com/lE89Aey.jpg">
+            <div id="image-caption">Nick Doe</div>
           </div>
         </div>
-        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-          <i class='fas fa-arrow-left'></i>
-        </a>
-        <a class="carousel-control-next" href="#demo" data-slide="next">
-          <i class='fas fa-arrow-right'></i>
-        </a>
+        <div class="carousel-item">
+          <div class="carousel-caption">
+
+            <img src="https://i.imgur.com/QptVdsp.jpg" class="img-fluid">
+            <div id="image-caption">Cromption Greves</div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="carousel-caption">
+            <img src="https://i.imgur.com/jQWThIn.jpg" class="img-fluid">
+            <div id="image-caption">Harry Mon</div>
+          </div>
+        </div>
       </div>
-      
-</div>
+      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <i class='fas fa-arrow-left'></i>
+      </a>
+      <a class="carousel-control-next" href="#demo" data-slide="next">
+        <i class='fas fa-arrow-right'></i>
+      </a>
+    </div>
+
+  </div> -->
+
+
+
+  <h1 class="titulo mb-4">Marcas Destacadas</h1>
+  <section>
+
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-3 mb-4">
+
+      <div class="col mb-4">
+        <div class="card mb-4" style="max-width: 540px;">
+
+          <div id="carouselExampleControls1" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="../../../assets/img/index/LaMartina1.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../../../assets/img/index/LaMartina2.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../../../assets/img/index/LaMartina3.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+
+          </div>
+          <div class="card-body">
+            <p class="card-text"><small class="text-muted">Valle de Traslasierra, Provincia de Córdoba</small></p>
+
+            <h5 class="card-title">La Matilde</h5>
+            <p class="card-text">Su especialidad son los vinos orgánicos y biodinámicos, que producen a partir de sus
+              30.000 m2 cuadrados de viñedos.</p>
+            <p class="card-text"><small class="text-muted">Entre sus varietales se destacan:</small></p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Cabernet Sauvignon</li>
+              <li class="list-group-item">Malbec</li>
+              <li class="list-group-item">Tannat</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col mb-4">
+        <div class="card mb-4" style="max-width: 540px;">
+
+          <div id="carouselExampleControls1" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="../../../assets/img/index/araoz1.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../../../assets/img/index/araoz2.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../../../assets/img/index/araoz3.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+
+          </div>
+          <div class="card-body">
+            <p class="card-text"><small class="text-muted">San Javier, Provincia de Córdoba</small></p>
+
+            <h5 class="card-title">Aráoz de Lamadrid</h5>
+            <p class="card-text">Entre las más de 30.000 plantas que habitan los jardines, <br> hay 11.000 vides, con dos tipos de uvas blancas y nueve tintas. <br></p>
+            <p class="card-text"><small class="text-muted">Entre sus varietales se destacan:</small></p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Petit Verdot</li>
+              <li class="list-group-item">Monastrell</li>
+              <li class="list-group-item">Syrah</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col mb-4">
+        <div class="card mb-4" style="max-width: 540px;">
+
+          <div id="carouselExampleControls1" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="../../../assets/img/index/sanjavier1.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../../../assets/img/index/sanjavier2.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../../../assets/img/index/sanjavier3.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+
+          </div>
+          <div class="card-body">
+            <p class="card-text"><small class="text-muted">San Javier, Provincia de Córdoba</small></p>
+
+            <h5 class="card-title">Bodega Noble San Javier</h5>
+            <p class="card-text">A 900 msnm y la ausencia de cultivos aledaños 
+              hacen de este un lugar único, permitiendo elaborar un vino sano y muy frutado.</p>
+            <p class="card-text"><small class="text-muted">Entre sus varietales se destacan:</small></p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Merlot</li>
+              <li class="list-group-item">Malbec</li>
+              <li class="list-group-item">Cabernet Sauvignon</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</section>
 
 
 
 
 
-  <h1 class="titulo">Testimonios</h1>
+
+  <!-- <h1 class="titulo">Testimonios</h1>
   <section>
     <div class="row d-flex justify-content-center">
       <div class="col-md-10 col-xl-8 text-center">
         <h3 class="mb-4">Algunos testimonios de nuestros clientes</h3>
       </div>
     </div>
-  
+
     <div class="row text-center">
       <div class="col-md-4 mb-5 mb-md-0">
         <div class="d-flex justify-content-center mb-4">
-          <img src="../../../assets/img/index/persona1.jpg"
-            class="rounded-circle shadow-1-strong" width="150" height="150" />
+          <img src="../../../assets/img/index/persona1.jpg" class="rounded-circle shadow-1-strong" width="150"
+            height="150" />
         </div>
         <h5 class="mb-3">Santiago Perez</h5>
-    
+
         <p class="px-xl-3">
-          <i class="fas fa-quote-left pe-2"></i>La variedad de vinos que encontré en esta vinoteca fue impresionante.
+          <i class="fas fa-quote-left pe-2"></i>La variedad de vinos que encontré en esta vinoteca fue
+          impresionante.
           Encontré el vino perfecto para mi cena de aniversario y fue un éxito. ¡Definitivamente volveré!
         </p>
         <ul class="list-unstyled d-flex justify-content-center mb-0">
@@ -254,13 +336,14 @@
       </div>
       <div class="col-md-4 mb-5 mb-md-0">
         <div class="d-flex justify-content-center mb-4">
-          <img src="../../../assets/img/index/persona2.jpg"
-            class="rounded-circle shadow-1-strong" width="150" height="150" />
+          <img src="../../../assets/img/index/persona2.jpg" class="rounded-circle shadow-1-strong" width="150"
+            height="150" />
         </div>
         <h5 class="mb-3">Carlos Herrera</h5>
- 
+
         <p class="px-xl-3">
-          <i class="fas fa-quote-left pe-2"></i>Soy un aficionado del vino y esta vinoteca cumplió con todas mis expectativas. 
+          <i class="fas fa-quote-left pe-2"></i>Soy un aficionado del vino y esta vinoteca cumplió con todas mis
+          expectativas.
           El personal es muy amable y conocedor de vinos. Me guiaron de la mejor manera.
         </p>
         <ul class="list-unstyled d-flex justify-content-center mb-0">
@@ -283,12 +366,12 @@
       </div>
       <div class="col-md-4 mb-0">
         <div class="d-flex justify-content-center mb-4">
-          <img src="../../../assets/img/index/persona3.jpg"
-            class="rounded-circle shadow-1-strong" width="150" height="150" />
+          <img src="../../../assets/img/index/persona3.jpg" class="rounded-circle shadow-1-strong" width="150"
+            height="150" />
         </div>
         <h5 class="mb-3">Jose Diaz</h5>
         <p class="px-xl-3">
-          <i class="fas fa-quote-left pe-2"></i>La vinoteca tiene una selección única de vinos locales e 
+          <i class="fas fa-quote-left pe-2"></i>La vinoteca tiene una selección única de vinos locales e
           internacionales a precios razonables. La atmósfera es acogedora y te hace sentir como en casa
         </p>
         <ul class="list-unstyled d-flex justify-content-center mb-0">
@@ -310,7 +393,7 @@
         </ul>
       </div>
     </div>
-  </section>
+  </section> -->
 
 
 

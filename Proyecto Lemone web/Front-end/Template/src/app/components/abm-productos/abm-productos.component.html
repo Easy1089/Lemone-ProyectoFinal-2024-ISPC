@@ -55,6 +55,11 @@
                         <a class="nav-link" [routerLink]="['/ambcategorias']">
                             <i class="bi bi-bookmarks"></i> Categorias
                         </a>
+                    </li>   
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/puntosclaves']">
+                            <i class="bi bi-bookmarks"></i> Puntos claves
+                        </a>
                     </li>                 
                 </ul>
             </div>
@@ -132,22 +137,23 @@
                             {{ product.preciodeventa }}
                         </td>
                         <td>
-                            {{ product.categoria }}
+                            {{ product.categoria.nombre }}
                         </td>
                         <td>
                             <span class="badge badge-lg badge-dot">
-                                <i class="bg-success"></i>
-                                <span [appEstadoProducto]="product.activoactualmente"></span>
-                            </span>
+                                <i class="bg-warning" *ngIf="!product.activoactualmente"></i>
+                                <i class="bg-success" *ngIf="product.activoactualmente"></i>
+                                {{ product.activoactualmente ? 'Activo' : 'Inactivo' }}
+                            </span>                                                                        
                         </td>
                         <td class="text-end">
                             <!--<a href="#" class="btn btn-sm btn-neutral">View</a>-->
                             <a class="btn btn-sm btn-primary"
                                 [routerLink]="['/producto-form', { id: product.id, editar: true } ]">Editar</a>
-                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover"
+                                (click)="eliminarProducto(product.id)">
                                 <i class="bi bi-trash"></i>
                             </button>
-
                         </td>
                     </tr>
                 </tbody>

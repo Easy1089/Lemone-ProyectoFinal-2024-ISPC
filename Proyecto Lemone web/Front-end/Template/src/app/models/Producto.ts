@@ -2,7 +2,6 @@ import { DecimalPipe } from "@angular/common";
 
 export class Producto {
     fechaActual: Date = new Date();
-
     codigo:string="";
     nombre:string="";
     descripcion:string="";
@@ -15,7 +14,12 @@ export class Producto {
     fechaalta:Date=this.fechaActual;
     categoria:number=0;
     usuarioalta_id:number=0;
+    ano:number=0;
+    temperatura:number=0;
+    porcentajedealcohol:number=0;;
     id:number=0;
+    bodega:number=0;
+    tipodevino:number=0;
   }
 
 
