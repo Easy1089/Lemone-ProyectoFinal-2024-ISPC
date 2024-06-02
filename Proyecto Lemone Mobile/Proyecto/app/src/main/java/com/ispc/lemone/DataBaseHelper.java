@@ -28,7 +28,7 @@ import java.util.Locale;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lemonemobile_3.db";
-    private static final int DATABASE_VERSION = 2; // Incrementa la versión de la base de datos
+    private static final int DATABASE_VERSION = 3; // Incrementa la versión de la base de datos
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -60,10 +60,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "Email VARCHAR(50), " +
                 "Password VARCHAR(255) NOT NULL, " +
                 "ActivoActualmente BIT NOT NULL DEFAULT 1, " +
+                "Estado VARCHAR(5) DEFAULT 'A', " + // Agregar la nueva columna aquí
                 "FOREIGN KEY(IdPersona) REFERENCES Personas(Id), " +
                 "FOREIGN KEY(IdTipoDeUsuario) REFERENCES TiposDeUsuarios(Id))";
         db.execSQL(tablaUsuarios);
-
 
 
 
@@ -148,6 +148,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     "FOREIGN KEY(IdProducto) REFERENCES Productos(Id))";
             db.execSQL(tablaProductosDestacados);
         }
+        if (oldVersion < 3) {
+            // Agregar la columna Estado en la versión 3
+            db.execSQL("ALTER TABLE Usuarios ADD COLUMN Estado VARCHAR(5) DEFAULT 'A'");
+        }
         // Maneja otras actualizaciones de esquema aquí
     }
     public boolean existeProductoDestacadoEnFechas(int idProducto, Date fechaDesde, Date fechaHasta) {
@@ -220,7 +224,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public List<Usuario> listarUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
 
-        String query = "SELECT * FROM Usuarios";
+        String query = "SELECT * FROM Usuarios WHERE Estado = 'A'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -312,13 +316,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean borrarUsuario(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM Usuarios WHERE Id = " + id;
-        Cursor cursor = db.rawQuery(query, null);
-        boolean result = cursor.moveToFirst();
-        cursor.close();  // Asegúrate de cerrar el cursor
-        db.close();  // Cierra la base de datos después de usarla
-        return result;
+        ContentValues values = new ContentValues();
+        values.put("Estado", "B");
+
+        // Actualiza la tabla y obtiene el número de filas afectadas
+        int rowsAffected = db.update("Usuarios", values, "Id = ?", new String[]{String.valueOf(id)});
+
+        // Cierra la base de datos después de usarla
+        db.close();
+
+        // Devuelve verdadero si al menos una fila fue afectada
+        return rowsAffected > 0;
     }
+
 
 
 
