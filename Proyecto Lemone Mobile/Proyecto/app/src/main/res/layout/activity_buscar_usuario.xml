@@ -28,68 +28,68 @@
         app:layout_constraintTop_toBottomOf="@+id/btnActivarDesactivarUsuario"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/btnActivarDesactivarUsuario"
-        android:layout_width="98dp"
-        android:layout_height="52dp"
-        android:backgroundTint="@color/bordo"
-        android:insetTop="10dp"
-        android:insetBottom="10dp"
-        android:text="Activar"
-        android:textColor="@color/crema"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:cornerRadius="10dp"
-        app:iconPadding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.888"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewUsuarios"
-        app:layout_constraintVertical_bias="0.138"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/btnActivarDesactivarUsuario"-->
+<!--        android:layout_width="98dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:backgroundTint="@color/bordo"-->
+<!--        android:insetTop="10dp"-->
+<!--        android:insetBottom="10dp"-->
+<!--        android:text="Activar"-->
+<!--        android:textColor="@color/crema"-->
+<!--        android:textSize="15sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:cornerRadius="10dp"-->
+<!--        app:iconPadding="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.888"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/listViewUsuarios"-->
+<!--        app:layout_constraintVertical_bias="0.138"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <Button
-        android:id="@+id/btnEliminarUsuario"
-        android:layout_width="124dp"
-        android:layout_height="52dp"
-        android:backgroundTint="@color/bordo"
-        android:insetTop="10dp"
-        android:insetBottom="10dp"
-        android:text="Eliminar"
-        android:textColor="@color/crema"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:cornerRadius="10dp"
-        app:iconPadding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewUsuarios"
-        app:layout_constraintVertical_bias="0.138"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/btnEliminarUsuario"-->
+<!--        android:layout_width="124dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:backgroundTint="@color/bordo"-->
+<!--        android:insetTop="10dp"-->
+<!--        android:insetBottom="10dp"-->
+<!--        android:text="Eliminar"-->
+<!--        android:textColor="@color/crema"-->
+<!--        android:textSize="15sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:cornerRadius="10dp"-->
+<!--        app:iconPadding="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/listViewUsuarios"-->
+<!--        app:layout_constraintVertical_bias="0.138"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <Button
-        android:id="@+id/btnModificarUsuario"
-        android:layout_width="98dp"
-        android:layout_height="52dp"
-        android:backgroundTint="@color/bordo"
-        android:insetTop="10dp"
-        android:insetBottom="10dp"
-        android:text="Editar"
-        android:textColor="@color/crema"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:cornerRadius="10dp"
-        app:iconPadding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewUsuarios"
-        app:layout_constraintVertical_bias="0.138"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/btnModificarUsuario"-->
+<!--        android:layout_width="98dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:backgroundTint="@color/bordo"-->
+<!--        android:insetTop="10dp"-->
+<!--        android:insetBottom="10dp"-->
+<!--        android:text="Editar"-->
+<!--        android:textColor="@color/crema"-->
+<!--        android:textSize="15sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:cornerRadius="10dp"-->
+<!--        app:iconPadding="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.092"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/listViewUsuarios"-->
+<!--        app:layout_constraintVertical_bias="0.138"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
 
     <Button
