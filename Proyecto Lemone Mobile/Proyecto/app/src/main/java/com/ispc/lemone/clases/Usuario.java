@@ -115,4 +115,8 @@ public class Usuario implements Parcelable {
                 "email='" + email + '\'' +
                 '}';
     }
+
+    public Object getUsuario() {
+        return "usuario";
+    }
 }

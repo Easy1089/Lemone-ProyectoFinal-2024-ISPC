@@ -56,6 +56,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(IdTipoDeUsuario) REFERENCES TiposDeUsuarios(Id))";
         db.execSQL(tablaUsuarios);
 
+
+
+
         String tablaTiposOperacion = "CREATE TABLE IF NOT EXISTS TiposDeOperacion (" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "Nombre VARCHAR(50))";
@@ -217,12 +220,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return tipoUsuario;
     }
 
-    public boolean borrarUsuario(Usuario usuario) {
+    public boolean borrarUsuario(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM Usuarios WHERE id = " + usuario.getId();
+        String query = "DELETE FROM Usuarios WHERE Id = " + id;
         Cursor cursor = db.rawQuery(query, null);
-        return cursor.moveToFirst();
+        boolean result = cursor.moveToFirst();
+        cursor.close();  // Asegúrate de cerrar el cursor
+        db.close();  // Cierra la base de datos después de usarla
+        return result;
     }
+
+
 
     public boolean editarUsuario(Usuario usuario, String etPassActual, String etConfirmarPass, String etNombre, String etApellido, String etDatosContacto, double etTelefono) {
         SQLiteDatabase db = this.getWritableDatabase();
