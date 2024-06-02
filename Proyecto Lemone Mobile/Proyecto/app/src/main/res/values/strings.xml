@@ -51,9 +51,9 @@
     <string name="editMail">Email</string>
 
     <!--   Acerca De    -->
-    <string name="msj_btn_regresar">Menu Principal</string>
+    <string name="descarga">Descargar</string>
     <string name="titulo">Lemone</string>
-    <string name="msj_textoacercade">Sistema de Gestion de Stock para Vinotecas, permite al usuario realizar control de Stock de sus mercaderias ahora en version movil</string>
+    <string name="msj_textoacercade">Sistema de Gestion de Stock para Vinotecas, Descarga nuestras versiones web y/o movil.</string>
     <!--  -->
 
     <!--   Contacto    -->
