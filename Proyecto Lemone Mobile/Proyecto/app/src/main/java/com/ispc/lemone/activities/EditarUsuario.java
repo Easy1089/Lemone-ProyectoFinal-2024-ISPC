@@ -2,12 +2,14 @@ package com.ispc.lemone.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.ispc.lemone.DataBaseHelper;
@@ -25,6 +27,7 @@ public class EditarUsuario extends AppCompatActivity {
     private EditText etDatosContacto;
     private EditText etTelefono;
     private Button buttonGuardar;
+    private Switch etActivoActualmente;
     private Usuario usuarioEnEdicion;
     private DataBaseHelper dataBaseHelper;
 
@@ -35,6 +38,7 @@ public class EditarUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_editar_usuario);
 
         btnEliminarUsuario = findViewById(R.id.btnEliminarUsuario);
+        etActivoActualmente = findViewById(R.id.btnActivarDesactivarUsuario);
 
         try {
             Log.d(TAG, "onCreate: Inicializando vistas");
@@ -43,20 +47,39 @@ public class EditarUsuario extends AppCompatActivity {
             etPassActual = findViewById(R.id.etPassActual);
             etConfirmarPass = findViewById(R.id.etConfirmarPass);
             etApellido = findViewById(R.id.etApellido);
-            etDatosContacto = findViewById(R.id.etDatosContacto);
             etTelefono = findViewById(R.id.etTelefono);
             buttonGuardar = findViewById(R.id.btnGuardar);
 
             dataBaseHelper = new DataBaseHelper(this);
 
-            Log.e(TAG, "onCreate: Usuario");
-
             // Obtén el objeto Usuario como Parcelable
             usuarioEnEdicion = getIntent().getParcelableExtra("usuario");
             if (usuarioEnEdicion != null) {
                 Log.d(TAG, "onCreate: Usuario recibido - " + usuarioEnEdicion.getEmail());
-                etNombre.setText(usuarioEnEdicion.getEmail());
-                // etc. para los otros campos...
+                // Aquí es donde actualizas la información del usuario desde la base de datos
+                usuarioEnEdicion = dataBaseHelper.obtenerUsuarioPorId(usuarioEnEdicion.getId());
+                if (usuarioEnEdicion != null) {
+                    etNombre.setText(usuarioEnEdicion.getEmail());
+                    etApellido.setText(usuarioEnEdicion.getDatosPersonales());
+                    etTelefono.setText(usuarioEnEdicion.getTelefono());
+
+                    // etc. para los otros campos...
+                    etActivoActualmente.setChecked(usuarioEnEdicion.isActivoActualmente());
+
+//            usuarioEnEdicion = getIntent().getParcelableExtra("usuario");
+//            if (usuarioEnEdicion != null) {
+//                Log.d(TAG, "onCreate: Usuario recibido - " + usuarioEnEdicion.getEmail());
+//                etNombre.setText(usuarioEnEdicion.getEmail());
+//                etApellido.setText(usuarioEnEdicion.getDatosPersonales());
+//                etTelefono.setText(usuarioEnEdicion.getTelefono()) ;
+//
+//                // etc. para los otros campos...
+//                etActivoActualmente.setChecked(usuarioEnEdicion.isActivoActualmente());
+                } else {
+                    Log.e(TAG, "onCreate: No se pudo obtener la información del usuario desde la base de datos");
+                    Toast.makeText(this, "Error al obtener la información del usuario", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             } else {
                 Log.e(TAG, "onCreate: Usuario no encontrado en el Intent");
                 Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
@@ -71,10 +94,24 @@ public class EditarUsuario extends AppCompatActivity {
 
             buttonGuardar.setOnClickListener(view -> {
                 Log.d(TAG, "onClick: Botón guardar presionado");
-                // Aquí puedes agregar la lógica para guardar los cambios del usuario
-                Toast.makeText(EditarUsuario.this, "Usuario Editado", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(EditarUsuario.this, BuscarUsuario.class);
-                startActivity(intent);
+
+                // Obtener los valores de los EditText
+                String email = etNombre.getText().toString();
+                String datosPersonales = etApellido.getText().toString();
+                String telefono = etTelefono.getText().toString();
+                String nuevaPass = etConfirmarPass.getText().toString();
+                boolean activoActualmente = etActivoActualmente.isChecked();
+
+                // Actualizar los datos del usuario en la base de datos
+                boolean actualizado = dataBaseHelper.editarUsuario(usuarioEnEdicion, email, datosPersonales, telefono, nuevaPass, activoActualmente);
+
+                if (actualizado) {
+                    Toast.makeText(EditarUsuario.this, "Usuario actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EditarUsuario.this, BuscarUsuario.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(EditarUsuario.this, "Error al actualizar usuario", Toast.LENGTH_SHORT).show();
+                }
             });
 
         } catch (Exception e) {
