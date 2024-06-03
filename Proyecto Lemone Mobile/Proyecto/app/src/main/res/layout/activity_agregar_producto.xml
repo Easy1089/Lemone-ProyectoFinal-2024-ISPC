@@ -16,14 +16,15 @@
         android:id="@+id/swActivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
         android:text="Activo"
         android:textColor="@color/black"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonGuardarAddProduct"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.914" />
 
     <FrameLayout
         android:id="@+id/buttonAtras"
@@ -107,10 +108,12 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.597"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.0" />
 
     <FrameLayout
         android:id="@+id/framePrecioVenta"
@@ -141,10 +144,12 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.597"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPrecioCosto" />
+        app:layout_constraintTop_toBottomOf="@+id/textPrecioCosto"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/textInventario"
@@ -156,10 +161,12 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.597"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDescripcion" />
+        app:layout_constraintTop_toBottomOf="@+id/textDescripcion"
+        app:layout_constraintVertical_bias="0.033" />
 
     <FrameLayout
         android:id="@+id/frameDescripcion"
@@ -190,10 +197,12 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.597"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInventario" />
+        app:layout_constraintTop_toBottomOf="@+id/textInventario"
+        app:layout_constraintVertical_bias="0.0" />
 
     <FrameLayout
         android:id="@+id/frameLayoutNombre"
@@ -264,10 +273,12 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.597"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/textNombre"
+        app:layout_constraintVertical_bias="0.011" />
 
     <FrameLayout
         android:id="@+id/framePrecioCosto"
@@ -292,16 +303,18 @@
         android:id="@+id/textNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.597"
+        app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCodigo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393" />
 
     <FrameLayout
         android:id="@+id/frameLayoutCodigo"
