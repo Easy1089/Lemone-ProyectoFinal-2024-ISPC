@@ -2,9 +2,9 @@ package com.ispc.lemone.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -59,22 +59,14 @@ public class EditarUsuario extends AppCompatActivity {
                 // Aquí es donde actualizas la información del usuario desde la base de datos
                 usuarioEnEdicion = dataBaseHelper.obtenerUsuarioPorId(usuarioEnEdicion.getId());
                 if (usuarioEnEdicion != null) {
+                    etPassActual.setText(usuarioEnEdicion.getPassword());
+                    etConfirmarPass.setText(usuarioEnEdicion.getPassword());
                     etNombre.setText(usuarioEnEdicion.getEmail());
                     etApellido.setText(usuarioEnEdicion.getDatosPersonales());
                     etTelefono.setText(usuarioEnEdicion.getTelefono());
 
                     // etc. para los otros campos...
                     etActivoActualmente.setChecked(usuarioEnEdicion.isActivoActualmente());
-
-//            usuarioEnEdicion = getIntent().getParcelableExtra("usuario");
-//            if (usuarioEnEdicion != null) {
-//                Log.d(TAG, "onCreate: Usuario recibido - " + usuarioEnEdicion.getEmail());
-//                etNombre.setText(usuarioEnEdicion.getEmail());
-//                etApellido.setText(usuarioEnEdicion.getDatosPersonales());
-//                etTelefono.setText(usuarioEnEdicion.getTelefono()) ;
-//
-//                // etc. para los otros campos...
-//                etActivoActualmente.setChecked(usuarioEnEdicion.isActivoActualmente());
                 } else {
                     Log.e(TAG, "onCreate: No se pudo obtener la información del usuario desde la base de datos");
                     Toast.makeText(this, "Error al obtener la información del usuario", Toast.LENGTH_SHORT).show();
@@ -94,6 +86,10 @@ public class EditarUsuario extends AppCompatActivity {
 
             buttonGuardar.setOnClickListener(view -> {
                 Log.d(TAG, "onClick: Botón guardar presionado");
+
+                if (!validarContrasenas()) {
+                    return;
+                }
 
                 // Obtener los valores de los EditText
                 String email = etNombre.getText().toString();
@@ -119,6 +115,33 @@ public class EditarUsuario extends AppCompatActivity {
             Toast.makeText(this, "Error al inicializar la actividad", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    private boolean validarContrasenas() {
+        String passActual = etPassActual.getText().toString();
+        String confirmarPass = etConfirmarPass.getText().toString();
+
+        if (TextUtils.isEmpty(passActual) || TextUtils.isEmpty(confirmarPass)) {
+            Toast.makeText(this, "Ambos campos son obligatorios", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!esContrasenaValida(passActual)) {
+            Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!passActual.equals(confirmarPass)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true; // Las contraseñas coinciden y son válidas
+    }
+
+    private boolean esContrasenaValida(String password) {
+        String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).{8,}$";
+        return password.matches(regex);
     }
 
     public void volver(View view) {
