@@ -11,17 +11,21 @@ public class Usuario implements Parcelable {
     private String email;
     private String password;
     private boolean activoActualmente;
+    private String DatosPersonales;
+    private String Telefono;
 
     public Usuario() {
     }
 
-    public Usuario(int id, TipoUsuario tipoUsuario, Persona persona, String email, String password, boolean activoActualmente) {
+    public Usuario(int id, TipoUsuario tipoUsuario, Persona persona, String email, String password, boolean activoActualmente, String Telefono, String DatosPersonales) {
         this.id = id;
         this.tipoUsuario = tipoUsuario;
         this.persona = persona;
         this.email = email;
         this.password = password;
         this.activoActualmente = activoActualmente;
+        this.Telefono = Telefono;
+        this.DatosPersonales = DatosPersonales;
     }
 
     protected Usuario(Parcel in) {
@@ -118,5 +122,24 @@ public class Usuario implements Parcelable {
 
     public Object getUsuario() {
         return "usuario";
+    }
+
+
+    public String getDatosPersonales() {
+
+       return DatosPersonales;
+    }
+
+    public String getTelefono() {
+
+        return Telefono;
+    }
+
+    public void setDatosPersonales(String DatosPersonales) {
+        this.DatosPersonales = DatosPersonales;
+    }
+
+    public void setTelefono(String Telefono) {
+        this.Telefono = Telefono;
     }
 }

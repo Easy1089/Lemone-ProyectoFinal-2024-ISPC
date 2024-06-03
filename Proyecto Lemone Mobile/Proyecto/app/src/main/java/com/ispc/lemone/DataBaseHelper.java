@@ -19,7 +19,6 @@ import com.ispc.lemone.clases.ProductoDestacado;
 import com.ispc.lemone.clases.TipoUsuario;
 import com.ispc.lemone.clases.Usuario;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ import java.util.Locale;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lemonemobile_3.db";
-    private static final int DATABASE_VERSION = 3; // Incrementa la versión de la base de datos
+    private static final int DATABASE_VERSION = 4; // Incrementa la versión de la base de datos
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -60,7 +59,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "Email VARCHAR(50), " +
                 "Password VARCHAR(255) NOT NULL, " +
                 "ActivoActualmente BIT NOT NULL DEFAULT 1, " +
-                "Estado VARCHAR(5) DEFAULT 'A', " + // Agregar la nueva columna aquí
+                "Estado VARCHAR(5) DEFAULT 'A', " +
+                "DatosPersonales VARCHAR(50) DEFAULT 'Completar nombre y apellido', " +
+                "Telefono VARCHAR(50) DEFAULT 'Completar Teléfono', " +
                 "FOREIGN KEY(IdPersona) REFERENCES Personas(Id), " +
                 "FOREIGN KEY(IdTipoDeUsuario) REFERENCES TiposDeUsuarios(Id))";
         db.execSQL(tablaUsuarios);
@@ -152,6 +153,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             // Agregar la columna Estado en la versión 3
             db.execSQL("ALTER TABLE Usuarios ADD COLUMN Estado VARCHAR(5) DEFAULT 'A'");
         }
+        if (oldVersion < 4) {
+            // Agregar la columna Estado en la versión 3
+            db.execSQL("ALTER TABLE Usuarios ADD COLUMN DatosPersonales VARCHAR(50) DEFAULT 'Completar nombre y apellido'");
+            db.execSQL("ALTER TABLE Usuarios ADD COLUMN Telefono VARCHAR(50) DEFAULT 'Completar teléfono'");
+        }
         // Maneja otras actualizaciones de esquema aquí
     }
     public boolean existeProductoDestacadoEnFechas(int idProducto, Date fechaDesde, Date fechaHasta) {
@@ -235,6 +241,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 int idPersona = cursor.getInt(2);
                 @SuppressLint("Range") String email = cursor.getString(cursor.getColumnIndex("Email"));
                 String password = cursor.getString(4);
+                String telefono = cursor.getString(6);
+                String datosPersonales = cursor.getString(7);
                 boolean activoActualmente = cursor.getInt(5) == 1;
 
                 Usuario usuario = new Usuario();
@@ -244,6 +252,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 usuario.setEmail(email);
                 usuario.setPassword(password);
                 usuario.setActivoActualmente(activoActualmente);
+                usuario.setTelefono(telefono);
+                usuario.setDatosPersonales(datosPersonales);
 
                 usuarios.add(usuario);
             } while (cursor.moveToNext());
@@ -332,47 +342,34 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
-    public boolean editarUsuario(Usuario usuario, String etPassActual, String etConfirmarPass, String etNombre, String etApellido, String etDatosContacto, double etTelefono) {
+    public boolean editarUsuario(Usuario usuario, String email, String datosPersonales, String telefono, String nuevaPass, boolean isActivoActualmente) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int idPersona = usuario.getPersona().getId();
+
         int idUsuario = usuario.getId();
-        int filasActualizadasPersona = 0;
-        int filasActualizadasTablaUsuario = 0;
 
         db.beginTransaction();
-
         try {
-            // Se actualiza la otra tabla solo si antiguoPassword coincide con el valor existente
-            filasActualizadasTablaUsuario = 0;
-            if (etConfirmarPass != null && etPassActual != null) {
-                // Se compara nuevoPassword con el valor existente en la base de datos
-                Cursor cursor = db.rawQuery("SELECT password FROM Usuario WHERE id = " + idUsuario, null);
-                if (cursor.moveToFirst()) {
-                    String passwordExistente = cursor.getString(0);
-                    if (passwordExistente.equals(etPassActual)) {
-                        ContentValues valuesTablaRelacionada = new ContentValues();
-                        valuesTablaRelacionada.put("password", etConfirmarPass);
-                        filasActualizadasTablaUsuario = db.update("Usuario", valuesTablaRelacionada, "id = " + idUsuario, null);
-
-                        ContentValues valuesPersona = new ContentValues();
-                        valuesPersona.put("nombre", etNombre);
-                        valuesPersona.put("apellido", etApellido);
-                        valuesPersona.put("domicilio", etDatosContacto);
-                        valuesPersona.put("telefono", etTelefono);
-
-                        // Se actualiza la tabla Personas
-                        filasActualizadasPersona = db.update("Personas", valuesPersona, "id = " + idPersona, null);
-                    }
-                }
-                cursor.close();
+            ContentValues valuesUsuario = new ContentValues();
+            if (nuevaPass != null && !nuevaPass.isEmpty()) {
+                valuesUsuario.put("Password", nuevaPass);
             }
-            // Comprobamos que al menos una de las actualizaciones tuvo éxito
-            if (filasActualizadasPersona > 0 || filasActualizadasTablaUsuario > 0) {
-                // Confirmación de la transacción
+            if (email != null && !email.isEmpty()) {
+                valuesUsuario.put("Email", email);
+            }
+            if (datosPersonales != null && !datosPersonales.isEmpty()) {
+                valuesUsuario.put("DatosPersonales", datosPersonales);
+            }
+            if (telefono != null && !telefono.isEmpty()) {
+                valuesUsuario.put("Telefono", telefono);
+            }
+            valuesUsuario.put("ActivoActualmente", isActivoActualmente ? 1 : 0);
+
+            int filasActualizadas = db.update("Usuarios", valuesUsuario, "Id = ?", new String[]{String.valueOf(idUsuario)});
+
+            if (filasActualizadas > 0) {
                 db.setTransactionSuccessful();
                 return true;
             } else {
-                // Revertimos la transacción en caso de error
                 return false;
             }
         } finally {
@@ -380,6 +377,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+
+    public Usuario obtenerUsuarioPorId(int idUsuario) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Usuario usuario = null;
+        Cursor cursor = db.query("Usuarios", null, "Id = ?", new String[]{String.valueOf(idUsuario)}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            usuario = new Usuario();
+            usuario.setId(cursor.getInt(cursor.getColumnIndexOrThrow("Id")));
+            usuario.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("Email")));
+            usuario.setPassword (cursor.getString(cursor.getColumnIndexOrThrow("Password")));
+            usuario.setDatosPersonales(cursor.getString(cursor.getColumnIndexOrThrow("DatosPersonales")));
+            usuario.setTelefono(cursor.getString(cursor.getColumnIndexOrThrow("Telefono")));
+            usuario.setActivoActualmente(cursor.getInt(cursor.getColumnIndexOrThrow("ActivoActualmente")) == 1);
+            // Asigna otros campos según sea necesario
+            cursor.close();
+        }
+        db.close();
+        return usuario;
+    }
+
+
+
 
     public boolean guardarUsuario(Usuario usuario) {
         long result = 0;
@@ -743,4 +763,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return productosDestacados;
     }
+
+
 }
