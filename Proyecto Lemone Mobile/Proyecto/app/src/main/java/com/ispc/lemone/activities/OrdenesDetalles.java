@@ -17,6 +17,8 @@ import com.ispc.lemone.R;
 import com.ispc.lemone.adapters.OrdenAdapter;
 
 import com.ispc.lemone.clases.Orden;
+import com.ispc.lemone.clases.globalState;
+
 import android.net.Uri;
 import android.os.Environment;
 import androidx.core.content.FileProvider;
@@ -33,8 +35,8 @@ public class OrdenesDetalles extends AppCompatActivity {
     private ArrayList<Orden> listaDeOrdenes;
     private ListView listViewOrdenes;
     private Button btnExportar;
-
     private FrameLayout btnAtras;
+    private String loginUser = globalState.getInstance().getLoginUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +55,13 @@ public class OrdenesDetalles extends AppCompatActivity {
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OrdenesDetalles.this, MenuPrincipal.class);
-                startActivity(intent);
+                if("admin".equals(loginUser)) {
+                    Intent intent = new Intent(OrdenesDetalles.this, MenuPrincipal.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(OrdenesDetalles.this, MenuPrincipalUsuarioComun.class);
+                    startActivity(intent);
+                }
             }
         });
 
