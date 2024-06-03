@@ -49,10 +49,10 @@
         app:iconPadding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etMensaje"
-        app:layout_constraintVertical_bias="0.288" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -88,25 +88,28 @@
         android:layout_marginTop="12dp"
         android:text="@string/msj_textomensaje"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.814"
+        app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
+        app:layout_constraintVertical_bias="0.018" />
 
     <EditText
         android:id="@+id/etNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
         android:ems="10"
         android:hint="@string/msj_nombreyapellido"
-        android:textStyle="bold"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
 
     <EditText
         android:id="@+id/etCel"
@@ -114,13 +117,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/msj_celular"
-        android:textStyle="bold"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/etNombre"
+        app:layout_constraintVertical_bias="0.034" />
 
     <EditText
         android:id="@+id/etMail"
@@ -128,104 +133,80 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/msj_textoemail"
-        android:textStyle="bold"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCel" />
+        app:layout_constraintTop_toBottomOf="@+id/etCel"
+        app:layout_constraintVertical_bias="0.04" />
 
     <EditText
         android:id="@+id/etMensaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="294dp"
+        android:layout_height="74dp"
         android:ems="10"
         android:hint="@string/msj_textomensaje"
-        android:textStyle="bold"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etMail" />
+        app:layout_constraintTop_toBottomOf="@+id/etMail"
+        app:layout_constraintVertical_bias="0.027" />
 
     <TextView
-        android:id="@+id/tvNumTel"
-        android:layout_width="70dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="568dp"
-        android:minHeight="48dp"
-        android:text="@string/msj_nrotelefono"
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Copyright - Todos los derechos reservados"
+        android:textSize="15sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
-        app:layout_constraintStart_toEndOf="@+id/tvTel"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvInfoLemone"
-        android:layout_width="115dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="8dp"
-        android:minHeight="48dp"
-        android:text="@string/msj_email"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.324"
-        app:layout_constraintStart_toEndOf="@+id/tvMailLemone"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumTel" />
-
-    <TextView
-        android:id="@+id/tvMailLemone"
-        android:layout_width="52dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="16dp"
-        android:minHeight="48dp"
-        android:text="@string/msj_textoemail"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTel" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79" />
 
     <TextView
-        android:id="@+id/tvHelp"
-        android:layout_width="62dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="4dp"
-        android:minHeight="48dp"
-        android:text="@string/msj_textohelp"
-        android:textStyle="bold"
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correo electrónico  -  info@lemone.com"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMailLemone" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.911" />
 
     <TextView
-        android:id="@+id/tvTel"
-        android:layout_width="71dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="568dp"
-        android:minHeight="48dp"
-        android:text="@string/msj_textotelefono"
-        android:textStyle="bold"
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teléfono  -  354144554455"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.938" />
 
     <TextView
-        android:id="@+id/tvWebLemone"
-        android:layout_width="177dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="16dp"
-        android:minHeight="48dp"
-        android:textStyle="bold"
-        android:text="@string/msj_help"
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Visitanos  http://lemone.com"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toEndOf="@+id/tvHelp"
-        app:layout_constraintTop_toBottomOf="@+id/tvInfoLemone" />
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.964" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

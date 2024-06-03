@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,8 @@ public class AgregarUsuario extends AppCompatActivity {
     private FrameLayout btnAtras;
     private EditText emailEditText;
     private EditText passwordEditText;
+    private EditText  textContraseña; // Este campo debe estar en tu layout
+    private EditText textReingreseContraseña; // Este campo debe estar en tu layout
     private DataBaseHelper dbHelper;
 
     @Override
@@ -35,11 +38,17 @@ public class AgregarUsuario extends AppCompatActivity {
 
         emailEditText = findViewById(R.id.textEmail);
         passwordEditText = findViewById(R.id.textContraseña);
+        textContraseña = findViewById(R.id.textContraseña); // Asegúrate de tener este EditText en tu layout
+        textReingreseContraseña = findViewById(R.id.textReingreseContraseña); // Asegúrate de tener este EditText en tu layout
 
         botonAddUser = findViewById(R.id.buttonGuardarAddUser);
         botonAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!validarContrasenas()) {
+                    return;
+                }
+
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
@@ -61,6 +70,7 @@ public class AgregarUsuario extends AppCompatActivity {
                                         startActivity(intent);
                                     } else {
                                         // Error al guardar el usuario en la base de datos local
+                                        Toast.makeText(AgregarUsuario.this, "Error al guardar el usuario en la base de datos local", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     // Error en la creación del usuario en Firebase
@@ -92,5 +102,32 @@ public class AgregarUsuario extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private boolean validarContrasenas() {
+        String passActual = textContraseña.getText().toString();
+        String confirmarPass = textReingreseContraseña.getText().toString();
+
+        if (TextUtils.isEmpty(passActual) || TextUtils.isEmpty(confirmarPass)) {
+            Toast.makeText(this, "Ambos campos son obligatorios", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!esContrasenaValida(passActual)) {
+            Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!passActual.equals(confirmarPass)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true; // Las contraseñas coinciden y son válidas
+    }
+
+    private boolean esContrasenaValida(String password) {
+        String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).{8,}$";
+        return password.matches(regex);
     }
 }

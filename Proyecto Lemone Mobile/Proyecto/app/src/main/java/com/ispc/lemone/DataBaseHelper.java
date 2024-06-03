@@ -387,6 +387,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             usuario = new Usuario();
             usuario.setId(cursor.getInt(cursor.getColumnIndexOrThrow("Id")));
             usuario.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("Email")));
+            usuario.setPassword (cursor.getString(cursor.getColumnIndexOrThrow("Password")));
             usuario.setDatosPersonales(cursor.getString(cursor.getColumnIndexOrThrow("DatosPersonales")));
             usuario.setTelefono(cursor.getString(cursor.getColumnIndexOrThrow("Telefono")));
             usuario.setActivoActualmente(cursor.getInt(cursor.getColumnIndexOrThrow("ActivoActualmente")) == 1);
@@ -396,6 +397,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return usuario;
     }
+
+
 
 
     public boolean guardarUsuario(Usuario usuario) {

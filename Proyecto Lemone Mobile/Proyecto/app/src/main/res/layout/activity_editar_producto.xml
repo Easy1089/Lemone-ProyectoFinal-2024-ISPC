@@ -25,7 +25,7 @@
         android:id="@+id/btnEliminar"
         android:layout_width="177dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="@color/bordo"
         android:insetTop="5dp"
         android:insetBottom="5dp"
@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.963" />
+        app:layout_constraintVertical_bias="0.976" />
 
     <Button
         android:id="@+id/buttonGuardarEP"
@@ -59,7 +59,7 @@
         app:layout_constraintHorizontal_bias="0.24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.961" />
+        app:layout_constraintVertical_bias="0.976" />
 
     <FrameLayout
         android:id="@+id/btn_volverEP"
@@ -385,14 +385,15 @@
         android:id="@+id/swActivo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
         android:text="Activo"
         android:textColor="@color/black"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.906" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

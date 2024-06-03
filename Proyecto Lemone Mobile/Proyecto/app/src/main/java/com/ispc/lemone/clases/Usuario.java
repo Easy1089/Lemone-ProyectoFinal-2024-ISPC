@@ -135,9 +135,11 @@ public class Usuario implements Parcelable {
         return Telefono;
     }
 
-    public void setDatosPersonales(String datosPersonales) {
+    public void setDatosPersonales(String DatosPersonales) {
+        this.DatosPersonales = DatosPersonales;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(String Telefono) {
+        this.Telefono = Telefono;
     }
 }
