@@ -672,22 +672,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return productos;
     }
 
-    //public boolean insertarProductoDestacado2(ProductoDestacado productoDestacado) {
-        //SQLiteDatabase db = this.getWritableDatabase();
-        //ContentValues contentValues = new ContentValues();
-       // contentValues.put("FechaDesde", productoDestacado.getFechaDesde().getTime());
-        //contentValues.put("FechaHasta", productoDestacado.getFechaHasta().getTime());
-        //contentValues.put("IdProducto", productoDestacado.getIdProducto());
-
-        //long result = db.insert("ProductosDestacados", null, contentValues);
-        //db.close();
-
-        // Log insert operation result
-        //Log.d("ProductoDestacado", "Insert result: " + result);
-
-        //return result != -1;
-    //}
-
     public boolean insertarProductoDestacado(ProductoDestacado productoDestacado) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -718,6 +702,43 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 long fechaHasta = cursor.getLong(3);
 
                 ProductoDestacado productoDestacado = new ProductoDestacado(fechaDesde, fechaHasta, idProducto, nombreProducto);
+                productosDestacados.add(productoDestacado);
+            }
+            cursor.close();
+        }
+        db.close();
+        return productosDestacados;
+    }
+
+    public boolean productoYaDestacado(long idProducto, long fechaDesde, long fechaHasta) {
+        List<ProductoDestacado> productosExistente = obtenerProductosPorIdYFechas(idProducto, fechaDesde, fechaHasta);
+        boolean existe = !productosExistente.isEmpty();
+
+        // Agregar registros de log para depurar
+        Log.d("ProductoDestacado", "ID Producto: " + idProducto);
+        Log.d("ProductoDestacado", "Fecha Desde: " + fechaDesde);
+        Log.d("ProductoDestacado", "Fecha Hasta: " + fechaHasta);
+        Log.d("ProductoDestacado", "Productos Existentes: " + productosExistente.size());
+        Log.d("ProductoDestacado", "Producto ya destacado: " + existe);
+
+        return existe;
+    }
+
+    public List<ProductoDestacado> obtenerProductosPorIdYFechas(long idProducto, long fechaDesde, long fechaHasta) {
+        List<ProductoDestacado> productosDestacados = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM ProductosDestacados WHERE IdProducto = " + idProducto + " AND (FechaDesde <= " + fechaDesde + " AND FechaHasta >= " + fechaHasta + ")";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                int idProducto1 = cursor.getInt(0);
+                String nombreProducto1 = cursor.getString(1);
+                long fechaDesde1 = cursor.getLong(2);
+                long fechaHasta1 = cursor.getLong(3);
+
+                ProductoDestacado productoDestacado = new ProductoDestacado(fechaDesde1, fechaHasta1, idProducto1, nombreProducto1);
                 productosDestacados.add(productoDestacado);
             }
             cursor.close();

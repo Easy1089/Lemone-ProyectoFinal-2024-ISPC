@@ -123,6 +123,10 @@ public class MarcarProductoDestacadoActivity extends AppCompatActivity {
         spinnerProductos.setAdapter(adapter);
     }
 
+    public boolean fechasSeSuperponen(long start1, long end1, long start2, long end2) {
+        return !(start1 > end2 || start2 > end1);
+    }
+
     private void marcarProductoDestacado() {
         try {
             DataBaseHelper dbHelper = new DataBaseHelper(this);
@@ -140,6 +144,7 @@ public class MarcarProductoDestacadoActivity extends AppCompatActivity {
                 return;
             }
 
+
             int idProducto = dbHelper.obtenerIdProductoPorNombre(nombreProductoSeleccionado);
             Date fechaDesde = calendarDesde.getTime();
             Date fechaHasta = calendarHasta.getTime();
@@ -148,6 +153,26 @@ public class MarcarProductoDestacadoActivity extends AppCompatActivity {
 
             if (fechaHasta.before(fechaDesde)) {
                 Toast.makeText(this, "La fecha 'Desde' debe ser anterior a la fecha 'Hasta'", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            long idProd = idProducto; // Asumiendo que idProducto es una variable existente
+            long desde = fechaDesde.getTime();
+            long hasta = fechaHasta.getTime();
+
+            Log.d("CheckDestacado", "Verificando si el producto está destacado");
+            Log.d("CheckDestacado", "ID Producto: " + idProd + ", Desde: " + desde + ", Hasta: " + hasta);
+
+            if (dbHelper.productoYaDestacado(idProd, desde, hasta)) {
+                Log.d("CheckDestacado", "El producto ya está destacado en el rango de fechas");
+                Toast.makeText(this, "Este producto ya está destacado en el rango de fechas seleccionado.", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                Log.d("CheckDestacado", "El producto no está destacado en el rango de fechas");
+            }
+
+            if (dbHelper.productoYaDestacado(idProducto, fechaDesde.getTime(), fechaHasta.getTime())) {
+                Toast.makeText(this, "Este producto ya está destacado en el rango de fechas seleccionado.", Toast.LENGTH_LONG).show();
                 return;
             }
 
