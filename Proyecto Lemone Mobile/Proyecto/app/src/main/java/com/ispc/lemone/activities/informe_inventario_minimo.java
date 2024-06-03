@@ -17,6 +17,7 @@ import com.ispc.lemone.adapters.ProductoAdapter;
 import com.ispc.lemone.clases.InventarioMinimoPorProducto;
 import com.ispc.lemone.clases.Orden;
 import com.ispc.lemone.clases.Producto;
+import com.ispc.lemone.clases.globalState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class informe_inventario_minimo extends AppCompatActivity {
     private ArrayAdapter<Producto> adapter;
     private ArrayList<Producto> listaProductos;
     private ListView listViewProductos;
+    private String loginUser = globalState.getInstance().getLoginUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +47,13 @@ public class informe_inventario_minimo extends AppCompatActivity {
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(informe_inventario_minimo.this, MenuPrincipal.class);
-                startActivity(intent);
+                if("admin".equals(loginUser)) {
+                    Intent intent = new Intent(informe_inventario_minimo.this, MenuPrincipal.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(informe_inventario_minimo.this, MenuPrincipalUsuarioComun.class);
+                    startActivity(intent);
+                }
             }
         });
     }
