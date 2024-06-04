@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.net.Uri;
+
 import com.ispc.lemone.R;
 
-
 public class AcercaDe extends AppCompatActivity {
+    private FrameLayout btnAtras;
     private Button btnMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,15 @@ public class AcercaDe extends AppCompatActivity {
             public void onClick(View v) {
                 String url = "https://easy1089.github.io/";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+
+        btnAtras = findViewById(R.id.btnAtras);
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AcercaDe.this, Login.class);
                 startActivity(intent);
             }
         });
