@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "969730389487",
+    "project_id": "lemone-b63e9",
+    "storage_bucket": "lemone-b63e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969730389487:android:aa341217facc336137b21a",
+        "android_client_info": {
+          "package_name": "com.ispc.lemone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpdOUvsCis3LHUxHv80FbECm1K5U2xBqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
