@@ -41,12 +41,15 @@ public class ProductoAdapter extends ArrayAdapter<Producto> {
             codigoYNombre = "(" + producto.getCodigo() + ") - " + producto.getNombre() + " - Inv. mínimo:" + producto.getInventarioMinimo();
             textViewProducto.setText(codigoYNombre);
 
-            if (producto.getInventarioMinimo() < 100) {
+            if (producto.getInventarioMinimo() < 15) {
                 textViewProducto.setTextColor(Color.RED);
             }
+            else
+            {
+                textViewProducto.setTextColor(Color.BLACK);
+            }
         }
-
         return convertView;
     }
-
 }
+

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,6 +56,9 @@ public class OrdenesDetalles extends AppCompatActivity {
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loginUser = globalState.getInstance().getLoginUser();
+                Log.d("Usuario logueado", loginUser);
+
                 if("admin".equals(loginUser)) {
                     Intent intent = new Intent(OrdenesDetalles.this, MenuPrincipal.class);
                     startActivity(intent);

@@ -138,7 +138,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
+        if (oldVersion == 2) {
             String tablaProductosDestacados = "CREATE TABLE IF NOT EXISTS ProductosDestacados (" +
                     "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "FechaDesde DATETIME NOT NULL, " +
@@ -147,16 +147,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     "FOREIGN KEY(IdProducto) REFERENCES Productos(Id))";
             db.execSQL(tablaProductosDestacados);
         }
-        if (oldVersion < 3) {
+        if (oldVersion == 3) {
             // Agregar la columna Estado en la versión 3
             db.execSQL("ALTER TABLE Usuarios ADD COLUMN Estado VARCHAR(5) DEFAULT 'A'");
         }
-        if (oldVersion < 4) {
+        if (oldVersion == 4) {
             // Agregar la columna Estado en la versión 3
             db.execSQL("ALTER TABLE Usuarios ADD COLUMN DatosPersonales VARCHAR(50) DEFAULT 'Completar nombre y apellido'");
             db.execSQL("ALTER TABLE Usuarios ADD COLUMN Telefono VARCHAR(50) DEFAULT 'Completar teléfono'");
         }
-        if (oldVersion < 6) {
+        if (oldVersion == 6) {
             // Agregar la columna Estado en la versión 3
             db.execSQL("ALTER TABLE Personas ADD COLUMN Apellido VARCHAR(50) DEFAULT ''");
             db.execSQL("ALTER TABLE Personas ADD COLUMN Telefono VARCHAR(50) DEFAULT ''");
@@ -341,9 +341,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // Devuelve verdadero si al menos una fila fue afectada
         return rowsAffected > 0;
     }
-
-
-
 
     public boolean editarUsuario(Usuario usuario, String email, String datosPersonales, String telefono, String nuevaPass, boolean isActivoActualmente) {
         SQLiteDatabase db = this.getWritableDatabase();

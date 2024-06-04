@@ -45,19 +45,11 @@ public class InventarioAdapter extends BaseAdapter {
         }
 
         TextView codigoTextView = convertView.findViewById(R.id.codigoTextView);
-        //TextView productoTextView = convertView.findViewById(R.id.productoTextView);
-        //TextView categoriaTextView = convertView.findViewById(R.id.categoriaTextView);
-        //TextView inventarioTextView = convertView.findViewById(R.id.InventarioTextView);
 
         Producto inventario = inventarios.get(position);
 
         codigoTextView.setText("Código: " + inventario.getCodigo());
-        //productoTextView.setText("Producto: " + inventario.getNombre());
-        //categoriaTextView.setText("Cantidad: " + String.valueOf(inventario.getCategoriaProducto()));
-        //inventarioTextView.setText("Inventario mínimo: " + String.valueOf(inventario.getInventarioMinimo()));
 
         return convertView;
     }
-
-
 }

@@ -9,12 +9,30 @@
 
     <ListView
         android:id="@+id/listViewProductos"
-        android:layout_width="377dp"
-        android:layout_height="513dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="376dp"
+        android:layout_height="494dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_exportar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.63"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTituloInventario" />
+
+    <Button
+        android:id="@+id/btn_exportar"
+        android:layout_width="177dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/bordo"
+        android:insetTop="5dp"
+        android:insetBottom="5dp"
+        android:text="Exportar"
+        android:textColor="@color/crema"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:iconPadding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
