@@ -89,6 +89,7 @@ public class Usuario implements Parcelable {
         this.persona = persona;
     }
 
+
     public String getEmail() {
         return email;
     }

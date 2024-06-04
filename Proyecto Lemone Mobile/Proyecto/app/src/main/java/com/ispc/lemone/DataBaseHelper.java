@@ -27,7 +27,7 @@ import java.util.Locale;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lemonemobile_3.db";
-    private static final int DATABASE_VERSION = 4; // Incrementa la versión de la base de datos
+    private static final int DATABASE_VERSION = 6; // Incrementa la versión de la base de datos
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -65,8 +65,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(IdPersona) REFERENCES Personas(Id), " +
                 "FOREIGN KEY(IdTipoDeUsuario) REFERENCES TiposDeUsuarios(Id))";
         db.execSQL(tablaUsuarios);
-
-
 
         String tablaTiposOperacion = "CREATE TABLE IF NOT EXISTS TiposDeOperacion (" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -158,7 +156,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE Usuarios ADD COLUMN DatosPersonales VARCHAR(50) DEFAULT 'Completar nombre y apellido'");
             db.execSQL("ALTER TABLE Usuarios ADD COLUMN Telefono VARCHAR(50) DEFAULT 'Completar teléfono'");
         }
-        // Maneja otras actualizaciones de esquema aquí
+        if (oldVersion < 6) {
+            // Agregar la columna Estado en la versión 3
+            db.execSQL("ALTER TABLE Personas ADD COLUMN Apellido VARCHAR(50) DEFAULT ''");
+            db.execSQL("ALTER TABLE Personas ADD COLUMN Telefono VARCHAR(50) DEFAULT ''");
+            db.execSQL("ALTER TABLE Personas ADD COLUMN ActivoActualmente BIT DEFAULT 1");
+            db.execSQL("ALTER TABLE Personas ADD COLUMN Domicilio VARCHAR(50) DEFAULT ''");
+        }
     }
     public boolean existeProductoDestacadoEnFechas(int idProducto, Date fechaDesde, Date fechaHasta) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -227,10 +231,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return idProducto;
     }
 
-    public List<Usuario> listarUsuarios() {
+    public List<Usuario> listarUsuarios2() {
         List<Usuario> usuarios = new ArrayList<>();
 
-        String query = "SELECT * FROM Usuarios WHERE Estado = 'A'";
+        String query = "SELECT * FROM Usuarios";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -239,21 +243,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(0);
                 int idTipoUsuario = cursor.getInt(1);
                 int idPersona = cursor.getInt(2);
-                @SuppressLint("Range") String email = cursor.getString(cursor.getColumnIndex("Email"));
+                String email = cursor.getString(3);
                 String password = cursor.getString(4);
-                String telefono = cursor.getString(6);
-                String datosPersonales = cursor.getString(7);
-                boolean activoActualmente = cursor.getInt(5) == 1;
+                int activoActualmenteInt = cursor.getInt(5);
+                boolean activoActualmente = (activoActualmenteInt == 1);
+                String datospersonales = cursor.getString(6);
+                String telefono = cursor.getString(7);
 
                 Usuario usuario = new Usuario();
                 usuario.setId(id);
-                usuario.setTipoUsuario(buscarTipoUsuarioPorId(idTipoUsuario));
-                usuario.setPersona(buscarPersonaPorId(idPersona));
                 usuario.setEmail(email);
                 usuario.setPassword(password);
-                usuario.setActivoActualmente(activoActualmente);
+                usuario.setDatosPersonales(datospersonales);
                 usuario.setTelefono(telefono);
-                usuario.setDatosPersonales(datosPersonales);
+                usuario.setActivoActualmente(activoActualmente);
 
                 usuarios.add(usuario);
             } while (cursor.moveToNext());
