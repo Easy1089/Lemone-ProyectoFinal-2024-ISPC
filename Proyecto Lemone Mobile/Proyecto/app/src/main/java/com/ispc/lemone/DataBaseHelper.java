@@ -332,13 +332,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("Estado", "B");
 
-        // Actualiza la tabla y obtiene el número de filas afectadas
         int rowsAffected = db.update("Usuarios", values, "Id = ?", new String[]{String.valueOf(id)});
 
-        // Cierra la base de datos después de usarla
         db.close();
 
-        // Devuelve verdadero si al menos una fila fue afectada
         return rowsAffected > 0;
     }
 
@@ -398,9 +395,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return usuario;
     }
 
-
-
-
     public boolean guardarUsuario(Usuario usuario) {
         long result = 0;
         try {
@@ -458,7 +452,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public List<Producto> listaDeProductos() {
         List<Producto> productos = new ArrayList<>();
 
-        String query = "SELECT * FROM Productos";
+        String query =  "SELECT P.Id, P.Codigo, P.Nombre, P.Descripcion, " +
+                "P.InventarioMinimo, P.PrecioDeCosto, P.PrecioDeVenta, P.IdCategoria, P.ActivoActualmente, " +
+                "(SELECT IFNULL(SUM(O.Cantidad), 0) FROM Ordenes O WHERE O.IdProducto = P.Id AND O.IdTipoDeOperacion = 1) - " +
+                "(SELECT IFNULL(SUM(O.Cantidad), 0) FROM Ordenes O WHERE O.IdProducto = P.Id AND O.IdTipoDeOperacion = 2) AS StockActual " +
+                "FROM Productos P " +
+                "WHERE P.ActivoActualmente = 1";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -468,12 +467,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String codigo = cursor.getString(1);
                 String nombre = cursor.getString(2);
                 String descripcion = cursor.getString(3);
+
                 int inventariominimo = cursor.getInt(4);
                 Double preciodecosto = cursor.getDouble(5);
                 Double preciodeventa = cursor.getDouble(6);
                 int idcategoria = 1;//cursor.getInt(7);
                 int activoActualmenteInt = cursor.getInt(8);
                 boolean activoActualmente = (activoActualmenteInt == 1);
+                int stock = cursor.getInt(9);
 
                 Producto producto = new Producto();
                 producto.setId(id);
@@ -483,8 +484,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 producto.setInventarioMinimo(inventariominimo);
                 producto.setPrecioDeCosto(preciodecosto);
                 producto.setPrecioDeVenta(preciodeventa);
-                //producto.setCategoriaProducto(buscarCategoriaPorId(idcategoria));
                 producto.setActivoActualmente(activoActualmente);
+                producto.setStockActual(stock);
+
+                Log.d("Productos", "Producto: " + nombre + ", Código: " + codigo + ", Stock Actual: " + stock + ", Inventario Mínimo: " + inventariominimo);
 
                 productos.add(producto);
             } while (cursor.moveToNext());
@@ -608,25 +611,63 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return result != 0;
     }
 
-    public List<Orden> getOrdenesConDetalles() {
-        List<Orden> ordenes = new ArrayList<>();
+    public List<Producto> getResumenDeInventario() {
+        List<Producto> productos = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT o.Id, strftime('%d/%m/%Y', DATE(SUBSTR(o.Fecha, 7, 4) || '-' || SUBSTR(o.Fecha, 4, 2) || '-' || SUBSTR(o.Fecha, 1, 2))) as Fecha, pro.Codigo, pro.Nombre as Producto, o.Cantidad, t.Nombre as TipoDeOperacion, (p.Apellido || ', ' || p.Nombre) as Persona FROM Ordenes o inner join Personas p on p.Id = o.IdPersona inner join Productos pro on pro.Id = o.IdProducto inner join TiposDeOperacion t on t.Id = o.IdTipoDeOperacion";
+        String query = "SELECT Codigo, Nombre, InventarioMinimo FROM Productos where ActivoActualmente =" + 1;
 
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
             do {
+                @SuppressLint("Range") String codigoProducto = cursor.getString(cursor.getColumnIndex("Codigo"));
+                @SuppressLint("Range") String nombreProducto = cursor.getString(cursor.getColumnIndex("Nombre"));
+                int inventario = cursor.getInt(cursor.getInt(4));
+
+                Producto producto = new Producto();
+                producto.setCodigo(codigoProducto);
+                producto.setNombre(nombreProducto);
+                producto.setInventarioMinimo(inventario);
+
+                productos.add(producto);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return productos;
+    }
+
+    public List<Orden> getOrdenesConDetalles() {
+        List<Orden> ordenes = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT o.Id, strftime('%d/%m/%Y', DATE(SUBSTR(o.Fecha, 7, 4) || '-' || SUBSTR(o.Fecha, 4, 2) || '-' || SUBSTR(o.Fecha, 1, 2))) as Fecha, " +
+                "pro.Codigo, pro.Nombre as Producto, o.Cantidad, t.Nombre as TipoDeOperacion, " +
+                "(p.Apellido || ', ' || p.Nombre) as Persona " +
+                "FROM Ordenes o " +
+                "INNER JOIN Personas p on p.Id = o.IdPersona " +
+                "INNER JOIN Productos pro on pro.Id = o.IdProducto " +
+                "INNER JOIN TiposDeOperacion t on t.Id = o.IdTipoDeOperacion";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("Id"));
                 @SuppressLint("Range") String fecha = cursor.getString(cursor.getColumnIndex("Fecha"));
                 @SuppressLint("Range") String codigoProducto = cursor.getString(cursor.getColumnIndex("Codigo"));
                 @SuppressLint("Range") String nombreProducto = cursor.getString(cursor.getColumnIndex("Producto"));
-                int cantidad = cursor.getInt(cursor.getInt(3));
+                @SuppressLint("Range") int cantidad = cursor.getInt(cursor.getColumnIndex("Cantidad"));
                 @SuppressLint("Range") String tipoOperacion = cursor.getString(cursor.getColumnIndex("TipoDeOperacion"));
                 @SuppressLint("Range") String nombrePersona = cursor.getString(cursor.getColumnIndex("Persona"));
 
                 Orden orden = new Orden();
+                orden.setId(id);
                 orden.setFecha(fecha);
                 orden.setCodigoProducto(codigoProducto);
                 orden.setNombreProducto(nombreProducto);
@@ -644,31 +685,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return ordenes;
     }
 
-    public List<Producto> getInventario() {
+    public List<Producto> getInventario2() {
         List<Producto> inventarios = new ArrayList<>();
-
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT p.Id, P.Codigo, P.Nombre As Producto, C.Nombre as Categoria, P.InventarioMinimo FROM Productos P INNER JOIN Categorias C ON C.Id = P.IdCategoria WHERE P.ActivoActualmente = 1 AND P.InventarioMinimo < 100";
+        String query = "SELECT P.Id, P.Codigo, P.Nombre AS Producto, " +
+                "P.InventarioMinimo, " +
+                "(SELECT IFNULL(SUM(O.Cantidad), 0) FROM Ordenes O WHERE O.IdProducto = P.Id AND O.IdTipoDeOperacion = 1) - " +
+                "(SELECT IFNULL(SUM(O.Cantidad), 0) FROM Ordenes O WHERE O.IdProducto = P.Id AND O.IdTipoDeOperacion = 2) AS StockActual " +
+                "FROM Productos P " +
+                "WHERE P.ActivoActualmente = 1";
 
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
             do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("Id"));
+                String codigo = cursor.getString(cursor.getColumnIndexOrThrow("Codigo"));
+                String nombre = cursor.getString(cursor.getColumnIndexOrThrow("Producto"));
+                int inventarioMinimo = cursor.getInt(cursor.getColumnIndexOrThrow("InventarioMinimo"));
+                int stockActual = cursor.getInt(cursor.getColumnIndexOrThrow("StockActual"));
 
-                int id = cursor.getInt(cursor.getInt(0));
-                //@SuppressLint("Range") String codigoProducto = cursor.getString(cursor.getColumnIndex("Codigo"));
-                //@SuppressLint("Range") String nombreProducto = cursor.getString(cursor.getColumnIndex("Producto"));
-                //@SuppressLint("Range")  String categoria = cursor.getString(cursor.getColumnIndex("Categoria"));
-                //int inventarioInt = cursor.getInt(cursor.getInt(4));
+                Log.d("Inventario", "Producto: " + nombre + ", Código: " + codigo + ", Stock Actual: " + stockActual + ", Inventario Mínimo: " + inventarioMinimo);
 
                 Producto inventario = new Producto();
-
                 inventario.setId(id);
-                //inventario.setCodigo(codigoProducto);
-                //inventario.setNombre(nombreProducto);
-                //inventario.setCategoriaDeProducto(categoria);
-                //inventario.setInventarioMinimo(inventarioInt);
+                inventario.setCodigo(codigo);
+                inventario.setNombre(nombre);
+                inventario.setInventarioMinimo(inventarioMinimo);
+                inventario.setStockActual(stockActual);
 
                 inventarios.add(inventario);
             } while (cursor.moveToNext());
@@ -679,7 +724,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return inventarios;
     }
-
     public List<Producto> obtenerTodosLosProductos() {
         List<Producto> productos = new ArrayList<>();
         String query = "SELECT * FROM Productos";
@@ -720,9 +764,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         long result = db.insert("ProductosDestacados", null, contentValues);
         db.close();
 
-        // Log insert operation result
         Log.d("ProductoDestacado", "Insert result: " + result);
-
         return result != -1;
     }
 
@@ -752,7 +794,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         List<ProductoDestacado> productosExistente = obtenerProductosPorIdYFechas(idProducto, fechaDesde, fechaHasta);
         boolean existe = !productosExistente.isEmpty();
 
-        // Agregar registros de log para depurar
         Log.d("ProductoDestacado", "ID Producto: " + idProducto);
         Log.d("ProductoDestacado", "Fecha Desde: " + fechaDesde);
         Log.d("ProductoDestacado", "Fecha Hasta: " + fechaHasta);

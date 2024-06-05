@@ -83,14 +83,12 @@ public class OrdenesDetalles extends AppCompatActivity {
                 WritableWorkbook workbook = Workbook.createWorkbook(file);
                 WritableSheet sheet = workbook.createSheet("Ordenes", 0);
 
-                // Agregar encabezados
                 String[] headers = {"Fecha", "Código", "Producto", "Cantidad", "Tipo de operación", "Persona"};
                 for (int i = 0; i < headers.length; i++) {
                     Label label = new Label(i, 0, headers[i]);
                     sheet.addCell(label);
                 }
 
-                // Agregar datos
                 DataBaseHelper dbHelper = new DataBaseHelper(this);
                 List<Orden> ordenes = dbHelper.getOrdenesConDetalles();
                 int rowNum = 1;
@@ -103,8 +101,6 @@ public class OrdenesDetalles extends AppCompatActivity {
                     sheet.addCell(new Label(5, rowNum, orden.getPersona()));
                     rowNum++;
                 }
-
-                // Escribir el libro y cerrarlo
                 workbook.write();
                 workbook.close();
 

@@ -2,6 +2,7 @@ package com.ispc.lemone.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +35,17 @@ public class ProductoAdapter extends ArrayAdapter<Producto> {
 
         String codigoYNombre = "";
 
+        Log.d("Adaptador", "Stock actual:" + producto.getStockActual());
+
+
         if (!mostrarInventario) {
             codigoYNombre = "(" + producto.getCodigo() + ") - " + producto.getNombre();
             textViewProducto.setText(codigoYNombre);
         } else {
-            codigoYNombre = "(" + producto.getCodigo() + ") - " + producto.getNombre() + " - Inv. mínimo:" + producto.getInventarioMinimo();
+            codigoYNombre = "(" + producto.getCodigo() + ") - " + producto.getNombre() + " - Inv. mínimo: " + producto.getInventarioMinimo() + " - Stock actual: " + producto.getStockActual();
             textViewProducto.setText(codigoYNombre);
 
-            if (producto.getInventarioMinimo() < 15) {
+            if (producto.getInventarioMinimo() > producto.getStockActual()) {
                 textViewProducto.setTextColor(Color.RED);
             }
             else

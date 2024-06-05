@@ -6,6 +6,8 @@ public class Producto implements Serializable  {
     private String nombre;
     private String descripcion;
     private int inventarioMinimo;
+    private int stockActual;
+    private  boolean tieneStock;
     private double precioDeCosto;
     private double precioDeVenta;
     private CategoriaProducto categoriaProducto;
@@ -61,9 +63,24 @@ public class Producto implements Serializable  {
     public int getInventarioMinimo() {
         return inventarioMinimo;
     }
+    public int getStockActual() {
+        return stockActual;
+    }
+
+    public boolean getAlertaDeStock() {
+        return tieneStock;
+    }
 
     public void setInventarioMinimo(int inventarioMinimo) {
         this.inventarioMinimo = inventarioMinimo;
+    }
+
+    public void setStockActual(int stockActual) {
+        this.stockActual = stockActual;
+    }
+
+    public void setTieneStock(boolean tieneStock) {
+        this.tieneStock = tieneStock;
     }
 
     public double getPrecioDeCosto() {
